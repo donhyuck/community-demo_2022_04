@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserHomeController {
-	@RequestMapping("/user/home/main")
+	@RequestMapping("/user/home/main1")
 	@ResponseBody
-	public String showMain() {
+	public String showMain1() {
 		return "안녕하세요.";
 	}
 	
