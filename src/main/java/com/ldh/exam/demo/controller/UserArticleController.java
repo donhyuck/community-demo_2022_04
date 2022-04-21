@@ -117,6 +117,19 @@ public class UserArticleController {
 		return null;
 	}
 
+	@RequestMapping("/user/article/getArticle")
+	@ResponseBody
+	public Object getOneArticle(int id) {
+
+		Article article = getArticle(id);
+
+		if (article == null) {
+			return id + "번 게시물을 찾을 수 없습니다.";
+		}
+
+		return article;
+	}
+
 	@RequestMapping("/user/article/getArticles")
 	@ResponseBody
 	public List<Article> getArticles() {
