@@ -1,79 +1,43 @@
 package com.ldh.exam.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ldh.exam.demo.repository.ArticleRepository;
 import com.ldh.exam.demo.vo.Article;
 
 @Service
 public class ArticleService {
 
-	private int articlesLastId;
-	private List<Article> articles;
+	@Autowired
+	private ArticleRepository articleRepository;
 
-	public ArticleService() {
+	public ArticleService(ArticleRepository articleRepository) {
 
-		articlesLastId = 0;
-		articles = new ArrayList<>();
-
-		makeTestData();
-
-	}
-
-	private void makeTestData() {
-
-		for (int i = 1; i <= 10; i++) {
-
-			String title = i + "번 제목";
-			String body = "내용" + i;
-
-			writeArticle(title, body);
-		}
-
+		this.articleRepository = articleRepository;
+		articleRepository.makeTestData();
 	}
 
 	public Article getArticle(int id) {
-
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-
-		return null;
-	}
-
-	public Article writeArticle(String title, String body) {
-
-		int id = articlesLastId + 1;
-
-		Article article = new Article(id, title, body);
-
-		articles.add(article);
-		articlesLastId = id;
-
-		return article;
-	}
-
-	public void modifyArticle(int id, String title, String body) {
-
-		Article article = getArticle(id);
-
-		article.setTitle(title);
-		article.setBody(body);
-	}
-
-	public void deleteArticle(int id) {
-
-		Article article = getArticle(id);
-
-		articles.remove(article);
+		return articleRepository.getArticle(id);
 	}
 
 	public List<Article> getArticles() {
-
-		return articles;
+		return articleRepository.getArticles();
 	}
+
+	public Article writeArticle(String title, String body) {
+		return articleRepository.writeArticle(title, body);
+	}
+
+	public void modifyArticle(int id, String title, String body) {
+		articleRepository.modifyArticle(id, title, body);
+	}
+
+	public void deleteArticle(int id) {
+		articleRepository.deleteArticle(id);
+	}
+
 }

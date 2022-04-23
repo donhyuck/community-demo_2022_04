@@ -18,6 +18,26 @@ public class UserArticleController {
 	private ArticleService articleService;
 
 	// 액션 메서드 시작
+	@RequestMapping("/user/article/getArticle")
+	@ResponseBody
+	public Object getOneArticle(int id) {
+
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return id + "번 게시물을 찾을 수 없습니다.";
+		}
+
+		return article;
+	}
+
+	@RequestMapping("/user/article/getArticles")
+	@ResponseBody
+	public List<Article> getArticles() {
+
+		return articleService.getArticles();
+	}
+
 	@RequestMapping("/user/article/doAdd")
 	@ResponseBody
 	public Article doAdd(String title, String body) {
@@ -56,27 +76,6 @@ public class UserArticleController {
 
 		return id + "번 게시물을 삭제했습니다.";
 	}
-
-	@RequestMapping("/user/article/getArticle")
-	@ResponseBody
-	public Object getOneArticle(int id) {
-
-		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return id + "번 게시물을 찾을 수 없습니다.";
-		}
-
-		return article;
-	}
-
-	@RequestMapping("/user/article/getArticles")
-	@ResponseBody
-	public List<Article> getArticles() {
-
-		return articleService.getArticles();
-	}
-
 	// 액션 메서드 끝
 
 }
