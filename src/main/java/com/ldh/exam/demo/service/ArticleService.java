@@ -2,7 +2,6 @@ package com.ldh.exam.demo.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ldh.exam.demo.repository.ArticleRepository;
@@ -25,8 +24,9 @@ public class ArticleService {
 		return articleRepository.getArticles();
 	}
 
-	public Article writeArticle(String title, String body) {
-		return articleRepository.writeArticle(title, body);
+	public int writeArticle(String title, String body) {
+		articleRepository.writeArticle(title, body);
+		return articleRepository.getLastInsertId();
 	}
 
 	public void modifyArticle(int id, String title, String body) {

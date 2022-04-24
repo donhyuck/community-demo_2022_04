@@ -20,7 +20,7 @@ public class UserArticleController {
 	// 액션 메서드 시작
 	@RequestMapping("/user/article/getArticle")
 	@ResponseBody
-	public Object getOneArticle(int id) {
+	public Object getArticle(int id) {
 
 		Article article = articleService.getArticle(id);
 
@@ -42,7 +42,9 @@ public class UserArticleController {
 	@ResponseBody
 	public Article doAdd(String title, String body) {
 
-		Article article = articleService.writeArticle(title, body);
+		int id = articleService.writeArticle(title, body);
+
+		Article article = articleService.getArticle(id);
 
 		return article;
 	}
