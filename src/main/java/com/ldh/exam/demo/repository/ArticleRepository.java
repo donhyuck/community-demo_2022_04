@@ -3,75 +3,29 @@ package com.ldh.exam.demo.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 import com.ldh.exam.demo.vo.Article;
 
-@Component
-public class ArticleRepository {
+@Mapper
+public interface ArticleRepository {
 
-	private int articlesLastId;
-	private List<Article> articles;
+	@Select("select * from article where id = #{id}")
+	public Article getArticle(@Param("id") int id);
 
-	public ArticleRepository() {
+	// SELECT * FROM article ORDER BY id DESC;
+	public List<Article> getArticles();
 
-		articlesLastId = 0;
-		articles = new ArrayList<>();
-	}
+	// INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, `body` = ?;
+	public Article writeArticle(String title, String body);
 
-	public void makeTestData() {
+	// UPDATE article SET title = ?, `body` = ?, updateDate = NOW() WHERE id = ?;
+	public void modifyArticle(int id, String title, String body);
 
-		for (int i = 1; i <= 10; i++) {
-
-			String title = i + "번 제목";
-			String body = "내용" + i;
-
-			writeArticle(title, body);
-		}
-
-	}
-
-	public Article getArticle(int id) {
-
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-
-		return null;
-	}
-
-	public List<Article> getArticles() {
-
-		return articles;
-	}
-
-	public Article writeArticle(String title, String body) {
-
-		int id = articlesLastId + 1;
-
-		Article article = new Article(id, title, body);
-
-		articles.add(article);
-		articlesLastId = id;
-
-		return article;
-	}
-
-	public void modifyArticle(int id, String title, String body) {
-
-		Article article = getArticle(id);
-
-		article.setTitle(title);
-		article.setBody(body);
-	}
-
-	public void deleteArticle(int id) {
-
-		Article article = getArticle(id);
-
-		articles.remove(article);
-	}
+	// DELETE FROM article WHERE id = ?;
+	public void deleteArticle(int id);
 
 }

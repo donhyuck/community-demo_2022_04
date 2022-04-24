@@ -14,9 +14,7 @@ public class ArticleService {
 	private ArticleRepository articleRepository;
 
 	public ArticleService(ArticleRepository articleRepository) {
-
 		this.articleRepository = articleRepository;
-		articleRepository.makeTestData();
 	}
 
 	public Article getArticle(int id) {
