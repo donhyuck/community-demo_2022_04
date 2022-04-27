@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ldh.exam.demo.service.MemberService;
+import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Member;
 
 @Controller
@@ -20,29 +21,33 @@ public class UserMemberController {
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
 			String email) {
 
-		if (loginId == null || loginId.trim().length() == 0) {
-			return "loginId(을)를 입력해주세요.";
+		if (Ut.empty(loginId)) {
+			return "아이디(을)를 입력해주세요.";
 		}
-		if (loginPw == null || loginId.trim().length() == 0) {
-			return "loginPw(을)를 입력해주세요.";
+		if (Ut.empty(loginPw)) {
+			return "비밀번호(을)를 입력해주세요.";
 		}
-		if (name == null || loginId.trim().length() == 0) {
-			return "name(을)를 입력해주세요.";
+		if (Ut.empty(name)) {
+			return "이름(을)를 입력해주세요.";
 		}
-		if (nickname == null || loginId.trim().length() == 0) {
-			return "nickname(을)를 입력해주세요.";
+		if (Ut.empty(nickname)) {
+			return "닉네임(을)를 입력해주세요.";
 		}
-		if (cellphoneNo == null || loginId.trim().length() == 0) {
-			return "cellphoneNo(을)를 입력해주세요.";
+		if (Ut.empty(cellphoneNo)) {
+			return "연락처(을)를 입력해주세요.";
 		}
-		if (email == null || loginId.trim().length() == 0) {
-			return "email(을)를 입력해주세요.";
+		if (Ut.empty(email)) {
+			return "이메일(을)를 입력해주세요.";
 		}
 
 		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 
 		if (id == -1) {
 			return "해당 로그인아이디는 이미 사용중입니다.";
+		}
+
+		if (id == -2) {
+			return "해당 이름과 이메일은 이미 사용중입니다.";
 		}
 
 		Member member = memberService.getMemberById(id);

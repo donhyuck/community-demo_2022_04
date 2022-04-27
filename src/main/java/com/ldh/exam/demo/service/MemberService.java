@@ -16,10 +16,16 @@ public class MemberService {
 
 	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 
+		// 로그인 아이디 확인
 		Member oldMember = getMemberByLoginId(loginId);
-
 		if (oldMember != null) {
 			return -1;
+		}
+
+		// 이름, 이메일 확인
+		oldMember = getMemberByNameAndEmail(name, email);
+		if (oldMember != null) {
+			return -2;
 		}
 
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
@@ -28,6 +34,10 @@ public class MemberService {
 
 	private Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
+	}
+
+	private Member getMemberByNameAndEmail(String name, String email) {
+		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
 	public Member getMemberById(int id) {
