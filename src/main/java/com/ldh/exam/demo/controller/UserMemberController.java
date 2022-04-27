@@ -17,9 +17,13 @@ public class UserMemberController {
 	// http://localhost:8011/user/member/doJoin?loginId=bbb&loginPw=aaa&name=a&nickname=aa&cellphoneNo=111&email=a@test.com
 	@RequestMapping("/user/member/doJoin")
 	@ResponseBody
-	public Member doJoin(String loginId, String loginPw, String name, String nickname, int cellphoneNo, String email) {
+	public Object doJoin(String loginId, String loginPw, String name, String nickname, int cellphoneNo, String email) {
 
 		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+
+		if (id == -1) {
+			return "해당 로그인아이디는 이미 사용중입니다.";
+		}
 
 		Member member = memberService.getMemberById(id);
 
