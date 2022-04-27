@@ -14,7 +14,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public int join(String loginId, String loginPw, String name, String nickname, int cellphoneNo, String email) {
+	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 
 		Member oldMember = getMemberByLoginId(loginId);
 
