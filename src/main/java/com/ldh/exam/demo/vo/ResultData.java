@@ -15,7 +15,15 @@ public class ResultData {
 
 	}
 
-	private static ResultData from(String resultCode, String msg, Object data1) {
+	public boolean isSuccess() {
+		return resultCode.startsWith("S-");
+	}
+
+	public boolean isFail() {
+		return isSuccess() == false;
+	}
+
+	public static ResultData from(String resultCode, String msg, Object data1) {
 
 		ResultData rd = new ResultData();
 		rd.resultCode = resultCode;
@@ -25,12 +33,8 @@ public class ResultData {
 		return rd;
 	}
 
-	public boolean isSuccess() {
-		return resultCode.startsWith("S-");
-	}
-
-	public boolean isFail() {
-		return isSuccess() == false;
+	public static ResultData from(String resultCode, String msg) {
+		return from(resultCode, msg, null);
 	}
 
 }
