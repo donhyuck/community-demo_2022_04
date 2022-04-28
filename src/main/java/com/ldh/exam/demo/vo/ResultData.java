@@ -37,4 +37,8 @@ public class ResultData {
 		return from(resultCode, msg, null);
 	}
 
+	public static ResultData newData(ResultData joinRd, Object newData) {
+		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
+	}
+
 }
