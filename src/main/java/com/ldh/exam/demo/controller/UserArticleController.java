@@ -43,13 +43,21 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doAdd")
 	@ResponseBody
-	public Article doAdd(String title, String body) {
+	public ResultData doAdd(String title, String body) {
 
-		int id = articleService.writeArticle(title, body);
+		if (Ut.empty(title)) {
+			return ResultData.from("F-1", "제목을 입력해주세요.");
+		}
+		if (Ut.empty(body)) {
+			return ResultData.from("F-1", "내용을 입력해주세요.");
+		}
+
+		ResultData writeArticleRd = articleService.writeArticle(title, body);
+		int id = (int) writeArticleRd.getData1();
 
 		Article article = articleService.getArticle(id);
 
-		return article;
+		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
 	}
 
 	@RequestMapping("/user/article/doModify")
