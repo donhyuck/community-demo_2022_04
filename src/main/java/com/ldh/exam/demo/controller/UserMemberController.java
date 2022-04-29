@@ -1,5 +1,7 @@
 package com.ldh.exam.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +52,41 @@ public class UserMemberController {
 		Member member = memberService.getMemberById(joinRd.getData1());
 
 		return ResultData.newData(joinRd, member);
+	}
+
+	@RequestMapping("/user/member/doLogin")
+	@ResponseBody
+	public ResultData<Member> doLogin(HttpSession httpSession, String loginId, String loginPw) {
+
+		boolean isLogined = false;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+		
+		if (isLogined) {
+			return ResultData.from("F-5", "이미 로그인되었습니다.");
+		}
+
+		if (Ut.empty(loginId)) {
+			return ResultData.from("F-1", "아이디(을)를 입력해주세요.");
+		}
+		if (Ut.empty(loginPw)) {
+			return ResultData.from("F-2", "비밀번호(을)를 입력해주세요.");
+		}
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		if (member == null) {
+			return ResultData.from("F-3", "등록되지 않은 회원입니다.");
+		}
+
+		if (member.getLoginPw().equals(loginPw) == false) {
+			return ResultData.from("F-4", "잘못된 비밀번호입니다.");
+		}
+
+		httpSession.setAttribute("loginedMemberId", member.getId());
+
+		return ResultData.from("S-1", Ut.format("%s님 환영합니다.", member.getNickname()));
 	}
 }
