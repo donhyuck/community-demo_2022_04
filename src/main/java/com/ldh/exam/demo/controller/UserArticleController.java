@@ -21,7 +21,7 @@ public class UserArticleController {
 	// 액션 메서드 시작
 	@RequestMapping("/user/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {
+	public ResultData<Article> getArticle(int id) {
 
 		Article article = articleService.getArticle(id);
 
@@ -29,12 +29,12 @@ public class UserArticleController {
 			return ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
 		}
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id));
+		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id), article);
 	}
 
 	@RequestMapping("/user/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles() {
+	public ResultData<List<Article>> getArticles() {
 
 		List<Article> articles = articleService.getArticles();
 
@@ -43,7 +43,7 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(String title, String body) {
+	public ResultData<Article> doAdd(String title, String body) {
 
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", "제목을 입력해주세요.");
@@ -62,32 +62,32 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public ResultData<Integer> doModify(int id, String title, String body) {
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return id + "번 게시물을 찾을 수 없습니다.";
+			ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
 		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return id + "번 게시물을 수정했습니다.";
+		return ResultData.from("S-1", Ut.format("%d번 게시물을 수정했습니다.", id), id);
 	}
 
 	@RequestMapping("/user/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData<Integer> doDelete(int id) {
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return id + "번 게시물을 찾을 수 없습니다.";
+			ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return id + "번 게시물을 삭제했습니다.";
+		return ResultData.from("S-1", Ut.format("%d번 게시물을 삭제했습니다.", id), id);
 	}
 	// 액션 메서드 끝
 
