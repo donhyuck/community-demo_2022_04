@@ -19,7 +19,7 @@ public class UserMemberController {
 	// http://localhost:8011/user/member/doJoin?loginId=bbb&loginPw=aaa&name=a&nickname=aa&cellphoneNo=111&email=a@test.com
 	@RequestMapping("/user/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
+	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
 			String email) {
 
 		if (Ut.empty(loginId)) {
@@ -41,13 +41,13 @@ public class UserMemberController {
 			return ResultData.from("F-6", "이메일(을)를 입력해주세요.");
 		}
 
-		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 
 		if (joinRd.isFail()) {
-			return joinRd;
+			return (ResultData) joinRd;
 		}
 
-		Member member = memberService.getMemberById((int) joinRd.getData1());
+		Member member = memberService.getMemberById(joinRd.getData1());
 
 		return ResultData.newData(joinRd, member);
 	}
