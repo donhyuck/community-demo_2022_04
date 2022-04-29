@@ -18,7 +18,7 @@ public interface ArticleRepository {
 
 	public List<Article> getArticles();
 
-	public void writeArticle(@Param("title") String title, @Param("body") String body);
+	public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
 
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 

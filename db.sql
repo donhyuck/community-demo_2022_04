@@ -47,7 +47,7 @@ CREATE TABLE `member` (
     authLevel SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
-    cellphoneNo  CHAR(20) NOT NULL,
+    cellphoneNo CHAR(20) NOT NULL,
     email  CHAR(50) NOT NULL,
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전,1=탈퇴)',
     delDate DATETIME COMMENT '탈퇴날짜'
@@ -88,3 +88,15 @@ loginPw = 'test2',
 nickname = '유저2',
 cellphoneNo = '01011111112',
 email = 'test002@gmail.com';
+
+SELECT LAST_INSERT_ID();
+
+# 게시글 테이블에 회원정보 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 회원정보가 미등록된 게시물은 2번 회원으로 일괄 지정
+UPDATE article
+SET memberId = 2
+WHERE memberId = 0;
+
+SELECT * FROM article;
