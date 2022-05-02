@@ -78,7 +78,7 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doModify")
 	@ResponseBody
-	public ResultData<Integer> doModify(HttpSession httpSession, int id, String title, String body) {
+	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
 
 		// 로그인 확인
 		boolean isLogined = false;
@@ -95,18 +95,14 @@ public class UserArticleController {
 
 		Article article = articleService.getArticle(id);
 
-		if (article == null) {
-			ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
+		// 게시글 존재여부 및 권한 체크
+		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
+
+		if (actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
 		}
 
-		// 권한 체크
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", "해당 게시글에 대한 권한이 없습니다.");
-		}
-
-		articleService.modifyArticle(id, title, body);
-
-		return ResultData.from("S-1", Ut.format("%d번 게시물을 수정했습니다.", id), id);
+		return articleService.modifyArticle(id, title, body);
 	}
 
 	@RequestMapping("/user/article/doDelete")
@@ -128,13 +124,11 @@ public class UserArticleController {
 
 		Article article = articleService.getArticle(id);
 
-		if (article == null) {
-			ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
-		}
+		// 게시글 존재여부 및 권한 체크
+		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
 
-		// 권한 체크
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", "해당 게시글에 대한 권한이 없습니다.");
+		if (actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
 		}
 
 		articleService.deleteArticle(id);
