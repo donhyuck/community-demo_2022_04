@@ -31,7 +31,7 @@ public class UserArticleController {
 			return ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
 		}
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id), article);
+		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id), "article", article);
 	}
 
 	@RequestMapping("/user/article/getArticles")
@@ -40,7 +40,7 @@ public class UserArticleController {
 
 		List<Article> articles = articleService.getArticles();
 
-		return ResultData.from("S-1", "게시물 목록입니다.", articles);
+		return ResultData.from("S-1", "게시물 목록입니다.", "articles", articles);
 	}
 
 	@RequestMapping("/user/article/doAdd")
@@ -73,7 +73,7 @@ public class UserArticleController {
 
 		Article article = articleService.getArticle(id);
 
-		return ResultData.newData(writeArticleRd, article);
+		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
 	@RequestMapping("/user/article/doModify")
@@ -133,7 +133,7 @@ public class UserArticleController {
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물을 삭제했습니다.", id), id);
+		return ResultData.from("S-1", Ut.format("%d번 게시물을 삭제했습니다.", id), "id", id);
 	}
 	// 액션 메서드 끝
 

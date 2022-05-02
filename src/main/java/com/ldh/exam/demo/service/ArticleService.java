@@ -30,7 +30,7 @@ public class ArticleService {
 		articleRepository.writeArticle(memberId, title, body);
 		int id = articleRepository.getLastInsertId();
 
-		return ResultData.from("S-1", Ut.format("%d번 게시글이 생성되었습니다.", id), id);
+		return ResultData.from("S-1", Ut.format("%d번 게시글이 생성되었습니다.", id), "id", id);
 	}
 
 	public ResultData<Article> modifyArticle(int id, String title, String body) {
@@ -38,7 +38,7 @@ public class ArticleService {
 
 		Article article = getArticle(id);
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물을 수정했습니다.", id), article);
+		return ResultData.from("S-1", Ut.format("%d번 게시물을 수정했습니다.", id), "article", article);
 	}
 
 	public void deleteArticle(int id) {
