@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserHomeController {
 
 	@RequestMapping("/user/home/main")
-	@ResponseBody
-	public String showMain1() {
-		return "안녕하세요.";
+	public String showMain() {
+		return "/user/home/main";
+	}
+
+	@RequestMapping("/")
+	public String showRoot() {
+		return "redirect:/user/home/main";
 	}
 }
