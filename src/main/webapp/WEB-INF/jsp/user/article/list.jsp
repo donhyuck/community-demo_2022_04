@@ -8,7 +8,19 @@
 </head>
 <body>
   <h1>게시글 목록</h1>
-  <hr />
+
+  <header>
+    <a href="/">로고</a>
+
+    <ul>
+      <li>
+        <a href="/">홈으로</a>
+      </li>
+      <li>
+        <a href="/user/article/list">목록보기</a>
+      </li>
+    </ul>
+  </header>
 
   <table border="1">
     <thead>

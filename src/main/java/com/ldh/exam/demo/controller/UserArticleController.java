@@ -35,7 +35,7 @@ public class UserArticleController {
 		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id), "article", article);
 	}
 
-	@RequestMapping("/user/article/getArticles")
+	@RequestMapping("/user/article/list")
 	public String showArticleList(Model model) {
 
 		List<Article> articles = articleService.getArticles();
