@@ -26,5 +26,16 @@ html > body {
 
 /* 에스코어드림Lt 적용하기 */
 html > body {
-    font-family: "S-CoreDream-3Light";
+	font-family: "S-CoreDream-3Light";
+}
+
+/* 라이브러리 */
+.table-box-type-1 > table {
+	width: 100%;
+}
+
+.table-box-type-1 > table th,
+.table-box-type-1 > table td {
+	border: 1px solid black;
+	padding: 10px;
 }
