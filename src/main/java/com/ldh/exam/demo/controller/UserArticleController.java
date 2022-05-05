@@ -22,17 +22,14 @@ public class UserArticleController {
 	private ArticleService articleService;
 
 	// 액션 메서드 시작
-	@RequestMapping("/user/article/getArticle")
-	@ResponseBody
-	public ResultData<Article> getArticle(int id) {
+	@RequestMapping("/user/article/detail")
+	public String showDetail(Model model, int id) {
 
 		Article article = articleService.getArticle(id);
 
-		if (article == null) {
-			return ResultData.from("F-1", Ut.format("%d번 게시물을 찾을 수 없습니다.", id));
-		}
+		model.addAttribute("article", article);
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물입니다.", id), "article", article);
+		return "user/article/detail";
 	}
 
 	@RequestMapping("/user/article/list")
