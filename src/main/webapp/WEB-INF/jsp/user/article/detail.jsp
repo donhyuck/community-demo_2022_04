@@ -44,7 +44,9 @@
     <div class="btns">
       <button type="button" onclick="history.back();" class="btn-text-link">뒤로가기</button>
       <a href="../article/modify?id=${ article.id }" class="btn-text-link">게시물 수정</a>
-      <a href="../article/doDelete?id=${ article.id }" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;" class="btn-text-link">게시물 삭제</a>
+      <c:if test="${ article.extra__actorCanDelete }">
+        <a href="../article/doDelete?id=${ article.id }" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;" class="btn-text-link">게시물 삭제</a>
+      </c:if>
     </div>
   </div>
 </section>

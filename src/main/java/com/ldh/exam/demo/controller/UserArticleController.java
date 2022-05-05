@@ -23,9 +23,18 @@ public class UserArticleController {
 
 	// 액션 메서드 시작
 	@RequestMapping("/user/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(HttpSession httpSession, Model model, int id) {
 
-		Article article = articleService.getForPrintArticle(id);
+		// 로그인 확인
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		model.addAttribute("article", article);
 
@@ -33,9 +42,18 @@ public class UserArticleController {
 	}
 
 	@RequestMapping("/user/article/list")
-	public String showArticleList(Model model) {
+	public String showArticleList(HttpSession httpSession, Model model) {
 
-		List<Article> articles = articleService.getForPrintArticles();
+		// 로그인 확인
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+
+		List<Article> articles = articleService.getForPrintArticles(loginedMemberId);
 
 		model.addAttribute("articles", articles);
 
@@ -70,7 +88,7 @@ public class UserArticleController {
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);
 		int id = writeArticleRd.getData1();
 
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
@@ -92,7 +110,7 @@ public class UserArticleController {
 			return ResultData.from("F-A", "로그인 후 이용해주세요.");
 		}
 
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		// 게시글 존재여부 및 권한 체크
 		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
@@ -121,7 +139,7 @@ public class UserArticleController {
 			return ResultData.from("F-A", "로그인 후 이용해주세요.");
 		}
 
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		// 게시글 존재여부 및 권한 체크
 		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
