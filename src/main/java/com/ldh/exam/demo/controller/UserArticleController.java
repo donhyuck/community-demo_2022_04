@@ -124,7 +124,7 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doDelete")
 	@ResponseBody
-	public ResultData<Integer> doDelete(HttpSession httpSession, int id) {
+	public String doDelete(HttpSession httpSession, int id) {
 
 		// 로그인 확인
 		boolean isLogined = false;
@@ -136,21 +136,23 @@ public class UserArticleController {
 		}
 
 		if (isLogined == false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
+			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		// 게시글 존재여부 및 권한 체크
-		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
+		if (article == null) {
+			return Ut.jsHistoryBack("해당 게시물을 찾을 수 없습니다.");
+		}
 
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+		if (article.getMemberId() != loginedMemberId) {
+			return Ut.jsHistoryBack("해당 게시물에 대한 권한이 없습니다.");
 		}
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.format("%d번 게시물을 삭제했습니다.", id), "id", id);
+		return Ut.jsReplace(Ut.format("%d번 게시물을 삭제했습니다.", id), "../article/list");
 	}
 	// 액션 메서드 끝
 
