@@ -100,3 +100,10 @@ SET memberId = 2
 WHERE memberId = 0;
 
 SELECT * FROM article;
+
+# 게시글 작성자 표시
+SELECT a.*, m.nickname AS extra_writerName
+FROM article AS a
+LEFT JOIN `member` AS m
+ON a.memberId = m.id
+ORDER BY a.id DESC;

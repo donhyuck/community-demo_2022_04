@@ -11,13 +11,6 @@
 		= #{id}
 	</select>
 
-	<select id="getArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY
-		id DESC
-	</select>
-
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),

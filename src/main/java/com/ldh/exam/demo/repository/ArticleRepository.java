@@ -16,6 +16,13 @@ public interface ArticleRepository {
 
 	public Article getArticle(@Param("id") int id);
 
+	@Select("""
+			SELECT a.*, m.nickname AS extra__writerName
+			FROM article AS a
+			LEFT JOIN `member` AS m
+			ON a.memberId = m.id
+			ORDER BY a.id DESC
+			""")
 	public List<Article> getArticles();
 
 	public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
