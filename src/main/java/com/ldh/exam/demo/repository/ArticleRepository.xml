@@ -4,13 +4,6 @@
 <mapper
 	namespace="com.ldh.exam.demo.repository.ArticleRepository">
 
-	<select id="getArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE id
-		= #{id}
-	</select>
-
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),

@@ -14,7 +14,14 @@ import com.ldh.exam.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	public Article getArticle(@Param("id") int id);
+	@Select("""
+			SELECT a.*, m.nickname AS extra__writerName
+			FROM article AS a
+			LEFT JOIN `member` AS m
+			ON a.memberId = m.id
+			WHERE a.id = #{id}
+			""")
+	public Article getForPrintArticle(@Param("id") int id);
 
 	@Select("""
 			SELECT a.*, m.nickname AS extra__writerName
