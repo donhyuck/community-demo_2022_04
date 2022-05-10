@@ -41,18 +41,27 @@
             <span>목록보기</span>
           </a>
         </li>
-        <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/user/member/login">
-            <span>로그인</span>
-          </a>
-        </li>
+        <c:if test="${ !rq.isLogined() }">
+          <li>
+            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/login">
+              <span>로그인</span>
+            </a>
+          </li>
+        </c:if>
+        <c:if test="${ rq.isLogined() }">
+          <li>
+            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/doLogout">
+              <span>로그아웃</span>
+            </a>
+          </li>
+        </c:if>
       </ul>
     </div>
   </header>
 
   <section>
     <div class="container mx-auto px-3 mb-5">
-      <h1>${ pageTitle } 페이지</h1>
+      <h1>${ pageTitle }페이지</h1>
     </div>
   </section>
 
