@@ -47,9 +47,9 @@ public class UserArticleController {
 		return "user/article/list";
 	}
 
-	@RequestMapping("/user/article/doAdd")
+	@RequestMapping("/user/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
+	public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
