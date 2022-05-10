@@ -1,6 +1,7 @@
 package com.ldh.exam.demo.vo;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ResultData<DT> {
 
@@ -12,10 +13,6 @@ public class ResultData<DT> {
 	private String data1Name;
 	@Getter
 	private DT data1;
-
-	private ResultData() {
-
-	}
 
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");

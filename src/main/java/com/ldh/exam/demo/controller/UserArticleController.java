@@ -53,10 +53,6 @@ public class UserArticleController {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (rq.isLogined() == false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
-		}
-
 		// 게시글정보 입력 확인
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", "제목을 입력해주세요.");
@@ -79,10 +75,6 @@ public class UserArticleController {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (rq.isLogined() == false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
-		}
-
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		// 게시글 존재여부 및 권한 체크
@@ -100,10 +92,6 @@ public class UserArticleController {
 	public String doDelete(HttpServletRequest req, int id) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
-
-		if (rq.isLogined() == false) {
-			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
-		}
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
