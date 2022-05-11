@@ -1,5 +1,6 @@
 package com.ldh.exam.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.ldh.exam.demo.service.MemberService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.ResultData;
+import com.ldh.exam.demo.vo.Rq;
 
 @Controller
 public class UserMemberController {
@@ -61,15 +63,11 @@ public class UserMemberController {
 
 	@RequestMapping("/user/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpSession httpSession, String loginId, String loginPw) {
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
 
-		boolean isLogined = false;
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined) {
+		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("이미 로그인되었습니다.");
 		}
 
@@ -90,7 +88,7 @@ public class UserMemberController {
 			return Ut.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 
-		httpSession.setAttribute("loginedMemberId", member.getId());
+		rq.login(member);
 
 		return Ut.jsReplace(Ut.format("%s님 환영합니다.", member.getNickname()), "/");
 	}
