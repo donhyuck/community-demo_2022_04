@@ -55,24 +55,26 @@ public class UserArticleController {
 
 	@RequestMapping("/user/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, String title, String body, String replaceUri) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		// 게시글정보 입력 확인
 		if (Ut.empty(title)) {
-			return ResultData.from("F-1", "제목을 입력해주세요.");
+			return rq.jsHistoryBack("제목을 입력해주세요.");
 		}
 		if (Ut.empty(body)) {
-			return ResultData.from("F-2", "내용을 입력해주세요.");
+			return rq.jsHistoryBack("내용을 입력해주세요.");
 		}
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
 		int id = writeArticleRd.getData1();
 
-		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.format("../article/detail?id=%d", id);
+		}
 
-		return ResultData.newData(writeArticleRd, "article", article);
+		return rq.jsReplace(Ut.format("%d번 게시글이 등록되었습니다.", id), replaceUri);
 	}
 
 	@RequestMapping("/user/article/modify")
@@ -107,17 +109,17 @@ public class UserArticleController {
 
 		// 게시글 존재여부 및 권한 체크
 		if (article == null) {
-			return Ut.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+			return rq.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
 		if (actorCanModifyRd.isFail()) {
-			return Ut.jsHistoryBack(actorCanModifyRd.getMsg());
+			return rq.jsHistoryBack(actorCanModifyRd.getMsg());
 		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return Ut.jsReplace(Ut.format("%d번 게시글을 수정했습니다.", id), Ut.format("../article/detail?id=%d", id));
+		return rq.jsReplace(Ut.format("%d번 게시글을 수정했습니다.", id), Ut.format("../article/detail?id=%d", id));
 	}
 
 	@RequestMapping("/user/article/doDelete")
@@ -130,16 +132,16 @@ public class UserArticleController {
 
 		// 게시글 존재여부 및 권한 체크
 		if (article == null) {
-			return Ut.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+			return rq.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return Ut.jsHistoryBack("해당 게시물에 대한 권한이 없습니다.");
+			return rq.jsHistoryBack("해당 게시물에 대한 권한이 없습니다.");
 		}
 
 		articleService.deleteArticle(id);
 
-		return Ut.jsReplace(Ut.format("%d번 게시물을 삭제했습니다.", id), "../article/list");
+		return rq.jsReplace(Ut.format("%d번 게시물을 삭제했습니다.", id), "../article/list");
 	}
 	// 액션 메서드 끝
 
