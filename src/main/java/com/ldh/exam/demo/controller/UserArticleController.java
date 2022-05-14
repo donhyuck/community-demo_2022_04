@@ -70,7 +70,7 @@ public class UserArticleController {
 	}
 
 	@RequestMapping("/user/article/modify")
-	public String modify(HttpServletRequest req, int id) {
+	public String showModify(HttpServletRequest req, int id, Model model) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
@@ -86,25 +86,32 @@ public class UserArticleController {
 			return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
 		}
 
+		model.addAttribute("article", article);
+
 		return "user/article/modify";
 	}
 
 	@RequestMapping("/user/article/doModify")
 	@ResponseBody
-	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		// 게시글 존재여부 및 권한 체크
-		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
-
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+		if (article == null) {
+			return Ut.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
-		return articleService.modifyArticle(id, title, body);
+		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
+		if (actorCanModifyRd.isFail()) {
+			return Ut.jsHistoryBack(actorCanModifyRd.getMsg());
+		}
+
+		articleService.modifyArticle(id, title, body);
+
+		return Ut.jsReplace(Ut.format("%d번 게시글을 수정했습니다.", id), Ut.format("../article/detail?id=%d", id));
 	}
 
 	@RequestMapping("/user/article/doDelete")
@@ -117,7 +124,7 @@ public class UserArticleController {
 
 		// 게시글 존재여부 및 권한 체크
 		if (article == null) {
-			return Ut.jsHistoryBack("해당 게시물을 찾을 수 없습니다.");
+			return Ut.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
 		if (article.getMemberId() != rq.getLoginedMemberId()) {

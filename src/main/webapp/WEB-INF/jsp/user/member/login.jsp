@@ -32,8 +32,8 @@
       </table>
 
       <div class="btns mt-3">
-        <button class="btn-text-link" type="submit">로그인</button>
         <button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
+        <button class="btn-text-link" type="submit">로그인</button>
       </div>
 
     </form>

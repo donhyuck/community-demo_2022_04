@@ -42,7 +42,7 @@
       </table>
     </div>
 
-    <div class="btns">
+    <div class="btns mt-5">
       <button type="button" onclick="history.back();" class="btn-text-link">뒤로가기</button>
       <a href="../article/modify?id=${ article.id }" class="btn-text-link">게시물 수정</a>
       <c:if test="${ article.extra__actorCanDelete }">
