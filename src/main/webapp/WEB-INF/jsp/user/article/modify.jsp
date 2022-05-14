@@ -42,7 +42,7 @@
           <tr>
             <th>내용</th>
             <td>
-              <textarea class="w-full textarea textarea-bordered" name="body" rows="10">${ article.body }</textarea>
+              <textarea class="w-full textarea textarea-bordered" name="body" rows="10" placeholder="제목을 입력해주세요.">${ article.body }</textarea>
             </td>
           </tr>
         </tbody>

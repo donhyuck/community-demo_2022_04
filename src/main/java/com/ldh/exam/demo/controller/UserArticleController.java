@@ -47,6 +47,12 @@ public class UserArticleController {
 		return "user/article/list";
 	}
 
+	@RequestMapping("/user/article/write")
+	public String showWrite(HttpServletRequest req, Model model) {
+
+		return "user/article/write";
+	}
+
 	@RequestMapping("/user/article/doWrite")
 	@ResponseBody
 	public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
