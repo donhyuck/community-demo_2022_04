@@ -69,6 +69,26 @@ public class UserArticleController {
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
+	@RequestMapping("/user/article/modify")
+	public String modify(HttpServletRequest req, int id) {
+
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+		if (article == null) {
+			return rq.historyBackJsOnView(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+		}
+
+		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
+
+		if (actorCanModifyRd.isFail()) {
+			return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
+		}
+
+		return "user/article/modify";
+	}
+
 	@RequestMapping("/user/article/doModify")
 	@ResponseBody
 	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
