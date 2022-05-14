@@ -23,6 +23,7 @@ public class UserArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
 	private BoardService boardService;
 
 	// 액션 메서드 시작
@@ -48,6 +49,7 @@ public class UserArticleController {
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("board", board);
 
 		return "user/article/list";
 	}
