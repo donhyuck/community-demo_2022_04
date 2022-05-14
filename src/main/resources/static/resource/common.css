@@ -40,6 +40,11 @@ html > body {
 	padding: 10px;
 }
 
+/* 커스텀 */
+body {
+  min-width:500px;
+}
+
 .btn-text-link {
 		color: skyblue;
 		font-weight: bold;
