@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ldh.exam.demo.service.ArticleService;
+import com.ldh.exam.demo.service.BoardService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
+import com.ldh.exam.demo.vo.Board;
 import com.ldh.exam.demo.vo.ResultData;
 import com.ldh.exam.demo.vo.Rq;
 
@@ -21,6 +23,7 @@ public class UserArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	private BoardService boardService;
 
 	// 액션 메서드 시작
 	@RequestMapping("/user/article/detail")
@@ -36,7 +39,9 @@ public class UserArticleController {
 	}
 
 	@RequestMapping("/user/article/list")
-	public String showArticleList(HttpServletRequest req, Model model) {
+	public String showArticleList(HttpServletRequest req, Model model, int boardId) {
+
+		Board board = boardService.getBoardById(boardId);
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
