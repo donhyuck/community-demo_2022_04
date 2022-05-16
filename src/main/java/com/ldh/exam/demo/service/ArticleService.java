@@ -47,8 +47,8 @@ public class ArticleService {
 		article.setExtra__actorCanModify(actorCanModifyRd.isSuccess());
 	}
 
-	public ResultData<Integer> writeArticle(int memberId, String title, String body) {
-		articleRepository.writeArticle(memberId, title, body);
+	public ResultData<Integer> writeArticle(int memberId, int boardId, String title, String body) {
+		articleRepository.writeArticle(memberId, boardId, title, body);
 		int id = articleRepository.getLastInsertId();
 
 		return ResultData.from("S-1", Ut.format("%d번 게시글이 생성되었습니다.", id), "id", id);

@@ -2,12 +2,9 @@ package com.ldh.exam.demo.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import com.ldh.exam.demo.vo.Article;
 
@@ -38,7 +35,8 @@ public interface ArticleRepository {
 			""")
 	public List<Article> getArticles(@Param("boardId") int boardId);
 
-	public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
+	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId,
+			@Param("title") String title, @Param("body") String body);
 
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
