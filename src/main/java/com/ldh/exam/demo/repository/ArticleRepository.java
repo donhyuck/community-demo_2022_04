@@ -24,13 +24,19 @@ public interface ArticleRepository {
 	public Article getForPrintArticle(@Param("id") int id);
 
 	@Select("""
+			<script>
 			SELECT a.*, m.nickname AS extra__writerName
 			FROM article AS a
 			LEFT JOIN `member` AS m
 			ON a.memberId = m.id
+			WHERE 1
+			<if test="boardId != 0">
+				AND a.boardId = #{boardId}
+			</if>
 			ORDER BY a.id DESC
+			</script>
 			""")
-	public List<Article> getArticles();
+	public List<Article> getArticles(@Param("boardId") int boardId);
 
 	public void writeArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
 

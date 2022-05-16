@@ -25,8 +25,8 @@ public class ArticleService {
 		return article;
 	}
 
-	public List<Article> getForPrintArticles(int actorId) {
-		List<Article> articles = articleRepository.getArticles();
+	public List<Article> getForPrintArticles(int actorId, int boardId) {
+		List<Article> articles = articleRepository.getArticles(boardId);
 
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);

@@ -46,7 +46,11 @@ public class UserArticleController {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
+		if (board == null) {
+			return rq.historyBackJsOnView(Ut.format("%d번 게시판을 찾을 수 없습니다.", boardId));
+		}
+
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
