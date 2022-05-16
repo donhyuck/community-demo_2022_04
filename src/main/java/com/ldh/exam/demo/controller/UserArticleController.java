@@ -50,9 +50,11 @@ public class UserArticleController {
 			return rq.historyBackJsOnView(Ut.format("%d번 게시판을 찾을 수 없습니다.", boardId));
 		}
 
+		int articlesCount = articleService.getArticlesCount(boardId);
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId);
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("board", board);
 
 		return "user/article/list";

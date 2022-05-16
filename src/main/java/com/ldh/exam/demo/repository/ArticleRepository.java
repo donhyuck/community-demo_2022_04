@@ -46,4 +46,16 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
+	@Select("""
+			<script>
+			SELECT COUNT(*) AS cnt
+			FROM article AS a
+			WHERE 1
+			<if test="boardId != 0">
+				AND a.boardId = #{boardId}
+			</if>
+			</script>
+			""")
+	public int getArticlesCount(@Param("boardId") int boardId);
+
 }

@@ -6,6 +6,9 @@
 
 <section>
   <div class="container mx-auto px-3">
+    <div>
+      등록된 게시물 : ${ articlesCount } 개
+    </div>
     <div class="table-box-type-1">
       <table>
         <colgroup>
