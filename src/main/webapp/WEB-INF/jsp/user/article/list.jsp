@@ -9,6 +9,8 @@
     <div>
       등록된 게시물 : ${ articlesCount } 개
     </div>
+    
+    <!-- 게시글 목록 영역 시작 -->
     <div class="table-box-type-1">
       <table>
         <colgroup>
@@ -43,6 +45,17 @@
         </tbody>
       </table>
     </div>
+    <!-- 게시글 목록 영역 끝 -->
+    
+    <!-- 페이지 영역 시작 -->
+    <div class="page-menu mt-3">
+      <div class="btn-group justify-center">
+        <c:forEach begin="1" end="20" var="i">
+          <a href="?page=${i}" class="btn btn-sm ${ param.page == i ? 'btn-active' : ''}">${ i }</a>
+        </c:forEach>
+      </div>
+    </div>
+    <!-- 페이지 영역 끝 -->
   </div>
 </section>
 
