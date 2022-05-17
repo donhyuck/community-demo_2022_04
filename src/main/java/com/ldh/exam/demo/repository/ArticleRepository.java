@@ -31,9 +31,12 @@ public interface ArticleRepository {
 				AND a.boardId = #{boardId}
 			</if>
 			ORDER BY a.id DESC
+			<if test="limitTake != -1">
+				LIMIT #{limitStart}, #{limitTake}
+			</if>
 			</script>
 			""")
-	public List<Article> getArticles(@Param("boardId") int boardId);
+	public List<Article> getArticles(@Param("boardId") int boardId, int limitStart, int limitTake);
 
 	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId,
 			@Param("title") String title, @Param("body") String body);
