@@ -7,11 +7,34 @@
 <section>
   <div class="container mx-auto px-3">
 
-    <div>등록된 게시물 : ${ articlesCount } 개</div>
+    <!-- 검색 박스 영역 시작 -->
+    <div class="flex">
+      <div>
+        등록된 게시물 :
+        <span class="badge badge-primary">${ articlesCount }</span>
+        개
+      </div>
+      <div class="flex-grow"></div>
+      <form class="flex">
+        <input type="hidden" name="boardId" value="${param.boardId}" />
+        
+        <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
+          <option disabled="disabled">검색타입</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="title,body">제목과 내용</option>
+        </select>
+        <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
+          class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
+
+        <button type="submit" class="ml-2 btn btn-primary">검색</button>
+      </form>
+    </div>
+    <!-- 검색 박스 영역 끝 -->
 
     <!-- 게시글 목록 영역 시작 -->
-    <div class="table-box-type-1">
-      <table>
+    <div class="mt-3">
+      <table class="table table-fixed w-full">
         <colgroup>
           <col width="60" />
           <col width="150" />
@@ -36,7 +59,7 @@
               <td>${ article.regDate.substring(2,16) }</td>
               <td>${ article.updateDate.substring(2,16) }</td>
               <td>
-                <a class="btn-text-link" href="../article/detail?id=${ article.id }">${ article.title }</a>
+                <a class="btn-text-link block w-full truncate" href="../article/detail?id=${ article.id }">${ article.title }</a>
               </td>
               <td>${ article.extra__writerName }</td>
             </tr>
