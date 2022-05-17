@@ -55,8 +55,27 @@ public interface ArticleRepository {
 			<if test="boardId != 0">
 				AND a.boardId = #{boardId}
 			</if>
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordTypeCode == 'title'">
+						AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					</when>
+					<when test="searchKeywordTypeCode == 'body'">
+						AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+					</when>
+					<otherwise>
+						AND (
+							a.title LIKE CONCAT('%',#{searchKeyword},'%')
+							OR
+							a.body LIKE CONCAT('%',#{searchKeyword},'%')
+						)
+
+
+					</otherwise>
+				</choose>
+			</if>
 			</script>
 			""")
-	public int getArticlesCount(@Param("boardId") int boardId);
+	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
 
 }
