@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ldh.exam.demo.service.ArticleService;
 import com.ldh.exam.demo.service.BoardService;
+import com.ldh.exam.demo.service.ReactionPointService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Board;
@@ -23,6 +24,8 @@ public class UserArticleController {
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
+	private ReactionPointService reactionPointService;
+	@Autowired
 	private BoardService boardService;
 	@Autowired
 	private Rq rq;
@@ -34,7 +37,8 @@ public class UserArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
 
-		boolean actorCanMakeReactionPoint = articleService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), id);
+		boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
+				"article", id);
 		model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
 
 		return "user/article/detail";

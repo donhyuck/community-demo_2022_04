@@ -119,16 +119,4 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticleHitCount(int id);
-
-	@Select("""
-			<script>
-			SELECT IFNULL(SUM(rp.point), 0) AS sum
-			FROM reactionPoint AS rp
-			WHERE rp.relTypeCode = 'article'
-			AND rp.relId = #{id}
-			AND rp.memberId = #{memberId}
-			</script>
-			""")
-	public int getSumReactionPointByMemberId(int memberId, int id);
-
 }
