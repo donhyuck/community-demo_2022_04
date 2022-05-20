@@ -32,8 +32,10 @@ public class UserArticleController {
 	public String showDetail(Model model, int id) {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-
 		model.addAttribute("article", article);
+
+		boolean actorCanMakeReactionPoint = articleService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), id);
+		model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
 
 		return "user/article/detail";
 	}
@@ -52,7 +54,7 @@ public class UserArticleController {
 				articleService.getArticleHitCount(id));
 
 		rd.setData2("id", id);
-		
+
 		return rd;
 	}
 
