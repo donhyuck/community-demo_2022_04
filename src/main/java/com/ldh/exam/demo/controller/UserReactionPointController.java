@@ -34,6 +34,7 @@ public class UserReactionPointController {
 	}
 
 	@RequestMapping("/user/reactionPoint/doBadReaction")
+	@ResponseBody
 	public String doBadReaction(String relTypeCode, int relId) {
 
 		boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),

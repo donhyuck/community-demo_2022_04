@@ -36,7 +36,7 @@ public class ReactionPointService {
 	}
 
 	public ResultData addBadReactionPoint(int memberId, String relTypeCode, int relId) {
-		reactionPointRepository.addGoodReactionPoint(memberId, relTypeCode, relId);
+		reactionPointRepository.addBadReactionPoint(memberId, relTypeCode, relId);
 
 		switch (relTypeCode) {
 		case "article":
