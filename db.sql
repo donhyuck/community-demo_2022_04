@@ -215,3 +215,19 @@ relId = 1,
 `point` = 1;
 
 SELECT * FROM reactionPoint;
+
+# 게시글 정보 가져오기
+SELECT a.*,
+IFNULL(SUM(rp.point), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+FROM (
+    SELECT a.*, m.nickname AS extra__writerName
+    FROM article AS a
+    LEFT JOIN `member` AS m
+    ON a.memberId = m.id
+) AS a
+LEFT JOIN `reactionPoint` AS rp
+ON rp.relTypeCode = 'article'
+AND a.id = rp.relId
+GROUP BY a.id;

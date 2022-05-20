@@ -37,10 +37,12 @@
       <table class="table table-fixed w-full">
         <colgroup>
           <col width="60" />
-          <col width="150" />
-          <col width="150" />
+          <col width="100" />
+          <col width="100" />
           <col />
-          <col width="150" />
+          <col width="90" />
+          <col width="80" />
+          <col width="80" />
         </colgroup>
         <thead>
           <tr>
@@ -49,6 +51,8 @@
             <th>수정날짜</th>
             <th>제목</th>
             <th>작성자</th>
+            <th>추천</th>
+            <th>조회</th>
           </tr>
         </thead>
 
@@ -62,6 +66,8 @@
                 <a class="btn-text-link block w-full truncate" href="../article/detail?id=${ article.id }">${ article.title }</a>
               </td>
               <td>${ article.extra__writerName }</td>
+              <td>${ article.extra_goodReactionPoint }</td>
+              <td>${ article.hitCount }</td>
             </tr>
           </c:forEach>
         </tbody>
