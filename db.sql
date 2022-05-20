@@ -218,7 +218,7 @@ SELECT * FROM reactionPoint;
 
 # 게시글 정보 가져오기
 SELECT a.*,
-IFNULL(SUM(rp.point), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(rp.point), 0) AS extra_sumReactionPoint,
 IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
 IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
 FROM (
@@ -231,3 +231,28 @@ LEFT JOIN `reactionPoint` AS rp
 ON rp.relTypeCode = 'article'
 AND a.id = rp.relId
 GROUP BY a.id;
+
+# 게시글 테이블에 ReactionPoint 칼럼 추가
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# 각 게시물 별, 좋아요, 싫어요 총합
+SELECT rp.relTypeCode, relId, SUM(IF(rp.point > 0, rp.point, 0)) AS goodReactionPoint,
+SUM(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
+FROM reactionPoint AS rp
+GROUP BY rp.relTypeCode, rp.relId;
+
+# 기존 게시물의 좋아요, 싫어요 필드의 값 채우기
+UPDATE article AS a
+INNER JOIN (
+    SELECT rp.relId, SUM(IF(rp.point > 0, rp.point, 0)) AS goodReactionPoint,
+    SUM(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
+    FROM reactionPoint AS rp
+    WHERE rp.relTypeCode = 'article'
+    GROUP BY rp.relTypeCode, rp.relId
+) AS rp_sum
+ON a.id = rp_sum.relId
+SET a.goodReactionPoint = rp_sum.goodReactionPoint,
+a.badReactionPoint = rp_sum.badReactionPoint;
+
+SELECT * FROM article;
