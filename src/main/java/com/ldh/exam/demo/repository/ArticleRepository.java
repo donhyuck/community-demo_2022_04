@@ -119,4 +119,7 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticleHitCount(int id);
+
+	// 구현 예정
+	public int increaseGoodReactionPoint(int relId);
 }
