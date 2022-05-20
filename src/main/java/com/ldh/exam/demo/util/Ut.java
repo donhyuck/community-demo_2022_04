@@ -1,6 +1,6 @@
 package com.ldh.exam.demo.util;
 
-import com.ldh.exam.demo.vo.ResultData;
+import java.net.URLEncoder;
 
 public class Ut {
 
@@ -58,6 +58,14 @@ public class Ut {
 				location.replace('%s');
 				</script>
 				""", msg, uri);
+	}
+
+	public static String getUriEncoded(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch (Exception e) {
+			return str;
+		}
 	}
 
 }

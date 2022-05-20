@@ -30,12 +30,12 @@ public class UserReactionPointController {
 
 		reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("%d번 글이 추천되었습니다.", relId), Ut.format("/user/article/detail?id=%d", relId));
+		return rq.jsReplace(Ut.format("%d번 글이 추천되었습니다.", relId), replaceUri);
 	}
 
 	@RequestMapping("/user/reactionPoint/doBadReaction")
 	@ResponseBody
-	public String doBadReaction(String relTypeCode, int relId) {
+	public String doBadReaction(String relTypeCode, int relId, String replaceUri) {
 
 		boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
 				relTypeCode, relId);
@@ -46,6 +46,6 @@ public class UserReactionPointController {
 
 		reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("%d번 글이 비추천되었습니다.", relId), Ut.format("/user/article/detail?id=%d", relId));
+		return rq.jsReplace(Ut.format("%d번 글이 비추천되었습니다.", relId), replaceUri);
 	}
 }

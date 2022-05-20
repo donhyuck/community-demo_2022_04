@@ -73,8 +73,8 @@
                 <span>&nbsp;</span>
 
                 <c:if test="${ actorCanMakeReactionPoint }">
-                  <a href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}" class="btn btn-xs btn-secondary">좋아요👍</a>
-                  <a href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}" class="btn btn-xs btn-accent">싫어요👎</a>
+                  <a href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}" class="btn btn-xs btn-secondary">좋아요👍</a>
+                  <a href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}" class="btn btn-xs btn-accent">싫어요👎</a>
                 </c:if>
               </div>
             </td>
