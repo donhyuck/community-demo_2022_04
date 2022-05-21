@@ -72,10 +72,34 @@
                 <span class="badge badge-primary">${ article.goodReactionPoint }</span>
                 <span>&nbsp;</span>
 
-                <c:if test="${ actorCanMakeReactionPoint }">
-                  <a href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}" class="btn btn-xs btn-secondary">좋아요👍</a>
-                  <a href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.currentUri}" class="btn btn-xs btn-accent">싫어요👎</a>
+                <c:if test="${ actorCanMakeReaction }">
+                  <a
+                    href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                    class="btn btn-xs btn-secondary btn-outline">좋아요 👍</a>
+                  <span>&nbsp;</span>
+                  <a
+                    href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                    class="btn btn-xs btn-accent btn-outline">싫어요 👎</a>
                 </c:if>
+
+                <c:if test="${ actorCanCancelGoodReaction }">
+                  <a
+                    href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                    class="btn btn-xs btn-secondary">좋아요 👍</a>
+                  <span>&nbsp;</span>
+                  <a href="#" title="먼저 좋아요를 취소해주세요." onclick="alert(this.title); return false;"
+                    class="btn btn-xs btn-accent btn-outline">싫어요 👎</a>
+                </c:if>
+
+                <c:if test="${ actorCanCancelBadReaction }">
+                  <a href="#" title="먼저 싫어요를 취소해주세요." onclick="alert(this.title); return false;"
+                    class="btn btn-xs btn-secondary btn-outline">좋아요 👍</a>
+                  <span>&nbsp;</span>
+                  <a
+                    href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                    class="btn btn-xs btn-accent">싫어요 👎</a>
+                </c:if>
+
               </div>
             </td>
           </tr>

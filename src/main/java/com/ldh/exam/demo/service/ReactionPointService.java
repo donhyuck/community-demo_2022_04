@@ -14,13 +14,20 @@ public class ReactionPointService {
 	@Autowired
 	private ArticleService articleService;
 
-	public boolean actorCanMakeReactionPoint(int memberId, String relTypeCode, int relId) {
+	public ResultData actorCanMakeReactionPoint(int memberId, String relTypeCode, int relId) {
 
 		if (memberId == 0) {
-			return false;
+			return ResultData.from("F-1", "로그인 후 이용해주세요.");
 		}
 
-		return reactionPointRepository.getSumReactionPointByMemberId(memberId, relTypeCode, relId) == 0;
+		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(memberId, relTypeCode,
+				relId);
+
+		if (sumReactionPointByMemberId != 0) {
+			return ResultData.from("F-2", "리액션을 할 수 없습니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
+		}
+
+		return ResultData.from("S-1", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
 	public ResultData addGoodReactionPoint(int memberId, String relTypeCode, int relId) {
