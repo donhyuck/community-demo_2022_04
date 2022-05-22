@@ -43,12 +43,13 @@ public class UserArticleController {
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionPointRd.isSuccess());
 
 		if (actorCanMakeReactionPointRd.getResultCode().equals("F-2")) {
-
 			int sumReactionPointByMemberId = (int) actorCanMakeReactionPointRd.getData1();
 
 			if (sumReactionPointByMemberId > 0) {
 				model.addAttribute("actorCanCancelGoodReaction", true);
+
 			} else {
+
 				model.addAttribute("actorCanCancelBadReaction", true);
 			}
 		}

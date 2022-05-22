@@ -63,6 +63,13 @@
         </c:if>
         <c:if test="${ rq.isLogined() }">
           <li>
+            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/modify">
+              <span>${rq.loginedMember.nickname}님의 프로필</span>
+            </a>
+          </li>
+        </c:if>
+        <c:if test="${ rq.isLogined() }">
+          <li>
             <a class="flex items-center px-3 h-full hover:underline" href="/user/member/doLogout">
               <span>로그아웃</span>
             </a>
