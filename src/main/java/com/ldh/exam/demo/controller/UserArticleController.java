@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ldh.exam.demo.service.ArticleService;
 import com.ldh.exam.demo.service.BoardService;
 import com.ldh.exam.demo.service.ReactionPointService;
+import com.ldh.exam.demo.service.ReplyService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Board;
+import com.ldh.exam.demo.vo.Reply;
 import com.ldh.exam.demo.vo.ResultData;
 import com.ldh.exam.demo.vo.Rq;
 
@@ -28,6 +30,8 @@ public class UserArticleController {
 	@Autowired
 	private BoardService boardService;
 	@Autowired
+	private ReplyService replyService;
+	@Autowired
 	private Rq rq;
 
 	// 액션 메서드 시작
@@ -36,6 +40,10 @@ public class UserArticleController {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
+
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
+		int repliesCount = replies.size();
+		model.addAttribute("repliesCount", repliesCount);
 
 		ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
 				"article", id);

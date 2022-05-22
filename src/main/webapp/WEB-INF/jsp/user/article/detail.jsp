@@ -31,34 +31,6 @@
 	})
 </script>
 
-<!-- 댓글작성 관련 -->
-<script>
-	let ReplyWrite__submitFormDone = false;
-	function ReplyWrite__submitForm(form) {
-		if (ReplyWrite__submitFormDone) {
-			return;
-		}
-
-		// 좌우공백 제거
-		form.body.value = form.body.value.trim();
-
-		if (form.body.value.length == 0) {
-			alert('댓글을 입력해주세요.');
-			form.body.focus();
-			return;
-		}
-
-		if (form.body.value.length < 2) {
-			alert('댓글내용을 2자이상 입력해주세요.');
-			form.body.focus();
-			return;
-		}
-
-		ReplyWrite__submitFormDone = true;
-		form.submit();
-	}
-</script>
-
 <section>
   <div class="container mx-auto px-3">
     <div class="table-box-type-1">
@@ -166,6 +138,34 @@
   </div>
 </section>
 
+<!-- 댓글작성 관련 -->
+<script>
+	let ReplyWrite__submitFormDone = false;
+	function ReplyWrite__submitForm(form) {
+		if (ReplyWrite__submitFormDone) {
+			return;
+		}
+
+		// 좌우공백 제거
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('댓글을 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+
+		if (form.body.value.length < 2) {
+			alert('댓글내용을 2자이상 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+
+		ReplyWrite__submitFormDone = true;
+		form.submit();
+	}
+</script>
+
 <!-- 댓글 영역 시작 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
@@ -205,6 +205,12 @@
         후 댓글을 남길 수 있습니다.
       </h1>
     </c:if>
+  </div>
+</section>
+<!-- 댓글 리스트 영역 -->
+<section class="mt-5">
+  <div class="container mx-auto px-3">
+    <h1>댓글 목록 (${ repliesCount } 건)</h1>
   </div>
 </section>
 <!-- 댓글 영역 끝 -->

@@ -39,7 +39,7 @@ public class UserReplyController {
 		if (Ut.empty(replaceUri)) {
 			switch (relTypeCode) {
 			case "article":
-				replaceUri = Ut.format("../article/detail?id=%d", id);
+				replaceUri = Ut.format("../article/detail?id=%d", relId);
 				break;
 			}
 		}
