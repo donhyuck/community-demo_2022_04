@@ -1,5 +1,6 @@
 package com.ldh.exam.demo.repository;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -30,7 +31,7 @@ public interface ReactionPointRepository {
 			</script>
 			""")
 	public void addGoodReactionPoint(int memberId, String relTypeCode, int relId);
-	
+
 	@Insert("""
 			<script>
 			INSERT INTO reactionPoint
@@ -43,5 +44,15 @@ public interface ReactionPointRepository {
 			</script>
 			""")
 	public void addBadReactionPoint(int memberId, String relTypeCode, int relId);
+
+	@Delete("""
+			<script>
+			DELETE FROM reactionPoint
+			WHERE memberId = #{memberId}
+			AND relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+			</script>
+			""")
+	public void deleteReactionPoint(int memberId, String relTypeCode, int relId);
 
 }

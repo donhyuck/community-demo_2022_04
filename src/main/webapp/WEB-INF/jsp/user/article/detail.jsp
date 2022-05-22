@@ -96,7 +96,7 @@
                     class="btn btn-xs btn-secondary btn-outline">좋아요 👍</a>
                   <span>&nbsp;</span>
                   <a
-                    href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                    href="/user/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
                     class="btn btn-xs btn-accent">싫어요 👎</a>
                 </c:if>
 
