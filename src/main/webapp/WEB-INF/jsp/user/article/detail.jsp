@@ -35,12 +35,11 @@
 <script>
 	let ReplyWrite__submitFormDone = false;
 	function ReplyWrite__submitForm(form) {
-
 		if (ReplyWrite__submitFormDone) {
 			return;
 		}
 
-		// 좌우 공백 제거
+		// 좌우공백 제거
 		form.body.value = form.body.value.trim();
 
 		if (form.body.value.length == 0) {
@@ -48,15 +47,15 @@
 			form.body.focus();
 			return;
 		}
-		
+
 		if (form.body.value.length < 2) {
-			alert('최소 두글자 이상의 댓글을 입력해주세요.');
+			alert('댓글내용을 2자이상 입력해주세요.');
 			form.body.focus();
 			return;
 		}
-		
+
 		ReplyWrite__submitFormDone = true;
-		form.submit;
+		form.submit();
 	}
 </script>
 
@@ -172,7 +171,7 @@
   <div class="container mx-auto px-3">
     <c:if test="${ rq.logined }">
       <h1>댓글 작성</h1>
-      <form class="table-box-type-1" method="post" action="../reply/doWrite"
+      <form class="table-box-type-1 mt-3" method="post" action="../reply/doWrite"
         onsubmit="ReplyWrite__submitForm(this); return false;">
         <input type="hidden" name="relTypeCode" value="article" />
         <input type="hidden" name="relId" value="${ article.id }" />
