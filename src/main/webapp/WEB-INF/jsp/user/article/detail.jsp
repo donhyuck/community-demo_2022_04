@@ -65,6 +65,7 @@
               <span class="badge badge-primary article-detail__hit-count">${ article.hitCount }</span>
             </td>
           </tr>
+          <!-- 추천수 영역 시작 -->
           <tr>
             <th>추천수</th>
             <td>
@@ -103,6 +104,7 @@
               </div>
             </td>
           </tr>
+          <!-- 추천수 영역 끝 -->
           <tr>
             <th>제목</th>
             <td>${ article.title }</td>
@@ -115,6 +117,7 @@
       </table>
     </div>
 
+    <!-- 게시글 조작 영역 시작 -->
     <div class="btns mt-5">
       <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
 
@@ -131,7 +134,50 @@
         </button>
       </c:if>
     </div>
+    <!-- 게시글 조작 영역 끝 -->
   </div>
 </section>
 
+<!-- 댓글 영역 시작 -->
+<section class="mt-5">
+  <div class="container mx-auto px-3">
+    <c:if test="${ rq.logined }">
+      <h1>댓글 작성</h1>
+      <form class="table-box-type-1" method="post" action="../reply/doWrite">
+        <input type="hidden" name="relTypeCode" value="article" />
+        <input type="hidden" name="relId" value="${ article.id }" />
+        <table>
+          <colgroup>
+            <col width="200" />
+          </colgroup>
+
+          <tbody>
+            <tr>
+              <th>작성자</th>
+              <td>${ rq.loginedMember.nickname }</td>
+            </tr>
+            <tr>
+              <th>내용</th>
+              <td>
+                <textarea class="w-full textarea textarea-bordered" required="required" name="body" rows="5"
+                  placeholder="내용을 입력해주세요."></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="btns mt-5">
+          <button class="btn btn-primary mr-3" type="submit">댓글 남기기</button>
+        </div>
+      </form>
+    </c:if>
+    <c:if test="${ rq.notLogined }">
+      <h1>
+        <a class="link link-primary" href="/user/member/login">로그인</a>
+        후 댓글을 남길 수 있습니다.
+      </h1>
+    </c:if>
+  </div>
+</section>
+<!-- 댓글 영역 끝 -->
 <%@ include file="../common/foot.jspf"%>
