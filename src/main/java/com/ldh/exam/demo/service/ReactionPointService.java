@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ldh.exam.demo.repository.ReactionPointRepository;
+import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.ResultData;
 
 @Service
@@ -40,7 +41,7 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "좋아요 처리되었습니다.");
+		return ResultData.from("S-1", Ut.format("[%d번 글] 좋아요", relId));
 	}
 
 	public ResultData addBadReactionPoint(int memberId, String relTypeCode, int relId) {
@@ -53,7 +54,7 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "싫어요 처리되었습니다.");
+		return ResultData.from("S-1", Ut.format("[%d번 글] 싫어요", relId));
 	}
 
 	public ResultData deleteGoodReactionPoint(int memberId, String relTypeCode, int relId) {
@@ -66,7 +67,7 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "좋아요 취소가 처리되었습니다.");
+		return ResultData.from("S-1", Ut.format("[%d번 글] 좋아요 취소", relId));
 	}
 
 	public ResultData deleteBadReactionPoint(int memberId, String relTypeCode, int relId) {
@@ -79,6 +80,6 @@ public class ReactionPointService {
 			break;
 		}
 
-		return ResultData.from("S-1", "싫어요 취소가 처리되었습니다.");
+		return ResultData.from("S-1", Ut.format("[%d번 글] 싫어요 취소", relId));
 	}
 }

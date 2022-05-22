@@ -29,9 +29,10 @@ public class UserReactionPointController {
 			return rq.jsHistoryBack(actorCanMakeReactionPointRd.getMsg());
 		}
 
-		reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData addGoodReactionPointRd = reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId(),
+				relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("[%d번 글] 좋아요 를 하셨습니다.", relId), replaceUri);
+		return rq.jsReplace(addGoodReactionPointRd.getMsg(), replaceUri);
 	}
 
 	@RequestMapping("/user/reactionPoint/doBadReaction")
@@ -45,9 +46,10 @@ public class UserReactionPointController {
 			return rq.jsHistoryBack(actorCanMakeReactionPointRd.getMsg());
 		}
 
-		reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData addBadReactionPointRd = reactionPointService.addBadReactionPoint(rq.getLoginedMemberId(),
+				relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("[%d번 글] 싫어요 를 하셨습니다.", relId), replaceUri);
+		return rq.jsReplace(addBadReactionPointRd.getMsg(), replaceUri);
 	}
 
 	@RequestMapping("/user/reactionPoint/doCancelGoodReaction")
@@ -64,7 +66,7 @@ public class UserReactionPointController {
 		ResultData deleteGoodReactionPointRd = reactionPointService.deleteGoodReactionPoint(rq.getLoginedMemberId(),
 				relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("[%d번 글] 좋아요 취소", relId), replaceUri);
+		return rq.jsReplace(deleteGoodReactionPointRd.getMsg(), replaceUri);
 	}
 
 	@RequestMapping("/user/reactionPoint/doCancelBadReaction")
@@ -81,6 +83,6 @@ public class UserReactionPointController {
 		ResultData deleteBadReactionPointRd = reactionPointService.deleteBadReactionPoint(rq.getLoginedMemberId(),
 				relTypeCode, relId);
 
-		return rq.jsReplace(Ut.format("[%d번 글] 싫어요 취소", relId), replaceUri);
+		return rq.jsReplace(deleteBadReactionPointRd.getMsg(), replaceUri);
 	}
 }
