@@ -210,7 +210,40 @@
 <!-- 댓글 리스트 영역 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
-    <h1>댓글 목록 (${ repliesCount } 건)</h1>
+    <h1>댓글 목록 (${ replies.size() } 건)</h1>
+    <table class="table table-fixed w-full">
+        <colgroup>
+          <col width="60" />
+          <col width="100" />
+          <col width="100" />
+          <col />
+          <col width="90" />
+          <col width="80" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>작성날짜</th>
+            <th>수정날짜</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>추천</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <c:forEach var="reply" items="${ replies }">
+            <tr>
+              <th>${ reply.id }</th>
+              <td>${ reply.forPrintType1RegDate }</td>
+              <td>${ reply.forPrintType1UpdateDate }</td>
+              <td>${ reply.body }</td>
+              <td>${ reply.extra__writerName }</td>
+              <td>${ reply.goodReactionPoint }</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
   </div>
 </section>
 <!-- 댓글 영역 끝 -->
