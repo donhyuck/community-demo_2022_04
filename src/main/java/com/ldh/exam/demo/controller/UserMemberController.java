@@ -123,4 +123,9 @@ public class UserMemberController {
 
 		return rq.jsReplace("", replaceUri);
 	}
+
+	@RequestMapping("/user/member/modify")
+	public String showModify() {
+		return "user/member/modify";
+	}
 }
