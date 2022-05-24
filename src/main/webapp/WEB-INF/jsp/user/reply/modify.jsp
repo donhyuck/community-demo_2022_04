@@ -15,7 +15,19 @@
 
         <tbody>
           <tr>
-            <th>번호</th>
+            <th>게시물 번호</th>
+            <td>
+              <div>${ reply.relId }</div>
+            </td>
+          </tr>
+          <tr>
+            <th>게시물 제목</th>
+            <td>
+              <div>${ relDataTitle }</div>
+            </td>
+          </tr>
+          <tr>
+            <th>댓글번호</th>
             <td>
               <div class="badge badge-primary">${ reply.id }</div>
             </td>
@@ -39,9 +51,9 @@
             </td>
           </tr>
           <tr>
-            <th>내용</th>
+            <th>댓글내용</th>
             <td>
-              <textarea class="w-full textarea textarea-bordered" name="body" rows="10" placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
+              <textarea class="w-full textarea textarea-bordered" name="body" rows="5" placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
             </td>
           </tr>
         </tbody>
@@ -49,7 +61,7 @@
 
       <div class="btns mt-5">
         <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
-        <button class="btn btn-primary mr-3" type="submit">수정하기</button>
+        <button class="btn btn-primary mr-3" type="submit">댓글수정</button>
       </div>
     </form>
   </div>

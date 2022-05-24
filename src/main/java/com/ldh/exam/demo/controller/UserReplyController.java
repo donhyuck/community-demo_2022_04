@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ldh.exam.demo.service.ArticleService;
 import com.ldh.exam.demo.service.ReplyService;
 import com.ldh.exam.demo.util.Ut;
+import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Reply;
 import com.ldh.exam.demo.vo.ResultData;
 import com.ldh.exam.demo.vo.Rq;
@@ -17,6 +19,8 @@ public class UserReplyController {
 
 	@Autowired
 	private ReplyService replyService;
+	@Autowired
+	private ArticleService articleService;
 	@Autowired
 	private Rq rq;
 
@@ -67,7 +71,17 @@ public class UserReplyController {
 			return rq.historyBackJsOnView(Ut.format("%d번 댓글에 대한 수정권한이 없습니다.", id));
 		}
 
+		// 게시글 제목 가져오기
+		String relDataTitle = null;
+
+		switch (reply.getRelTypeCode()) {
+		case "article":
+			Article article = articleService.getArticle(reply.getRelId());
+			relDataTitle = article.getTitle();
+		}
+
 		model.addAttribute("reply", reply);
+		model.addAttribute("relDataTitle", relDataTitle);
 
 		return "user/reply/modify";
 	}
