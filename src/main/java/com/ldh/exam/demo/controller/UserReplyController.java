@@ -2,6 +2,7 @@ package com.ldh.exam.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,6 +47,29 @@ public class UserReplyController {
 		}
 
 		return rq.jsReplace(writeReplyRd.getMsg(), replaceUri);
+	}
+
+	@RequestMapping("/user/reply/modify")
+	public String modify(Model model, int id, String replaceUri) {
+
+		if (Ut.empty(id)) {
+			return rq.jsHistoryBack("id을 입력해주세요.");
+		}
+
+		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
+
+		// 댓글 존재여부 및 권한 체크
+		if (reply == null) {
+			return rq.historyBackJsOnView(Ut.format("%d번 댓글을 찾을 수 없습니다.", id));
+		}
+
+		if (reply.isExtra__actorCanModify() == false) {
+			return rq.historyBackJsOnView(Ut.format("%d번 댓글에 대한 수정권한이 없습니다.", id));
+		}
+
+		model.addAttribute("reply", reply);
+
+		return "user/reply/modify";
 	}
 
 	@RequestMapping("/user/reply/doDelete")

@@ -57,6 +57,10 @@ public class ReplyService {
 			return ResultData.from("F-1", "해당 댓글을 찾을 수 없습니다.");
 		}
 
+		if (member == null) {
+			return ResultData.from("F-3", "로그인 상태가 아닙니다.");
+		}
+
 		if (reply.getMemberId() != member.getId()) {
 			return ResultData.from("F-2", "해당 댓글에 대한 권한이 없습니다.");
 		}
@@ -68,6 +72,10 @@ public class ReplyService {
 
 		if (reply == null) {
 			return ResultData.from("F-1", "해당 댓글을 찾을 수 없습니다.");
+		}
+
+		if (member == null) {
+			return ResultData.from("F-3", "로그인 상태가 아닙니다.");
 		}
 
 		if (reply.getMemberId() != member.getId()) {
