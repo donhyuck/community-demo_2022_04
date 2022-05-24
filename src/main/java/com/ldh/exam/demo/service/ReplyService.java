@@ -101,4 +101,11 @@ public class ReplyService {
 		return ResultData.from("S-1", Ut.format("%d번 댓글을 삭제했습니다.", id));
 	}
 
+	public ResultData modifyReply(int id, String body) {
+
+		replyRepository.modifyReply(id, body);
+
+		return ResultData.from("S-1", Ut.format("%d번 댓글을 수정했습니다.", id));
+	}
+
 }
