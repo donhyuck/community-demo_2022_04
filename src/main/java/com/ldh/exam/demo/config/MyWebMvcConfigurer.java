@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ldh.exam.demo.interceptor.BeforeActionInterceptor;
 import com.ldh.exam.demo.interceptor.NeedLoginInterceptor;
+import com.ldh.exam.demo.interceptor.NeedLogoutInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
@@ -20,18 +21,24 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	@Autowired
 	NeedLoginInterceptor needLoginInterceptor;
 
+	// needLogoutInterceptor 인터셉터 불러오기
+	@Autowired
+	NeedLogoutInterceptor needLogoutInterceptor;
+
 	// 이 함수는 인터셉터를 적용하는 역할을 합니다.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		InterceptorRegistration ir;
 
+		// 작업 전 인터셉터
 		ir = registry.addInterceptor(beforeActionInterceptor);
 		ir.addPathPatterns("/**");
 		ir.excludePathPatterns("/favicon.ico");
 		ir.excludePathPatterns("/resource/**");
 		ir.excludePathPatterns("/error");
 
+		// 로그인 요구 인터셉터
 		ir = registry.addInterceptor(needLoginInterceptor);
 		ir.addPathPatterns("/user/article/write");
 		ir.addPathPatterns("/user/article/doWrite");
@@ -48,5 +55,16 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/user/member/doCheckPassword");
 		ir.addPathPatterns("/user/member/modify");
 		ir.addPathPatterns("/user/member/doModify");
+
+		// 로그아웃 요구 인터셉터
+		ir = registry.addInterceptor(needLogoutInterceptor);
+		ir.addPathPatterns("/user/member/join");
+		ir.addPathPatterns("/user/member/doJoin");
+		ir.addPathPatterns("/user/member/login");
+		ir.addPathPatterns("/user/member/doLogin");
+		ir.addPathPatterns("/user/member/findLoginId");
+		ir.addPathPatterns("/user/member/doFindLoginId");
+		ir.addPathPatterns("/user/member/findLoginPw");
+		ir.addPathPatterns("/user/member/doFindLoginPw");
 	}
 }

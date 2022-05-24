@@ -64,10 +64,6 @@ public class UserMemberController {
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw) {
 
-		if (rq.isLogined()) {
-			return rq.jsHistoryBack("이미 로그인되었습니다.");
-		}
-
 		if (Ut.empty(loginId)) {
 			return rq.jsHistoryBack("아이디를 입력해주세요.");
 		}
@@ -109,7 +105,22 @@ public class UserMemberController {
 	}
 
 	@RequestMapping("/user/member/checkPassword")
-	public String showcheckPassword() {
+	public String showCheckPassword() {
 		return "user/member/checkPassword";
+	}
+
+	@RequestMapping("/user/member/doCheckPassword")
+	@ResponseBody
+	public String doCheckPassword(String loginPw, String replaceUri) {
+
+		if (Ut.empty(loginPw)) {
+			return rq.jsHistoryBack("비밀번호를 입력해주세요.");
+		}
+
+		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
+			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
+		}
+
+		return rq.jsReplace("", replaceUri);
 	}
 }
