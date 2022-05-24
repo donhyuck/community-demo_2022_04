@@ -76,4 +76,21 @@ public class ReplyService {
 
 		return ResultData.from("S-1", "댓글 삭제가 가능합니다.");
 	}
+
+	public Reply getForPrintReply(Member member, int id) {
+
+		Reply reply = replyRepository.getForPrintReply(id);
+
+		updateForPrintData(member, reply);
+
+		return reply;
+	}
+
+	public ResultData deleteReply(int id) {
+
+		replyRepository.deleteReply(id);
+
+		return ResultData.from("S-1", Ut.format("%d번 댓글을 삭제했습니다.", id));
+	}
+
 }

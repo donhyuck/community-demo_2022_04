@@ -216,20 +216,20 @@
         <col width="50" />
         <col width="100" />
         <col width="100" />
-        <col width="80" />
+        <col width="50" />
+        <col width="100" />
+        <col width="150" />
         <col />
-        <col width="70" />
-        <col width="180" />
       </colgroup>
       <thead>
         <tr>
           <th>번호</th>
           <th>작성날짜</th>
           <th>수정날짜</th>
-          <th>작성자</th>
-          <th>내용</th>
           <th>추천</th>
+          <th>작성자</th>
           <th>비고</th>
+          <th>내용</th>
         </tr>
       </thead>
 
@@ -239,27 +239,23 @@
             <th>${ reply.id }</th>
             <td>${ reply.forPrintType1RegDate }</td>
             <td>${ reply.forPrintType1UpdateDate }</td>
-            <td>${ reply.extra__writerName }</td>
-            <td>${ reply.forPrintBody }</td>
             <td>${ reply.goodReactionPoint }</td>
+            <td>${ reply.extra__writerName }</td>
             <td>
               <!-- 댓글 조작 영역 시작 -->
               <div class="btns mt-5">
-                <c:if test="${ article.extra__actorCanModify }">
-                  <button class="btn btn-link mr-3">
-                    <a href="../reply/modify?id=${ reply.id }">수정</a>
-                  </button>
+                <c:if test="${ reply.extra__actorCanModify }">
+                  <a class="btn btn-link mr-3" href="../reply/modify?id=${ reply.id }">수정</a>
                 </c:if>
 
-                <c:if test="${ article.extra__actorCanDelete }">
-                  <button class="btn btn-link">
-                    <a href="../reply/doDelete?id=${ reply.id }"
-                      onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
-                  </button>
+                <c:if test="${ reply.extra__actorCanDelete }">
+                  <a class="btn btn-link" href="../reply/doDelete?id=${ reply.id }"
+                    onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
                 </c:if>
               </div>
               <!-- 댓글 조작 영역 끝 -->
             </td>
+            <td>${ reply.forPrintBody }</td>
           </tr>
         </c:forEach>
       </tbody>
