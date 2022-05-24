@@ -4,9 +4,31 @@
 <c:set var="pageTitle" value="댓글 수정" />
 <%@ include file="../common/head.jspf"%>
 
+<script>
+	let ReplyModify__submitDone = false;
+	function ReplyModify__submit(form) {
+
+		if (ReplyModify__submitDone) {
+			return;
+		}
+
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('수정내용을 입력해주세요.')
+			form.body.focus();
+			return;
+		}
+
+		ReplyModify__submitDone = true;
+		form.submit();
+	}
+</script>
+
 <section>
   <div class="container mx-auto px-3">
-    <form class="table-box-type-1" method="post" action="../reply/doModify">
+    <form class="table-box-type-1" method="post" action="../reply/doModify"
+      onsubmit="ReplyModify__submit(this); return false;">
       <input type="hidden" name="id" value="${ reply.id }" />
       <table>
         <colgroup>
