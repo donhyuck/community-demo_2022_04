@@ -19,10 +19,10 @@ public class UserMemberController {
 	@Autowired
 	private Rq rq;
 
-	// http://localhost:8011/user/member/doJoin?loginId=bbb&loginPw=aaa&name=a&nickname=aa&cellphoneNo=111&email=a@test.com
+	// http://localhost:8011/user/member/doJoin?loginId=bbb&loginPw=aaa&name=a&nickname=aa&cellPhoneNo=111&email=a@test.com
 	@RequestMapping("/user/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
+	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
 			String email) {
 
 		if (Ut.empty(loginId)) {
@@ -37,14 +37,14 @@ public class UserMemberController {
 		if (Ut.empty(nickname)) {
 			return ResultData.from("F-4", "닉네임(을)를 입력해주세요.");
 		}
-		if (Ut.empty(cellphoneNo)) {
+		if (Ut.empty(cellPhoneNo)) {
 			return ResultData.from("F-5", "연락처(을)를 입력해주세요.");
 		}
 		if (Ut.empty(email)) {
 			return ResultData.from("F-6", "이메일(을)를 입력해주세요.");
 		}
 
-		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 
 		if (joinRd.isFail()) {
 			return (ResultData) joinRd;
@@ -127,5 +127,35 @@ public class UserMemberController {
 	@RequestMapping("/user/member/modify")
 	public String showModify() {
 		return "user/member/modify";
+	}
+
+	@RequestMapping("/user/member/doModify")
+	@ResponseBody
+	public String doModify(String loginPw, String name, String nickname, String cellPhoneNo, String email) {
+
+		if (Ut.empty(loginPw)) {
+			loginPw = null;
+		}
+
+		if (Ut.empty(name)) {
+			return rq.jsHistoryBack("이름을 입력해주세요.");
+		}
+
+		if (Ut.empty(nickname)) {
+			return rq.jsHistoryBack("별명을 입력해주세요.");
+		}
+
+		if (Ut.empty(cellPhoneNo)) {
+			return rq.jsHistoryBack("연락처를 입력해주세요.");
+		}
+
+		if (Ut.empty(email)) {
+			return rq.jsHistoryBack("이메일을 입력해주세요.");
+		}
+
+		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, name, nickname, cellPhoneNo,
+				email);
+
+		return rq.jsReplace(modifyRd.getMsg(), "/");
 	}
 }

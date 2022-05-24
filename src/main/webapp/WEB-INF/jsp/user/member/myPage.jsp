@@ -28,7 +28,7 @@
           </tr>
           <tr>
             <th>연락처</th>
-            <td>${ rq.loginedMember.cellphoneNo }</td>
+            <td>${ rq.loginedMember.cellPhoneNo }</td>
           </tr>
           <tr>
             <th>이메일</th>

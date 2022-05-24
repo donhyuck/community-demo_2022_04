@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.ldh.exam.demo.vo.Member;
 
@@ -18,11 +19,11 @@ public interface MemberRepository {
 			loginPw = #{loginPw},
 			`name` = #{name},
 			nickname = #{nickname},
-			cellphoneNo = #{cellphoneNo},
+			cellPhoneNo = #{cellPhoneNo},
 			email = #{email}
 						""")
 	void join(@Param("loginId") String loginId, @Param("loginPw") String loginPw, @Param("name") String name,
-			@Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo, @Param("email") String email);
+			@Param("nickname") String nickname, @Param("cellPhoneNo") String cellPhoneNo, @Param("email") String email);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
@@ -48,5 +49,31 @@ public interface MemberRepository {
 			AND m.email=#{email}
 						""")
 	Member getMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
+
+	@Update("""
+			<script>
+			UPDATE `member`
+			<set>
+				updateDate = NOW(),
+				<if test="loginPw != null">
+					loginPw = #{loginPw},
+				</if>
+				<if test="name != null">
+					`name` = #{name},
+				</if>
+				<if test="nickname != null">
+					nickname = #{nickname},
+				</if>
+				<if test="cellPhoneNo != null">
+					cellPhoneNo = #{cellPhoneNo},
+				</if>
+				<if test="email != null">
+					email = #{email},
+				</if>
+			</set>
+			WHERE id = #{id}
+			</script>
+						""")
+	void modify(int id, String loginPw, String name, String nickname, String cellPhoneNo, String email);
 
 }

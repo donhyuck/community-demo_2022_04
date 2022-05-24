@@ -16,7 +16,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
+	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
 			String email) {
 
 		// 로그인 아이디 확인
@@ -31,7 +31,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.format("해당 이름(%s)과 이메일(%s)은 이미 사용중입니다.", name, email));
 		}
 
-		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		memberRepository.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 		int id = memberRepository.getLastInsertId();
 
 		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
@@ -47,6 +47,15 @@ public class MemberService {
 
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
+	}
+
+	public ResultData modify(int memberId, String loginPw, String name, String nickname, String cellPhoneNo,
+			String email) {
+
+		memberRepository.modify(memberId, loginPw, name, nickname, cellPhoneNo, email);
+
+		return ResultData.from("S-1", "회원정보가 수정되었습니다.");
+
 	}
 
 }

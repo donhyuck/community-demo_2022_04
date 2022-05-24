@@ -107,7 +107,7 @@
             <th>연락처</th>
             <td>
               <input type="tel" class="input input-bordered w-80" name="cellPhoneNo"
-                value="${ rq.loginedMember.cellphoneNo }" placeholder="연락처를 입력해주세요." />
+                value="${ rq.loginedMember.cellPhoneNo }" placeholder="연락처를 입력해주세요." />
             </td>
           </tr>
           <tr>
