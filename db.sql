@@ -63,9 +63,9 @@ loginId = 'admin',
 loginPw = 'admin',
 authLevel = 7,
 `name` = '관리자',
-nickname = '관리자',
-cellphoneNo = '01000000000',
-email = 'admin001@gmail.com';
+nickname = '관리자01',
+cellphoneNo = '01012341234',
+email = 'admin01@test.com';
 
 # 회원, 테스트 데이터 생성(일반 회원)
 INSERT INTO `member`
@@ -74,9 +74,9 @@ updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
 `name` = '사용자1',
-nickname = '유저1',
-cellphoneNo = '01011111111',
-email = 'test001@gmail.com';
+nickname = '이몽룡',
+cellphoneNo = '01045674567',
+email = 'test01@test.com';
 
 # 회원, 테스트 데이터 생성(일반 회원)
 INSERT INTO `member`
@@ -85,9 +85,9 @@ updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
 `name` = '사용자2',
-nickname = '유저2',
-cellphoneNo = '01011111112',
-email = 'test002@gmail.com';
+nickname = '성춘향',
+cellphoneNo = '01078947894',
+email = 'test02@test.com';
 
 SELECT LAST_INSERT_ID();
 
@@ -104,9 +104,9 @@ SELECT * FROM article;
 # 게시글 작성자 표시
 SELECT a.*, m.nickname AS extra_writerName
 FROM article AS a
-LEFT JOIN `member` AS m
-ON a.memberId = m.id
-ORDER BY a.id DESC;
+left join `member` as m
+on a.memberId = m.id
+order by a.id desc;
 
 # 게시판 테이블 생성
 CREATE TABLE board (
@@ -120,9 +120,9 @@ CREATE TABLE board (
 );
 
 # 기본 게시판 생성
-INSERT INTO board
-SET regDate = NOW(),
-updateDate = NOW(),
+insert into board
+set regDate = now(),
+updateDate = now(),
 `code` = 'notice',
 `name` = '공지사항';
 
@@ -133,12 +133,12 @@ updateDate = NOW(),
 `name` = '자유게시판';
 
 # 게시판 테이블에 boardId 칼럼 추가
-ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
+alter table article add column boardId int(10) unsigned not null after memberId;
 
 # 기존 게시물에 게시판 정보 설정
-UPDATE article
-SET boardId = 1
-WHERE id IN(1, 2);
+update article
+set boardId = 1
+where id in(1, 2);
 
 UPDATE article
 SET boardId = 2
@@ -155,24 +155,24 @@ FROM article;
 */
 
 # 게시글 테이블에 hitCount 칼럼 추가
-ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL default 0;
 
 # 리액션포인트 테이블
 CREATE TABLE reactionPoint (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    memberId INT(10) UNSIGNED NOT NULL,
-    relTypeCode CHAR(100) NOT NULL COMMENT '관련데이터타입코드',
-    relId INT(10) UNSIGNED NOT NULL COMMENT '관련데이터번호',
-    `point` SMALLINT(2) NOT NULL
+    memberId int(10) unsigned not null,
+    relTypeCode char(100) not null comment '관련데이터타입코드',
+    relId int(10) unsigned not null comment '관련데이터번호',
+    `point` smallint(2) not null
 );
 
 # 리액션포인트 테스트 데이터
 ## 1번 회원이 1번 article 에 대해서 싫어요
-INSERT INTO reactionPoint
-SET regDate = NOW(),
-updateDate = NOW(),
+insert into reactionPoint
+set regDate = now(),
+updateDate = now(),
 memberId = 1,
 relTypeCode = 'article',
 relId = 1,
@@ -214,48 +214,48 @@ relTypeCode = 'article',
 relId = 1,
 `point` = 1;
 
-SELECT * FROM reactionPoint;
+select * from reactionPoint;
 
 # 게시글 정보 가져오기
-SELECT a.*,
-IFNULL(SUM(rp.point), 0) AS extra_sumReactionPoint,
-IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+select a.*,
+IFNULL(sum(rp.point), 0) as extra_sumReactionPoint,
+IFNULL(SUM(if(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
 IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
-FROM (
+from (
     SELECT a.*, m.nickname AS extra__writerName
     FROM article AS a
     LEFT JOIN `member` AS m
     ON a.memberId = m.id
-) AS a
+) as a
 LEFT JOIN `reactionPoint` AS rp
-ON rp.relTypeCode = 'article'
-AND a.id = rp.relId
-GROUP BY a.id;
+on rp.relTypeCode = 'article'
+and a.id = rp.relId
+group by a.id;
 
 # 게시글 테이블에 ReactionPoint 칼럼 추가
 ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 # 각 게시물 별, 좋아요, 싫어요 총합
-SELECT rp.relTypeCode, relId, SUM(IF(rp.point > 0, rp.point, 0)) AS goodReactionPoint,
-SUM(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
-FROM reactionPoint AS rp
-GROUP BY rp.relTypeCode, rp.relId;
+select rp.relTypeCode, relId, sum(IF(rp.point > 0, rp.point, 0)) as goodReactionPoint,
+sum(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
+from reactionPoint as rp
+group by rp.relTypeCode, rp.relId;
 
 # 기존 게시물의 좋아요, 싫어요 필드의 값 채우기
-UPDATE article AS a
-INNER JOIN (
+update article as a
+inner join (
     SELECT rp.relId, SUM(IF(rp.point > 0, rp.point, 0)) AS goodReactionPoint,
     SUM(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
     FROM reactionPoint AS rp
-    WHERE rp.relTypeCode = 'article'
+    where rp.relTypeCode = 'article'
     GROUP BY rp.relTypeCode, rp.relId
-) AS rp_sum
-ON a.id = rp_sum.relId
-SET a.goodReactionPoint = rp_sum.goodReactionPoint,
+) as rp_sum
+on a.id = rp_sum.relId
+set a.goodReactionPoint = rp_sum.goodReactionPoint,
 a.badReactionPoint = rp_sum.badReactionPoint;
 
-SELECT * FROM article;
+select * from article;
 
 # 댓글 테이블
 CREATE TABLE reply (
@@ -265,12 +265,12 @@ CREATE TABLE reply (
     memberId INT(10) UNSIGNED NOT NULL,
     relTypeCode CHAR(100) NOT NULL COMMENT '관련데이터타입코드',
     relId INT(10) UNSIGNED NOT NULL COMMENT '관련데이터번호',
-    `body` TEXT NOT NULL
+    `body` text NOT NULL
 );
 
 # 댓글 테스트 데이터
-INSERT INTO reply
-SET regDate = NOW(),
+insert into reply
+set regDate = now(),
 updateDate = NOW(),
 memberId = 1,
 relTypeCode = 'article',
@@ -301,11 +301,11 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '댓글 4';
 
-SELECT * FROM reply;
+select * from reply;
 
 # 댓글 테이블에 ReactionPoint 칼럼 추가
 ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 # 댓글 테이블에 인덱스 걸기
-ALTER TABLE reply ADD INDEX (`relTypeCode`, `relId`);
+alter table reply add index (`relTypeCode`, `relId`);
