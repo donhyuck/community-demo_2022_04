@@ -12,11 +12,48 @@
 			return;
 		}
 
-		form.body.value = form.body.value.trim();
+		form.loginPw.value = form.loginPw.value.trim();
+		if (form.loginPw.value.length > 0) {
+			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 
-		if (form.body.value.length == 0) {
-			alert('수정내용을 입력해주세요.')
-			form.body.focus();
+			if (form.loginPwConfirm.value.length == 0) {
+				alert('새 비밀번호 확인을 입력해주세요.')
+				form.loginPwConfirm.focus();
+				return;
+			}
+
+			if (form.loginPwConfirm.value != form.loginPw.value) {
+				alert('비밀번호가 일치하지 않습니다.')
+				form.loginPwConfirm.focus();
+				return;
+			}
+		}
+
+		form.name.value = form.name.value.trim();
+		if (form.name.value.length == 0) {
+			alert('이름을 입력해주세요.')
+			form.name.focus();
+			return;
+		}
+
+		form.nickname.value = form.nickname.value.trim();
+		if (form.nickname.value.length == 0) {
+			alert('별명을 입력해주세요.')
+			form.nickname.focus();
+			return;
+		}
+
+		form.cellPhoneNo.value = form.cellPhoneNo.value.trim();
+		if (form.cellPhoneNo.value.length == 0) {
+			alert('연락처를 입력해주세요.')
+			form.cellPhoneNo.focus();
+			return;
+		}
+
+		form.email.value = form.email.value.trim();
+		if (form.email.value.length == 0) {
+			alert('이메일을 입력해주세요.')
+			form.email.focus();
 			return;
 		}
 
@@ -28,7 +65,7 @@
 <section>
   <div class="container mx-auto px-3">
     <form class="table-box-type-1" method="post" action="../member/doModify"
-      onsubmit="MemberModify__submitDone(this); return false;">
+      onsubmit="MemberModify__submit(this); return false;">
       <table>
         <colgroup>
           <col width="200" />
@@ -48,7 +85,8 @@
           <tr>
             <th>새 비밀번호 확인</th>
             <td>
-              <input type="password" class="input input-bordered w-80" name="loginPwConfirm" placeholder="다시 비밀번호를 입력해주세요." />
+              <input type="password" class="input input-bordered w-80" name="loginPwConfirm"
+                placeholder="다시 비밀번호를 입력해주세요." />
             </td>
           </tr>
           <tr>
@@ -61,8 +99,8 @@
           <tr>
             <th>별명</th>
             <td>
-              <input type="text" class="input input-bordered w-80" name="nickname" value="${ rq.loginedMember.nickname }"
-                placeholder="별명을 입력해주세요." />
+              <input type="text" class="input input-bordered w-80" name="nickname"
+                value="${ rq.loginedMember.nickname }" placeholder="별명을 입력해주세요." />
             </td>
           </tr>
           <tr>
