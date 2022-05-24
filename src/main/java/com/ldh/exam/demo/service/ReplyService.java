@@ -30,6 +30,50 @@ public class ReplyService {
 
 		List<Reply> replies = replyRepository.getForPrintReplies(relTypeCode, relId);
 
+		for (Reply reply : replies) {
+			updateForPrintData(member, reply);
+		}
+
 		return replies;
+	}
+
+	private void updateForPrintData(Member member, Reply reply) {
+
+		if (reply == null) {
+			return;
+		}
+
+		ResultData actorCanModifyRd = actorCanModify(member, reply);
+		reply.setExtra__actorCanModify(actorCanModifyRd.isSuccess());
+
+		ResultData actorCanDeleteRd = actorCanDelete(member, reply);
+		reply.setExtra__actorCanDelete(actorCanDeleteRd.isSuccess());
+
+	}
+
+	private ResultData actorCanModify(Member member, Reply reply) {
+
+		if (reply == null) {
+			return ResultData.from("F-1", "해당 댓글을 찾을 수 없습니다.");
+		}
+
+		if (reply.getMemberId() != member.getId()) {
+			return ResultData.from("F-2", "해당 댓글에 대한 권한이 없습니다.");
+		}
+
+		return ResultData.from("S-1", "댓글 수정이 가능합니다.");
+	}
+
+	private ResultData actorCanDelete(Member member, Reply reply) {
+
+		if (reply == null) {
+			return ResultData.from("F-1", "해당 댓글을 찾을 수 없습니다.");
+		}
+
+		if (reply.getMemberId() != member.getId()) {
+			return ResultData.from("F-2", "해당 댓글에 대한 권한이 없습니다.");
+		}
+
+		return ResultData.from("S-1", "댓글 삭제가 가능합니다.");
 	}
 }
