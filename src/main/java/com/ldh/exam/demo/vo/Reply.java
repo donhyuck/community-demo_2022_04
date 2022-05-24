@@ -25,11 +25,11 @@ public class Reply {
 	private boolean extra__actorCanDelete;
 
 	public String getForPrintType1RegDate() {
-		return regDate.substring(2, 16).replace(" ", "<br>");
+		return regDate.substring(2, 16).replace(" ", "</br>");
 	}
 
 	public String getForPrintType1UpdateDate() {
-		return updateDate.substring(2, 16).replace(" ", "<br>");
+		return updateDate.substring(2, 16).replace(" ", "</br>");
 	}
 
 	public String getForPrintType2RegDate() {
@@ -38,5 +38,9 @@ public class Reply {
 
 	public String getForPrintType2UpateDate() {
 		return updateDate.substring(2, 16);
+	}
+	
+	public String getForPrintBody() {
+		return body.replaceAll("\n", "</br>");
 	}
 }
