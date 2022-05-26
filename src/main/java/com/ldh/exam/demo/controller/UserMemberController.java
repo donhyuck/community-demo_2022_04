@@ -125,20 +125,46 @@ public class UserMemberController {
 		if (replaceUri.equals("../member/modify")) {
 			String authKeyForMemberModify = memberService.genAuthKeyForMemberModify(rq.getLoginedMemberId());
 
-			replaceUri += "?memberModifyAuthKey=" + authKeyForMemberModify;
+			replaceUri += "?authKeyForMemberModify=" + authKeyForMemberModify;
 		}
 
 		return rq.jsReplace("", replaceUri);
 	}
 
 	@RequestMapping("/user/member/modify")
-	public String showModify() {
+	public String showModify(String authKeyForMemberModify) {
+
+		// 인증코드 체크
+		if (Ut.empty(authKeyForMemberModify)) {
+			return rq.historyBackJsOnView("인증코드가 필요합니다.");
+		}
+
+		ResultData checkAuthKeyForMemberModifyRd = memberService.checkAuthKeyForMemberModify(rq.getLoginedMemberId(),
+				authKeyForMemberModify);
+
+		if (checkAuthKeyForMemberModifyRd.isFail()) {
+			return rq.historyBackJsOnView(checkAuthKeyForMemberModifyRd.getMsg());
+		}
+
 		return "user/member/modify";
 	}
 
 	@RequestMapping("/user/member/doModify")
 	@ResponseBody
-	public String doModify(String loginPw, String name, String nickname, String cellPhoneNo, String email) {
+	public String doModify(String authKeyForMemberModify, String loginPw, String name, String nickname,
+			String cellPhoneNo, String email) {
+
+		// 인증코드 체크
+		if (Ut.empty(authKeyForMemberModify)) {
+			return rq.historyBackJsOnView("인증코드가 필요합니다.");
+		}
+
+		ResultData checkAuthKeyForMemberModifyRd = memberService.checkAuthKeyForMemberModify(rq.getLoginedMemberId(),
+				authKeyForMemberModify);
+
+		if (checkAuthKeyForMemberModifyRd.isFail()) {
+			return rq.historyBackJsOnView(checkAuthKeyForMemberModifyRd.getMsg());
+		}
 
 		if (Ut.empty(loginPw)) {
 			loginPw = null;
