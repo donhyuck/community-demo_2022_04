@@ -1,5 +1,6 @@
 package com.ldh.exam.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ldh.exam.demo.repository.MemberRepository;
@@ -10,11 +11,10 @@ import com.ldh.exam.demo.vo.ResultData;
 @Service
 public class MemberService {
 
+	@Autowired
 	private MemberRepository memberRepository;
-
-	public MemberService(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
+	@Autowired
+	private AttrService attrService;
 
 	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
 			String email) {
@@ -56,6 +56,16 @@ public class MemberService {
 
 		return ResultData.from("S-1", "회원정보가 수정되었습니다.");
 
+	}
+
+	public String genAuthKeyForMemberModify(int memberId) {
+
+		String authKeyForMemberModify = Ut.getTempPassword(10);
+
+		attrService.setValue("member", memberId, "extra", "authKeyForMemberModify", authKeyForMemberModify,
+				Ut.getDateStrLater(60 * 5));
+
+		return authKeyForMemberModify;
 	}
 
 }

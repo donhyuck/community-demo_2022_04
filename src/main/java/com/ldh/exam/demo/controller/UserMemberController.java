@@ -121,6 +121,13 @@ public class UserMemberController {
 			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 
+		// 인증코드 생성
+		if (replaceUri.equals("../member/modify")) {
+			String authKeyForMemberModify = memberService.genAuthKeyForMemberModify(rq.getLoginedMemberId());
+
+			replaceUri += "?memberModifyAuthKey=" + authKeyForMemberModify;
+		}
+
 		return rq.jsReplace("", replaceUri);
 	}
 
