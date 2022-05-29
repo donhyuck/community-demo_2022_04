@@ -42,21 +42,21 @@ CREATE TABLE `member` (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    loginId CHAR(20) NOT NULL,
+    loginId char(20) NOT NULL,
     loginPw CHAR(60) NOT NULL,
-    authLevel SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
+    authLevel SMALLINT(2) UNSIGNED default 3 comment '권한레벨(3=일반,7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
     cellPhoneNo CHAR(20) NOT NULL,
     email  CHAR(50) NOT NULL,
-    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전,1=탈퇴)',
+    delStatus tinyint(1) unsigned not null default 0 comment '탈퇴여부(0=탈퇴전,1=탈퇴)',
     delDate DATETIME COMMENT '탈퇴날짜'
 );
 
 SELECT * FROM `member`;
 
 # 회원, 테스트 데이터 생성(관리자 회원)
-INSERT INTO `member`
+insert into `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
@@ -89,24 +89,24 @@ nickname = '성춘향',
 cellPhoneNo = '0107894789',
 email = 'test02@test.com';
 
-SELECT LAST_INSERT_ID();
+select last_insert_id();
 
 # 게시글 테이블에 회원정보 추가
-ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+alter table article add column memberId int(10) unsigned not null after updateDate;
 
 # 회원정보가 미등록된 게시물은 2번 회원으로 일괄 지정
-UPDATE article
-SET memberId = 2
-WHERE memberId = 0;
+update article
+set memberId = 2
+where memberId = 0;
 
 SELECT * FROM article;
 
 # 게시글 작성자 표시
-SELECT a.*, m.nickname AS extra_writerName
-FROM article AS a
-LEFT JOIN `member` AS m
-ON a.memberId = m.id
-ORDER BY a.id DESC;
+select a.*, m.nickname as extra_writerName
+from article as a
+left join `member` as m
+on a.memberId = m.id
+order by a.id desc;
 
 # 게시판 테이블 생성
 CREATE TABLE board (
@@ -120,9 +120,9 @@ CREATE TABLE board (
 );
 
 # 기본 게시판 생성
-INSERT INTO board
-SET regDate = NOW(),
-updateDate = NOW(),
+insert into board
+set regDate = now(),
+updateDate = now(),
 `code` = 'notice',
 `name` = '공지사항';
 
@@ -133,12 +133,12 @@ updateDate = NOW(),
 `name` = '자유게시판';
 
 # 게시판 테이블에 boardId 칼럼 추가
-ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
+alter table article add column boardId int(10) unsigned not null after memberId;
 
 # 기존 게시물에 게시판 정보 설정
-UPDATE article
-SET boardId = 1
-WHERE id IN(1, 2);
+update article
+set boardId = 1
+where id in(1, 2);
 
 UPDATE article
 SET boardId = 2
@@ -155,17 +155,17 @@ FROM article;
 */
 
 # 게시글 테이블에 hitCount 칼럼 추가
-ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL default 0;
 
 # 리액션포인트 테이블
 CREATE TABLE reactionPoint (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    memberId INT(10) UNSIGNED NOT NULL,
-    relTypeCode CHAR(100) NOT NULL COMMENT '관련데이터타입코드',
-    relId INT(10) UNSIGNED NOT NULL COMMENT '관련데이터번호',
-    `point` SMALLINT(2) NOT NULL
+    memberId int(10) unsigned not null,
+    relTypeCode char(100) not null comment '관련데이터타입코드',
+    relId int(10) unsigned not null comment '관련데이터번호',
+    `point` smallint(2) not null
 );
 
 # 리액션포인트 테스트 데이터
