@@ -3,6 +3,7 @@
 
 <c:set var="pageTitle" value="게시글 작성" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../../common/toastUiEditorLib.jspf"%>
 
 <section>
   <div class="container mx-auto px-3">
