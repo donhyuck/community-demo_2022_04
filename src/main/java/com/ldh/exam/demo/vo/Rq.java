@@ -58,6 +58,13 @@ public class Rq {
 		print(Ut.jsHistoryBack(msg));
 	}
 
+	public void printReplaceJs(String msg, String url) throws IOException {
+
+		resp.setContentType("text/html; charset=UTF-8");
+
+		print(Ut.jsReplace(msg, url));
+	}
+
 	public void print(String str) throws IOException {
 		resp.getWriter().append(str);
 	}
