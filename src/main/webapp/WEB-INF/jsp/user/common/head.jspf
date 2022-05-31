@@ -29,7 +29,7 @@
   <header>
     <div class="flex container h-20 mx-auto">
       <a class="flex items-center px-3" href="/">
-        <span>로고</span>
+        <span>헬로우월드</span>
       </a>
 
       <div class="flex-grow"></div>
@@ -55,21 +55,21 @@
             <span>자유 게시판</span>
           </a>
         </li>
-        <c:if test="${ !rq.isLogined() }">
+        <c:if test="${ !rq.logined }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/login">
+            <a class="flex items-center px-3 h-full hover:underline" href="${ rq.loginUri }">
               <span>로그인</span>
             </a>
           </li>
         </c:if>
-        <c:if test="${ rq.isLogined() }">
+        <c:if test="${ rq.logined }">
           <li>
             <a class="flex items-center px-3 h-full hover:underline" href="/user/member/myPage">
               <span>${rq.loginedMember.name}님의 프로필</span>
             </a>
           </li>
         </c:if>
-        <c:if test="${ rq.isLogined() }">
+        <c:if test="${ rq.logined }">
           <li>
             <a class="flex items-center px-3 h-full hover:underline" href="/user/member/doLogout">
               <span>로그아웃</span>
