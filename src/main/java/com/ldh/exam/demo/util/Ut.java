@@ -2,6 +2,11 @@ package com.ldh.exam.demo.util;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Ut {
 
@@ -100,5 +105,21 @@ public class Ut {
 		}
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> getParamMap(HttpServletRequest req) {
+
+		Map<String, String> param = new HashMap<>();
+
+		Enumeration<String> parameterNames = req.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			String paramValue = req.getParameter(paramName);
+
+			param.put(paramName, paramValue);
+		}
+
+		return param;
 	}
 }
