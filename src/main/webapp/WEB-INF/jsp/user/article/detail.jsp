@@ -202,7 +202,7 @@
     </c:if>
     <c:if test="${ rq.notLogined }">
       <h1>
-        <a class="link link-primary" href="/user/member/login">로그인</a>
+        <a class="link link-primary" href="${ rq.loginUri }">로그인</a>
         후 댓글을 남길 수 있습니다.
       </h1>
     </c:if>

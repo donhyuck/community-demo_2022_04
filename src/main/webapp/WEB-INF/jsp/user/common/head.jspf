@@ -69,7 +69,7 @@
         </c:if>
         <c:if test="${ rq.logined }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/doLogout">
+            <a class="flex items-center px-3 h-full hover:underline" href="${ rq.logoutUri }">
               <span>로그아웃</span>
             </a>
           </li>
