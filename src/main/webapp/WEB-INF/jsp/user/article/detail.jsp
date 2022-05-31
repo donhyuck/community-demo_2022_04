@@ -120,7 +120,12 @@
 
     <!-- 게시글 조작 영역 시작 -->
     <div class="btns mt-5">
-      <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
+      <c:if test="${ empty param.listUri }">
+        <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
+      </c:if>
+      <c:if test="${ not empty param.listUri }">
+        <a class="btn btn-secondary btn-outline mr-3" type="button" href="${ param.listUri }">뒤로가기</a>
+      </c:if>
 
       <c:if test="${ article.extra__actorCanModify }">
         <button class="btn btn-primary mr-3">

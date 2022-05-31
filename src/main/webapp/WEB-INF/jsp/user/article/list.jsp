@@ -17,7 +17,7 @@
       <div class="flex-grow"></div>
       <form class="flex">
         <input type="hidden" name="boardId" value="${param.boardId}" />
-        
+
         <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
           <option disabled="disabled">검색타입</option>
           <option value="title">제목</option>
@@ -63,7 +63,7 @@
               <td>${ article.forPrintType1RegDate }</td>
               <td>${ article.forPrintType1UpdateDate }</td>
               <td>
-                <a class="btn-text-link block w-full truncate" href="../article/detail?id=${ article.id }">${ article.title }</a>
+                <a class="btn-text-link block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${ article.title }</a>
               </td>
               <td>${ article.extra__writerName }</td>
               <td>${ article.goodReactionPoint }</td>
