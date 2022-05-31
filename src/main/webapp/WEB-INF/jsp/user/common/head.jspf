@@ -4,8 +4,6 @@
 <html lang="ko" class="light" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<link rel="shortcut icon" href="http://localhost:8011/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="http://localhost:8011/favicon.ico" type="image/x-icon" />
 <title>${ pageTitle }</title>
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

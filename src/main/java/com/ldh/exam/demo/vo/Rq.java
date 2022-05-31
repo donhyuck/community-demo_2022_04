@@ -131,7 +131,7 @@ public class Rq {
 		case "/user/member/join":
 		case "/user/member/findLoginId":
 		case "/user/member/findLoginPw":
-			return Ut.getUriEncoded(paramMap.get("afterLoginUri"));
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
 
 		return getEncodedCurrentUri();
