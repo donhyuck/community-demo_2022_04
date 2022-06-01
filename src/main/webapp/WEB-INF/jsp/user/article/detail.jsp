@@ -181,6 +181,7 @@
         onsubmit="ReplyWrite__submitForm(this); return false;">
         <input type="hidden" name="relTypeCode" value="article" />
         <input type="hidden" name="relId" value="${ article.id }" />
+        <input type="hidden" name="replaceUri" value="${ rq.currentUri }" />
         <table>
           <colgroup>
             <col width="200" />
@@ -251,11 +252,12 @@
               <!-- 댓글 조작 영역 시작 -->
               <div class="btns mt-5">
                 <c:if test="${ reply.extra__actorCanModify }">
-                  <a class="btn btn-link mr-3" href="../reply/modify?id=${ reply.id }">수정</a>
+                  <a class="btn btn-link mr-3"
+                    href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
                 </c:if>
 
                 <c:if test="${ reply.extra__actorCanDelete }">
-                  <a class="btn btn-link" href="../reply/doDelete?id=${ reply.id }"
+                  <a class="btn btn-link" href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
                     onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
                 </c:if>
               </div>

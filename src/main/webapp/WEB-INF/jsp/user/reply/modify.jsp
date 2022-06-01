@@ -30,6 +30,7 @@
     <form class="table-box-type-1" method="post" action="../reply/doModify"
       onsubmit="ReplyModify__submit(this); return false;">
       <input type="hidden" name="id" value="${ reply.id }" />
+      <input type="hidden" name="replaceUri" value="${ param.replaceUri }" />
       <table>
         <colgroup>
           <col width="200" />
@@ -82,7 +83,7 @@
       </table>
 
       <div class="btns mt-5">
-        <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
+        <a class="btn btn-secondary btn-outline mr-3" href="${ param.replaceUri }">뒤로가기</a>
         <button class="btn btn-primary mr-3" type="submit">댓글수정</button>
       </div>
     </form>
