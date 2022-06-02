@@ -61,7 +61,7 @@
           </li>
         </c:if>
         <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/user/member/join">
+          <a class="flex items-center px-3 h-full hover:underline" href="${ rq.joinUri }">
             <span>회원가입</span>
           </a>
         </li>

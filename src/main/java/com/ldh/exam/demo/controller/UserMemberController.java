@@ -27,8 +27,8 @@ public class UserMemberController {
 
 	@RequestMapping("/user/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
-			String email) {
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellPhoneNo, String email,
+			@RequestParam(defaultValue = "/") String afterLoginUri) {
 
 		if (Ut.empty(loginId)) {
 			return rq.jsHistoryBack("F-1", "아이디(을)를 입력해주세요.");
@@ -55,7 +55,9 @@ public class UserMemberController {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 
-		return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
+		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
+
+		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", afterJoinUri);
 	}
 
 	@RequestMapping("/user/member/login")

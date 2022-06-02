@@ -105,8 +105,8 @@ public class Rq {
 	}
 
 	public String jsHistoryBack(String resultCode, String msg) {
-		// TODO Auto-generated method stub
-		return null;
+		msg = String.format("[%s] %s", resultCode, msg);
+		return Ut.jsHistoryBack(msg);
 	}
 
 	public String jsReplace(String msg, String uri) {
@@ -131,6 +131,10 @@ public class Rq {
 
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
 	}
 
 	public String getLogoutUri() {
