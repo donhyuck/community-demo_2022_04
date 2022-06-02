@@ -94,8 +94,19 @@ public class Rq {
 		return "common/js";
 	}
 
+	public String historyBackJsOnView(String resultCode, String msg) {
+		req.setAttribute("msg", String.format("[%s] %s", resultCode, msg));
+		req.setAttribute("historyBack", true);
+		return "common/js";
+	}
+
 	public String jsHistoryBack(String msg) {
 		return Ut.jsHistoryBack(msg);
+	}
+
+	public String jsHistoryBack(String resultCode, String msg) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public String jsReplace(String msg, String uri) {
