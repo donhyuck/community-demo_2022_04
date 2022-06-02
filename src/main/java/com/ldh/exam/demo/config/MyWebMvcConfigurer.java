@@ -60,6 +60,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir = registry.addInterceptor(needLogoutInterceptor);
 		ir.addPathPatterns("/user/member/join");
 		ir.addPathPatterns("/user/member/doJoin");
+		ir.addPathPatterns("/user/member/getLoginIdDup");
 		ir.addPathPatterns("/user/member/login");
 		ir.addPathPatterns("/user/member/doLogin");
 		ir.addPathPatterns("/user/member/findLoginId");

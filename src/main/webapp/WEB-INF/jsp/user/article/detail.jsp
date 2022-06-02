@@ -190,7 +190,7 @@
           <tbody>
             <tr>
               <th>작성자</th>
-              <td>${ rq.loginedMember.nickname }</td>
+              <td>${ rq.loginedMember.name }</td>
             </tr>
             <tr>
               <th>내용</th>
