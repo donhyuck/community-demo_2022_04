@@ -20,7 +20,11 @@ public class UserMemberController {
 	@Autowired
 	private Rq rq;
 
-	// http://localhost:8011/user/member/doJoin?loginId=bbb&loginPw=aaa&name=a&nickname=aa&cellPhoneNo=111&email=a@test.com
+	@RequestMapping("/user/member/join")
+	public String showJoin() {
+		return "user/member/join";
+	}
+
 	@RequestMapping("/user/member/doJoin")
 	@ResponseBody
 	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
