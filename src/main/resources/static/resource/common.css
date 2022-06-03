@@ -48,9 +48,7 @@ html[data-theme="dark"] :is(.table-box-type-1>table th, .table-box-type-1>table 
 }
 
 html > body .toast-ui-viewer {
-	background-color:white;
-	padding:10px;
-	border-radius:10px;
+
 }
 
 /* 커스텀 */
@@ -60,6 +58,7 @@ body {
 
 .btn-theme-toggle > span:first-child {
   display: none;
+  color: white;
 }
 
 html[data-theme="dark"] .btn-theme-toggle > span:first-child {
