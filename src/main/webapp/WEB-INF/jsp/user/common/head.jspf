@@ -60,8 +60,9 @@
 
       <ul class="flex">
         <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="javascript:Theme__toggle();">
-            <span>테마변경</span>
+          <a class="flex items-center px-3 h-full hover:underline btn-theme-toggle" href="javascript:Theme__toggle();">
+            <span>밝게</span>
+            <span>어둡게</span>
           </a>
         </li>
         <li>

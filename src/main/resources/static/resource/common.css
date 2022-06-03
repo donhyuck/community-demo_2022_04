@@ -48,6 +48,18 @@ body {
 	min-width: 500px;
 }
 
+.btn-theme-toggle > span:first-child {
+  display: none;
+}
+
+html[data-theme="dark"] .btn-theme-toggle > span:first-child {
+  display:inline;
+}
+
+html[data-theme="dark"] .btn-theme-toggle > span:last-child {
+  display:none;
+}
+
 .btn-text-link {
 	color: skyblue;
 	font-weight: bold;
