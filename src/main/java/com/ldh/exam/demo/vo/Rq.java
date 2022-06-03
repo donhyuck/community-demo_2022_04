@@ -26,6 +26,8 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
+	@Getter
+	private boolean isAjax;
 
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
@@ -52,6 +54,26 @@ public class Rq {
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
+
+		// 해당 요청이 ajax 요청인지 아닌지 체크
+		String requestUri = req.getRequestURI();
+		boolean isAjax = requestUri.endsWith("Ajax");
+
+		if (isAjax == false) {
+			if (paramMap.containsKey("ajax") && paramMap.get("ajax").equals("Y")) {
+				isAjax = true;
+			} else if (paramMap.containsKey("isAjax") && paramMap.get("isAjax").equals("Y")) {
+				isAjax = true;
+			}
+		}
+
+		if (isAjax == false) {
+			if (requestUri.contains("/get")) {
+				isAjax = true;
+			}
+		}
+
+		this.isAjax = isAjax;
 	}
 
 	public void printHistoryBackJs(String msg) throws IOException {
