@@ -1,10 +1,13 @@
 package com.ldh.exam.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ldh.exam.demo.repository.MemberRepository;
 import com.ldh.exam.demo.util.Ut;
+import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.ResultData;
 
@@ -77,6 +80,23 @@ public class MemberService {
 		}
 
 		return ResultData.from("S-1", "정상적인 코드입니다.");
+	}
+
+	public int getMembersCount(int authLevel, String searchKeywordTypeCode, String searchKeyword) {
+
+		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
+	}
+
+	public List<Article> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int itemsCountInAPage, int page) {
+
+		int limitStart = (page - 1) * itemsCountInAPage;
+		int limitTake = itemsCountInAPage;
+
+		List<Article> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+				limitStart, limitTake);
+
+		return members;
 	}
 
 }
