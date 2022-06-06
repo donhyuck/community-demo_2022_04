@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.ldh.exam.demo.repository.MemberRepository;
 import com.ldh.exam.demo.util.Ut;
-import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.ResultData;
 
@@ -87,13 +86,13 @@ public class MemberService {
 		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 	}
 
-	public List<Article> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword,
+	public List<Member> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword,
 			int itemsCountInAPage, int page) {
 
 		int limitStart = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 
-		List<Article> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+		List<Member> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
 				limitStart, limitTake);
 
 		return members;

@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ldh.exam.demo.service.MemberService;
-import com.ldh.exam.demo.util.Ut;
-import com.ldh.exam.demo.vo.Article;
-import com.ldh.exam.demo.vo.Board;
+import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.Rq;
 
 @Controller
@@ -23,7 +21,7 @@ public class AdmMemberController {
 	private Rq rq;
 
 	@RequestMapping("/adm/member/list")
-	public String showArticleList(Model model, @RequestParam(defaultValue = "1") int authLevel,
+	public String showMemerList(Model model, @RequestParam(defaultValue = "0") int authLevel,
 			@RequestParam(defaultValue = "loginId,name,nickname") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 
@@ -31,7 +29,7 @@ public class AdmMemberController {
 
 		int itemsCountInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) membersCount / itemsCountInAPage);
-		List<Article> members = memberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
 				itemsCountInAPage, page);
 
 		model.addAttribute("authLevel", authLevel);

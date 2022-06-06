@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Member;
 
 @Mapper
@@ -119,26 +118,26 @@ public interface MemberRepository {
 			FROM `member` AS m
 			WHERE 1
 			<if test="authLevel != 0">
-				AND m.authLevel = #{authLevel}
+			    AND m.authLevel = #{authLevel}
 			</if>
 			<if test="searchKeyword != ''">
 				<choose>
 					<when test="searchKeywordTypeCode == 'loginId'">
-						AND m.title LIKE CONCAT('%',#{searchKeyword},'%')
+						AND m.loginId LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordTypeCode == 'name'">
-						AND m.name LIKE CONCAT('%',#{searchKeyword},'%')
+						AND m.name LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordTypeCode == 'nickname'">
-						AND m.nickname LIKE CONCAT('%',#{searchKeyword},'%')
+						AND m.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<otherwise>
 						AND (
-							m.loginId LIKE CONCAT('%',#{searchKeyword},'%')
+							m.loginId LIKE CONCAT('%', #{searchKeyword}, '%')
 							OR
-							m.name LIKE CONCAT('%',#{searchKeyword},'%')
+							m.name LIKE CONCAT('%', #{searchKeyword}, '%')
 							OR
-							m.nickname LIKE CONCAT('%',#{searchKeyword},'%')
+							m.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
 						)
 					</otherwise>
 				</choose>
@@ -149,7 +148,7 @@ public interface MemberRepository {
 			</if>
 			</script>
 			""")
-	List<Article> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword, int limitStart,
+	List<Member> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword, int limitStart,
 			int limitTake);
 
 }
