@@ -6,6 +6,32 @@
 
 <section>
   <div class="container mx-auto px-3">
+    <!-- 검색 박스 영역 시작 -->
+    <div class="flex">
+      <div>
+        가입한 회원수 :
+        <span class="badge badge-primary">${ membersCount }</span>
+        명
+      </div>
+      <div class="flex-grow"></div>
+      <form class="flex">
+        <input type="hidden" name="boardId" value="${param.boardId}" />
+
+        <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
+          <option disabled="disabled">검색타입</option>
+          <option value="loginId">아이디</option>
+          <option value="name">이름</option>
+          <option value="nickname">별명</option>
+          <option value="loginId,name,nickname">전부포함</option>
+        </select>
+        <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
+          class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
+
+        <button type="submit" class="ml-2 btn btn-primary">검색</button>
+      </form>
+    </div>
+    <!-- 검색 박스 영역 끝 -->
+
     <!-- 회원 목록 영역 시작 -->
     <div class="mt-3">
       <table class="table table-fixed w-full">
