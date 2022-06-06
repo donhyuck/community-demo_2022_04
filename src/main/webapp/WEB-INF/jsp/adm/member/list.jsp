@@ -4,12 +4,12 @@
 <c:set var="pageTitle" value="관리자 페이지 - 회원목록 " />
 <%@ include file="../common/head.jspf"%>
 
-<section class="mt-3">
+<section class="mt-5">
   <div class="container mx-auto px-3">
     <!-- 검색 박스 영역 시작 -->
     <div class="flex">
       <div>
-        가입한 회원수 :
+        회원수 :
         <span class="badge badge-primary">${ membersCount }</span>
         명
       </div>
@@ -44,15 +44,16 @@
     <div class="mt-3">
       <table class="table table-fixed w-full">
         <colgroup>
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
-          <col />
+          <col width="100" />
+          <col width="100" />
+          <col width="120" />
+          <col width="120" />
         </colgroup>
         <thead>
           <tr>
+            <th>
+              <input type="checkbox" class="checkbox-all-member-id" />
+            </th>
             <th>번호</th>
             <th>가입날짜</th>
             <th>갱신날짜</th>
@@ -65,6 +66,9 @@
         <tbody>
           <c:forEach var="member" items="${ members }">
             <tr>
+              <th>
+                <input type="checkbox" class="checkbox-member-id" value="${ member.id }" />
+              </th>
               <th>${ member.id }</th>
               <td>${ member.forPrintType1RegDate }</td>
               <td>${ member.forPrintType1UpdateDate }</td>
@@ -76,6 +80,26 @@
         </tbody>
       </table>
     </div>
+    
+    <!-- 회원선택 박스 스크립트 -->
+    <script>
+    $('.checkbox-all-member-id').change(function() {
+    	const $all = $(this);
+    	const allChecked = $all.prop('checked');
+    	
+    	$('.checkbox-member-id').prop('checked', allChecked);
+    });
+    
+    $('.checkbox-member-id').change(function() {
+    	const checkboxMemberIdCount = $('.checkbox-member-id').length;
+    	const checkboxMemberIdCheckedCount = $('.checkbox-member-id:checked').length;
+    	
+    	const allChecked = checkboxMemberIdCount == checkboxMemberIdCheckedCount;
+    	
+    $('.checkbox-all-member-id').prop('checked', allChecked);
+    });
+    </script>
+    
     <!-- 회원 목록 영역 끝 -->
     <!-- 페이지 영역 시작 -->
     <div class="page-menu mt-3">
@@ -110,5 +134,4 @@
     <!-- 페이지 영역 끝 -->
   </div>
 </section>
-
 <%@ include file="../common/foot.jspf"%>
