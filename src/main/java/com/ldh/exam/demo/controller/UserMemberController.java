@@ -87,7 +87,7 @@ public class UserMemberController {
 	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
 
 		if (Ut.empty(loginId)) {
-			return rq.jsHistoryBack("아이디를 입력해주세요.");
+			return rq.jsHistoryBack("아이디(을)를 입력해주세요.");
 		}
 		if (Ut.empty(loginPw)) {
 			return rq.jsHistoryBack("비밀번호를 입력해주세요.");
@@ -105,7 +105,7 @@ public class UserMemberController {
 
 		rq.login(member);
 
-		return rq.jsReplace(Ut.format("%s님 환영합니다.", member.getNickname()), afterLoginUri);
+		return rq.jsReplace(Ut.format("%s님 환영합니다.", member.getName()), afterLoginUri);
 	}
 
 	@RequestMapping("/user/member/doLogout")

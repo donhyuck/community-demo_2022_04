@@ -37,14 +37,14 @@
 			return;
 		}
 
-		form.loginPwCofirm.value = form.loginPwCofirm.value.trim();
-		if (form.loginPwCofirm.value.length == 0) {
+		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+		if (form.loginPwConfirm.value.length == 0) {
 			alert('비밀번호 확인을 입력해주세요.');
-			form.loginPwCofirm.focus();
+			form.loginPwConfirm.focus();
 			return;
 		}
 
-		if (form.loginPw.value != form.loginPwCofirm.value) {
+		if (form.loginPw.value != form.loginPwConfirm.value) {
 			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPw.focus();
 			return;
