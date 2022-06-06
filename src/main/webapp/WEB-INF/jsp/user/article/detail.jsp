@@ -218,18 +218,18 @@
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1>댓글 목록 (${ replies.size() } 건)</h1>
-    <table class="table table-fixed w-full">
+    <table class="table table-fixed w-full mt-5">
       <colgroup>
         <col width="50" />
         <col width="100" />
         <col width="100" />
         <col width="50" />
-        <col width="100" />
+        <col width="80" />
         <col width="150" />
         <col />
       </colgroup>
       <thead>
-        <tr>
+        <tr class="text-center">
           <th>번호</th>
           <th>작성날짜</th>
           <th>수정날짜</th>
@@ -242,7 +242,7 @@
 
       <tbody>
         <c:forEach var="reply" items="${ replies }">
-          <tr>
+          <tr class="text-center">
             <th>${ reply.id }</th>
             <td>${ reply.forPrintType1RegDate }</td>
             <td>${ reply.forPrintType1UpdateDate }</td>
@@ -250,20 +250,21 @@
             <td>${ reply.extra__writerName }</td>
             <td>
               <!-- 댓글 조작 영역 시작 -->
-              <div class="btns mt-5">
+              <div class="btns">
                 <c:if test="${ reply.extra__actorCanModify }">
-                  <a class="btn btn-link mr-3"
+                  <a class="btn btn-link flex-auto"
                     href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
                 </c:if>
 
                 <c:if test="${ reply.extra__actorCanDelete }">
-                  <a class="btn btn-link" href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
+                  <a class="btn btn-link flex-auto"
+                    href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
                     onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
                 </c:if>
               </div>
               <!-- 댓글 조작 영역 끝 -->
             </td>
-            <td>${ reply.forPrintBody }</td>
+            <td class="text-left">${ reply.forPrintBody }</td>
           </tr>
         </c:forEach>
       </tbody>

@@ -144,7 +144,7 @@ public class UserArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return rq.historyBackJsOnView(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+			return rq.jsHistoryBack("F-1", Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
@@ -166,10 +166,11 @@ public class UserArticleController {
 
 		// 게시글 존재여부 및 권한 체크
 		if (article == null) {
-			return rq.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+			return rq.jsHistoryBack("F-1", Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
+
 		if (actorCanModifyRd.isFail()) {
 			return rq.jsHistoryBack(actorCanModifyRd.getMsg());
 		}

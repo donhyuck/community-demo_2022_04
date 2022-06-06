@@ -54,6 +54,7 @@ public class ArticleService {
 	}
 
 	public ResultData<Integer> writeArticle(int memberId, int boardId, String title, String body) {
+		
 		articleRepository.writeArticle(memberId, boardId, title, body);
 		int id = articleRepository.getLastInsertId();
 
@@ -61,6 +62,7 @@ public class ArticleService {
 	}
 
 	public ResultData<Article> modifyArticle(int id, String title, String body) {
+		
 		articleRepository.modifyArticle(id, title, body);
 
 		Article article = getForPrintArticle(0, id);
@@ -73,10 +75,6 @@ public class ArticleService {
 	}
 
 	public ResultData actorCanModify(int actorId, Article article) {
-
-		if (article == null) {
-			return ResultData.from("F-1", "해당 게시물을 찾을 수 없습니다.");
-		}
 
 		if (article.getMemberId() != actorId) {
 			return ResultData.from("F-2", "해당 게시물에 대한 권한이 없습니다.");
