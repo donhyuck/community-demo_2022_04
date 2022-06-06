@@ -80,7 +80,6 @@
         </tbody>
       </table>
     </div>
-    
     <!-- 회원선택 박스 스크립트 -->
     <script>
     $('.checkbox-all-member-id').change(function() {
@@ -99,7 +98,33 @@
     $('.checkbox-all-member-id').prop('checked', allChecked);
     });
     </script>
-    
+
+    <!-- 회원 삭제 버튼 -->
+    <div>
+      <button class="btn btn-error btn-delete-selected-members">선택삭제</button>
+    </div>
+
+    <form hidden action="../member/doDeleteMembers" name="do-delete-members-form" method="post">
+      <input type="hidden" name="ids" value="" />
+    </form>
+
+    <!-- 삭제할 회원정보 전송 -->
+    <script>
+		$('.btn-delete-selected-members').click(function() {
+			const values = $('.checkbox-member-id:checked').map((index, el) => el.value).toArray();
+			
+			if (values.length == 0) {
+				alert('선택된 회원이 없습니다.');
+			}
+			
+			if (confirm('정말 삭제하시겠습니까?') == false) {
+				return;
+			}
+			
+			document['do-delete-members-form'].ids.value = values.join(',');
+			document['do-delete-members-form'].submit();
+		});
+	</script>
     <!-- 회원 목록 영역 끝 -->
     <!-- 페이지 영역 시작 -->
     <div class="page-menu mt-3">
