@@ -152,11 +152,11 @@ public class Rq {
 	}
 
 	public String getLoginUri() {
-		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+		return "/user/member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 
 	public String getJoinUri() {
-		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+		return "/user/member/join?afterLoginUri=" + getAfterLoginUri();
 	}
 
 	public String getLogoutUri() {
@@ -168,7 +168,7 @@ public class Rq {
 			return "";
 		}
 
-		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+		return "/user/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 
 	public String getAfterLoginUri() {
@@ -192,6 +192,15 @@ public class Rq {
 	}
 
 	public String getArticleDetailUriFromArticleList(Article article) {
-		return "../article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
+		return "/user/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
+	}
+
+	public boolean isAdmin() {
+
+		if (isLogined == false) {
+			return false;
+		}
+
+		return loginedMember.isAdmin();
 	}
 }

@@ -37,4 +37,8 @@ public class Member {
 	public String getForPrintType2UpateDate() {
 		return updateDate.substring(2, 16);
 	}
+
+	public boolean isAdmin() {
+		return this.authLevel == 7;
+	}
 }

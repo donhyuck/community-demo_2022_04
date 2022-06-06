@@ -24,7 +24,15 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-  <div class="container mx-auto px-3 mb-5">
+  <div class="container mx-auto px-3 mt-3">
     <h1>${ pageTitle }페이지</h1>
-    <hr />
+    <div class="flex mt-3 mb-3">
+      <a class="flex items-center h-full hover:underline" href="/">
+        <span>홈으로</span>
+      </a>
+      <a class="flex items-center h-full px-3 hover:underline" href="${ rq.logoutUri }">
+        <span>로그아웃</span>
+      </a>
+    </div>
   </div>
+  <hr />

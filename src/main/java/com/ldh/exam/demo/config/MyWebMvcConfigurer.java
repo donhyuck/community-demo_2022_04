@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ldh.exam.demo.interceptor.BeforeActionInterceptor;
+import com.ldh.exam.demo.interceptor.NeedAdminInterceptor;
 import com.ldh.exam.demo.interceptor.NeedLoginInterceptor;
 import com.ldh.exam.demo.interceptor.NeedLogoutInterceptor;
 
@@ -17,13 +18,17 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
 
-	// needLoginInterceptor 인터셉터 불러오기
+	// needLoginInterceptor 로그인 인터셉터 불러오기
 	@Autowired
 	NeedLoginInterceptor needLoginInterceptor;
 
-	// needLogoutInterceptor 인터셉터 불러오기
+	// needLogoutInterceptor 로그아웃 인터셉터 불러오기
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
+
+	// needAdminInterceptor 관리자 인터셉터 불러오기
+	@Autowired
+	NeedAdminInterceptor needAdminInterceptor;
 
 	// 이 함수는 인터셉터를 적용하는 역할을 합니다.
 	@Override
@@ -55,6 +60,13 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/user/member/doCheckPassword");
 		ir.addPathPatterns("/user/member/modify");
 		ir.addPathPatterns("/user/member/doModify");
+		ir.addPathPatterns("/adm/**");
+		ir.excludePathPatterns("/adm/member/login");
+		ir.excludePathPatterns("/adm/member/doLogin");
+		ir.excludePathPatterns("/adm/member/findLoginId");
+		ir.excludePathPatterns("/adm/member/doFindLoginId");
+		ir.excludePathPatterns("/adm/member/findLoginPw");
+		ir.excludePathPatterns("/adm/member/doFindLoginPw");
 
 		// 로그아웃 요구 인터셉터
 		ir = registry.addInterceptor(needLogoutInterceptor);
@@ -67,5 +79,15 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/user/member/doFindLoginId");
 		ir.addPathPatterns("/user/member/findLoginPw");
 		ir.addPathPatterns("/user/member/doFindLoginPw");
+
+		// 관리자 확인 인터셉터
+		ir = registry.addInterceptor(needAdminInterceptor);
+		ir.addPathPatterns("/adm/**");
+		ir.excludePathPatterns("/adm/member/login");
+		ir.excludePathPatterns("/adm/member/doLogin");
+		ir.excludePathPatterns("/adm/member/findLoginId");
+		ir.excludePathPatterns("/adm/member/doFindLoginId");
+		ir.excludePathPatterns("/adm/member/findLoginPw");
+		ir.excludePathPatterns("/adm/member/doFindLoginPw");
 	}
 }

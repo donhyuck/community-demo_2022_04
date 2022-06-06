@@ -4,7 +4,7 @@
 <c:set var="pageTitle" value="관리자 페이지 - 회원목록 " />
 <%@ include file="../common/head.jspf"%>
 
-<section>
+<section class="mt-3">
   <div class="container mx-auto px-3">
     <!-- 검색 박스 영역 시작 -->
     <div class="flex">

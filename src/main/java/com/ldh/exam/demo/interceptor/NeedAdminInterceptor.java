@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.ldh.exam.demo.vo.Rq;
 
 @Component
-public class NeedLoginInterceptor implements HandlerInterceptor {
+public class NeedAdminInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private Rq rq;
@@ -18,16 +18,16 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 
-		if (!rq.isLogined()) {
+		if (!rq.isAdmin()) {
 
 			if (rq.isAjax()) {
 				resp.setContentType("application/json; charset=UTF-8");
-				resp.getWriter().append("{\"resultCode\":\"F-A\",\"msg\":\"로그인 후 이용해주세요.\"}");
+				rq.print("{\"resultCode\":\"F-A\",\"msg\":\"권한이 없습니다.\"}");
 			}
 
 			else {
 				String afterLoginUri = rq.getAfterLoginUri();
-				rq.printReplaceJs("로그인 후 이용해주세요.", "/user/member/login?afterLoginUri=" + afterLoginUri);
+				rq.printHistoryBackJs("관리자 계정으로 이용해주세요");
 			}
 			return false;
 		}
