@@ -106,6 +106,7 @@
 
     <form hidden action="../member/doDeleteMembers" name="do-delete-members-form" method="post">
       <input type="hidden" name="ids" value="" />
+      <input type="hidden" name="replaceUri" value="${ rq.currentUri }" />
     </form>
 
     <!-- 삭제할 회원정보 전송 -->

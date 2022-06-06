@@ -98,4 +98,19 @@ public class MemberService {
 		return members;
 	}
 
+	public void doDeleteMembers(List<Integer> memberIds) {
+
+		for (int memberId : memberIds) {
+			Member member = getMemberById(memberId);
+
+			if (member != null) {
+				doDeleteMember(member);
+			}
+		}
+	}
+
+	private void doDeleteMember(Member member) {
+		memberRepository.deleteMember(member.getId());
+	}
+
 }

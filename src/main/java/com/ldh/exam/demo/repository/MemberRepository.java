@@ -34,6 +34,7 @@ public interface MemberRepository {
 			SELECT *
 			FROM `member` as m
 			WHERE m.id=#{id}
+			AND delStatus = 0
 						""")
 	Member getMemberById(@Param("id") int id);
 
@@ -41,6 +42,7 @@ public interface MemberRepository {
 			SELECT *
 			FROM `member` as m
 			WHERE m.loginId=#{loginId}
+			AND delStatus = 0
 						""")
 	Member getMemberByLoginId(@Param("loginId") String loginId);
 
@@ -83,6 +85,7 @@ public interface MemberRepository {
 			SELECT COUNT(*) AS cnt
 			FROM `member` AS m
 			WHERE 1
+			AND delStatus = 0
 			<if test="authLevel != 0">
 				AND m.authLevel = #{authLevel}
 			</if>
@@ -117,6 +120,7 @@ public interface MemberRepository {
 			SELECT m.*
 			FROM `member` AS m
 			WHERE 1
+			AND delStatus = 0
 			<if test="authLevel != 0">
 			    AND m.authLevel = #{authLevel}
 			</if>
@@ -150,5 +154,18 @@ public interface MemberRepository {
 			""")
 	List<Member> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword, int limitStart,
 			int limitTake);
+
+	@Select("""
+			<script>
+			UPDATE `member`
+			<set>
+				updateDate = NOW(),
+				delStatus = 1,
+				delDate = NOW(),
+			</set>
+			WHERE id = #{id}
+			</script>
+			""")
+	void deleteMember(int id);
 
 }
