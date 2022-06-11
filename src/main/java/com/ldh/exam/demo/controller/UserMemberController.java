@@ -213,4 +213,14 @@ public class UserMemberController {
 
 		return rq.jsReplace(modifyRd.getMsg(), "/");
 	}
+
+	@RequestMapping("/user/member/findLoginId")
+	public String showFindLoginId() {
+		return "user/member/findLoginId";
+	}
+
+	@RequestMapping("/user/member/findLoginPw")
+	public String showFindLoginPw() {
+		return "user/member/findLoginPw";
+	}
 }

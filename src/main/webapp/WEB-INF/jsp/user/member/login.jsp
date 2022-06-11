@@ -34,8 +34,25 @@
       <div class="btns mt-5">
         <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
         <button class="btn btn-primary" type="submit">로그인</button>
-      </div>
 
+        <div class="mt-3">
+          <a href="../member/findLoginId" class="btn btn-link btn-sm btn-outline" type="submit">
+            <span>
+              <i class="fas fa-sign-in-alt"></i>
+            </span>
+            &nbsp;
+            <span>아이디 찾기</span>
+          </a>
+          <a href="../member/findLoginPw" class="btn btn-link btn-sm btn-outline" type="submit">
+            <span>
+              <i class="fas fa-sign-in-alt"></i>
+            </span>
+            &nbsp;
+            <span>비밀번호 찾기</span>
+          </a>
+        </div>
+
+      </div>
     </form>
   </div>
 </section>
