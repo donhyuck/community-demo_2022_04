@@ -139,4 +139,24 @@ public class MemberService {
 		return ResultData.from("S-1", Ut.format("%s 님의 비밀번호 : %s", member.getName(), member.getLoginPw()));
 	}
 
+	public ResultData notifyTempLoginPwByEmail(Member member) {
+
+		// 구현중
+		String title = "[" + siteName + "] 임시 패스워드 발송";
+		String tempPassword = Ut.getTempPassword(6);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+		body += "<a href=\"" + siteMainUri + "/mpaUsr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
+
+		if (sendResultData.isFail()) {
+			return sendResultData;
+		}
+
+		setTempPassword(actor, tempPassword);
+
+		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+
+	}
+
 }
