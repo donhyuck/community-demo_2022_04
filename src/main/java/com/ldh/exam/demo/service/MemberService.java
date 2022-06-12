@@ -113,4 +113,13 @@ public class MemberService {
 		memberRepository.deleteMember(member.getId());
 	}
 
+	public ResultData findLoginId(Member member) {
+
+		if (member == null) {
+			return ResultData.from("F-1", "아이디 또는 이메일을 정확히 입력해주세요.");
+		}
+
+		return ResultData.from("S-1", Ut.format("%s 님의 등록된 아이디 : %s", member.getName(), member.getLoginId()));
+	}
+
 }

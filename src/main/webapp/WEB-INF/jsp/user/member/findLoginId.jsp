@@ -7,7 +7,6 @@
 <section>
   <div class="container mx-auto px-3">
     <form class="table-box-type-1" method="post" action="../member/doFindLoginId">
-      <input type="hidden" name="afterLoginUri" value="${ param.afterLoginUri }">
       <table>
         <colgroup>
           <col width="200" />
@@ -17,14 +16,16 @@
           <tr>
             <th>이름</th>
             <td>
-              <input type="text" class="w-96 input input-bordered" name="name" placeholder="이름" maxlength="30" />
+              <input type="text" class="w-96 input input-bordered" required="required" name="name" placeholder="이름"
+                maxlength="30" />
             </td>
           </tr>
 
           <tr>
             <th>이메일</th>
             <td>
-              <input type="email" class="w-96 input input-bordered" name="email" placeholder="이메일" maxlength="100" />
+              <input type="email" class="w-96 input input-bordered" required="required" name="email" placeholder="이메일"
+                maxlength="100" />
             </td>
           </tr>
 

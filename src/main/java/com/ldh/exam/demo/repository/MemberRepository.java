@@ -51,6 +51,7 @@ public interface MemberRepository {
 			FROM `member` as m
 			WHERE m.name=#{name}
 			AND m.email=#{email}
+			AND delStatus = 0
 						""")
 	Member getMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
 
