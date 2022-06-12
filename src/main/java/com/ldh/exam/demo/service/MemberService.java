@@ -116,10 +116,27 @@ public class MemberService {
 	public ResultData findLoginId(Member member) {
 
 		if (member == null) {
-			return ResultData.from("F-1", "아이디 또는 이메일을 정확히 입력해주세요.");
+			return ResultData.from("F-1", "이름 또는 이메일을 정확히 입력해주세요.");
 		}
 
 		return ResultData.from("S-1", Ut.format("%s 님의 등록된 아이디 : %s", member.getName(), member.getLoginId()));
+	}
+
+	public ResultData findLoginPw(Member member, String name, String email) {
+
+		if (member == null) {
+			return ResultData.from("F-1", "아이디가 잘못 입력되었거나 등록되지 않은 회원입니다.");
+		}
+
+		if (member.getName().equals(name) == false) {
+			return ResultData.from("F-2", "이름이 잘못 입력되었거나 등록되지 않은 회원입니다.");
+		}
+
+		if (member.getEmail().equals(email) == false) {
+			return ResultData.from("F-3", "이메일이 잘못 입력되었거나 등록되지 않은 회원입니다.");
+		}
+
+		return ResultData.from("S-1", Ut.format("%s 님의 비밀번호 : %s", member.getName(), member.getLoginPw()));
 	}
 
 }

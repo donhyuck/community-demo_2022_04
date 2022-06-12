@@ -238,4 +238,19 @@ public class UserMemberController {
 	public String showFindLoginPw() {
 		return "user/member/findLoginPw";
 	}
+
+	@RequestMapping("/user/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(String loginId, String name, String email) {
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		ResultData findLoginIdRd = memberService.findLoginPw(member, name, email);
+
+		if (findLoginIdRd.isFail()) {
+			return rq.jsHistoryBack(findLoginIdRd.getMsg());
+		}
+
+		return rq.jsReplace(findLoginIdRd.getMsg(), "/user/member/login");
+	}
 }
