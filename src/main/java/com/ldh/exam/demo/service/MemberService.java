@@ -144,7 +144,7 @@ public class MemberService {
 			return ResultData.from("F-3", "이메일이 잘못 입력되었거나 등록되지 않은 회원입니다.");
 		}
 
-		return ResultData.from("S-1", Ut.format("%s 님의 비밀번호 : %s", member.getName(), member.getLoginPw()));
+		return ResultData.from("S-1", "임시 비밀번호가 발송됩니다.");
 	}
 
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
@@ -163,6 +163,10 @@ public class MemberService {
 		setTempPassword(actor, tempPassword);
 
 		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+	}
+
+	private void setTempPassword(Member actor, String tempPassword) {
+		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
 
 }

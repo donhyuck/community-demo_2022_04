@@ -251,8 +251,8 @@ public class UserMemberController {
 			return rq.jsHistoryBack(findLoginIdRd.getMsg());
 		}
 
-		memberService.notifyTempLoginPwByEmail(member);
+		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
 
-		return rq.jsReplace(findLoginIdRd.getMsg(), "/user/member/login");
+		return rq.jsReplace(notifyTempLoginPwByEmailRd.getMsg(), "/user/member/login");
 	}
 }
