@@ -14,6 +14,8 @@ spring:
 mybatis:
   type-aliases-package: com.ldh.exam.demo.vo
 custom:
+  siteMainUri: http://localhost:8011/
+  siteName: 헬로우월드
   logging:
     dir: log
     level: debug  
