@@ -228,7 +228,7 @@ public class UserMemberController {
 		ResultData findLoginIdRd = memberService.findLoginId(member);
 
 		if (findLoginIdRd.isFail()) {
-			return rq.jsHistoryBack(findLoginIdRd.getMsg());
+			return rq.jsReplace(findLoginIdRd.getMsg(), "/user/member/findLoginId");
 		}
 
 		return rq.jsReplace(findLoginIdRd.getMsg(), "/user/member/login");
@@ -245,10 +245,10 @@ public class UserMemberController {
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
-		ResultData findLoginIdRd = memberService.findLoginPw(member, name, email);
+		ResultData findLoginPwRd = memberService.findLoginPw(member, name, email);
 
-		if (findLoginIdRd.isFail()) {
-			return rq.jsHistoryBack(findLoginIdRd.getMsg());
+		if (findLoginPwRd.isFail()) {
+			return rq.jsReplace(findLoginPwRd.getMsg(), "/user/member/findLoginPw");
 		}
 
 		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);

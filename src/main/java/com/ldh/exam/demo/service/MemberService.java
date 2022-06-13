@@ -29,13 +29,11 @@ public class MemberService {
 	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
 			String email) {
 
-		// 로그인 아이디 확인
 		Member oldMember = getMemberByLoginId(loginId);
 		if (oldMember != null) {
 			return ResultData.from("F-7", Ut.format("해당 아이디(%s)는 이미 사용중입니다.", loginId));
 		}
 
-		// 이름, 이메일 확인
 		oldMember = getMemberByNameAndEmail(name, email);
 		if (oldMember != null) {
 			return ResultData.from("F-8", Ut.format("해당 이름(%s)과 이메일(%s)은 이미 사용중입니다.", name, email));
@@ -152,7 +150,7 @@ public class MemberService {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Ut.getTempPassword(6);
 		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
-		body += "<a href=\"" + siteMainUri + "/user/member/login\" target=\"_blank\">로그인 하러가기</a>";
+		body += "<a href=\"" + siteMainUri + "user/member/login\" target=\"_blank\">로그인 하러가기</a>";
 
 		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
 

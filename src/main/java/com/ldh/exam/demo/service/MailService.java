@@ -15,7 +15,7 @@ import com.ldh.exam.demo.vo.ResultData;
 
 @Service
 public class MailService {
-	
+
 	@Autowired
 	private JavaMailSender sender;
 	@Value("${custom.emailFrom}")
@@ -24,6 +24,7 @@ public class MailService {
 	private String emailFromName;
 
 	private static class MailHandler {
+
 		private JavaMailSender sender;
 		private MimeMessage message;
 		private MimeMessageHelper messageHelper;

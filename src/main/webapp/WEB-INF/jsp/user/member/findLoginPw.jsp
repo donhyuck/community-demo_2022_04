@@ -14,21 +14,21 @@
 
 		form.loginId.value = form.loginId.value.trim();
 		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요.')
+			alert('아이디를 입력해주세요.');
 			form.loginId.focus();
 			return;
 		}
 
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
-			alert('이름을 입력해주세요.')
+			alert('이름을 입력해주세요.');
 			form.name.focus();
 			return;
 		}
 
 		form.email.value = form.email.value.trim();
 		if (form.email.value.length == 0) {
-			alert('이메일을 입력해주세요.')
+			alert('이메일을 입력해주세요.');
 			form.email.focus();
 			return;
 		}
