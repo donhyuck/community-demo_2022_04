@@ -41,4 +41,8 @@ public class Member {
 	public boolean isAdmin() {
 		return this.authLevel == 7;
 	}
+	
+	public String getAuthLevelName() {
+		return "일반회원";
+	}
 }
