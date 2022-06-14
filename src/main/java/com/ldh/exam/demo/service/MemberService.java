@@ -38,8 +38,6 @@ public class MemberService {
 		if (oldMember != null) {
 			return ResultData.from("F-8", Ut.format("해당 이름(%s)과 이메일(%s)은 이미 사용중입니다.", name, email));
 		}
-		
-		loginPw = Ut.sha256(loginPw);
 
 		memberRepository.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 		int id = memberRepository.getLastInsertId();
@@ -166,9 +164,7 @@ public class MemberService {
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
-		
-		tempPassword = Ut.sha256(tempPassword);
-		
+
 		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
 

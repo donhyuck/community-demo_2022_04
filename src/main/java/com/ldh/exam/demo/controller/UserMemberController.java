@@ -99,7 +99,7 @@ public class UserMemberController {
 			return rq.jsHistoryBack("등록되지 않은 회원입니다.");
 		}
 
-		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
+		if (member.getLoginPw().equals(loginPw) == false) {
 			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 
@@ -139,7 +139,7 @@ public class UserMemberController {
 			return rq.jsHistoryBack("비밀번호를 입력해주세요.");
 		}
 
-		if (rq.getLoginedMember().getLoginPw().equals(Ut.sha256(loginPw)) == false) {
+		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
 			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 
@@ -207,8 +207,6 @@ public class UserMemberController {
 		if (Ut.empty(email)) {
 			return rq.jsHistoryBack("이메일을 입력해주세요.");
 		}
-
-		loginPw = Ut.sha256(loginPw);
 
 		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, name, nickname, cellPhoneNo,
 				email);

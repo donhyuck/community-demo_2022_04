@@ -5,6 +5,7 @@
 <%@ include file="../common/head.jspf"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
 	let MemberJoin__submitDone = false;
