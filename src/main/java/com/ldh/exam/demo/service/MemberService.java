@@ -165,6 +165,8 @@ public class MemberService {
 
 	private void setTempPassword(Member actor, String tempPassword) {
 
+		tempPassword = Ut.sha256(tempPassword);
+
 		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
 	}
 
