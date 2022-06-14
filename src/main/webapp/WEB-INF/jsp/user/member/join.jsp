@@ -31,10 +31,10 @@
 			return;
 		}
 
-		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length == 0) {
+		form.loginPwInput.value = form.loginPwInput.value.trim();
+		if (form.loginPwInput.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
+			form.loginPwInput.focus();
 			return;
 		}
 
@@ -45,7 +45,7 @@
 			return;
 		}
 
-		if (form.loginPw.value != form.loginPwConfirm.value) {
+		if (form.loginPwInput.value != form.loginPwConfirm.value) {
 			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPw.focus();
 			return;
@@ -78,6 +78,10 @@
 			form.email.focus();
 			return;
 		}
+
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+		form.loginPwConfirm.value = '';
 
 		MemberJoin__submitDone = true;
 		form.submit();
@@ -118,6 +122,7 @@
     <form class="table-box-type-1" method="post" action="../member/doJoin"
       onsubmit="MemberJoin__submit(this); return false;">
       <input type="hidden" name="afterLoginUri" value="${ param.afterLoginUri }">
+      <input type="hidden" name="loginPw">
       <table>
         <colgroup>
           <col width="200" />
@@ -136,7 +141,7 @@
           <tr>
             <th>비밀번호</th>
             <td>
-              <input type="password" class="w-96 input input-bordered" name="loginPw" placeholder="로그인 비밀번호" />
+              <input type="password" class="w-96 input input-bordered" name="loginPwInput" placeholder="로그인 비밀번호" />
             </td>
           </tr>
 
