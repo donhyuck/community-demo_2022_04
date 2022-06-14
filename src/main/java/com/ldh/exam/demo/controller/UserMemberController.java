@@ -49,7 +49,7 @@ public class UserMemberController {
 			return rq.jsHistoryBack("F-6", "이메일(을)를 입력해주세요.");
 		}
 
-		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
+		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 
 		if (joinRd.isFail()) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
@@ -99,7 +99,7 @@ public class UserMemberController {
 			return rq.jsHistoryBack("등록되지 않은 회원입니다.");
 		}
 
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 

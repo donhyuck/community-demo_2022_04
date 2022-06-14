@@ -340,6 +340,7 @@ SELECT * FROM attr;
 ALTER TABLE `member` ADD UNIQUE INDEX (`loginId`);
 
 # 회원 대량 생성
+/*
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -349,3 +350,11 @@ loginPw = 'user2',
 nickname = '사용자2',
 cellphoneNo = '01011111111',
 email = 'tester@test.com';
+*/
+
+# loginPw 칼럼의 길이를 100으로 늘림
+ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
+
+# 기존 회원의 비밀번호를 암호화 해서 저장
+UPDATE `member`
+SET loginPw = SHA2(loginPw, 256);
