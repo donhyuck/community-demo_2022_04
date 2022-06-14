@@ -18,13 +18,13 @@
 			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 
 			if (form.loginPwConfirm.value.length == 0) {
-				alert('새 비밀번호 확인을 입력해주세요.')
+				alert('새 비밀번호 확인을 입력해주세요.');
 				form.loginPwConfirm.focus();
 				return;
 			}
 
 			if (form.loginPwConfirm.value != form.loginPwInput.value) {
-				alert('비밀번호가 일치하지 않습니다.')
+				alert('비밀번호가 일치하지 않습니다.');
 				form.loginPwConfirm.focus();
 				return;
 			}
@@ -32,7 +32,7 @@
 
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
-			alert('이름을 입력해주세요.')
+			alert('이름을 입력해주ads세요.')
 			form.name.focus();
 			return;
 		}
@@ -58,9 +58,11 @@
 			return;
 		}
 
-		form.loginPw.value = sha256(form.loginPwInput.value);
-		form.loginPwInput.value = '';
-		form.loginPwConfirm.value = '';
+		if (form.loginPwInput.value.length > 0) {
+			form.loginPw.value = sha256(form.loginPwInput.value);
+			form.loginPwInput.value = '';
+			form.loginPwConfirm.value = '';
+		}
 
 		MemberModify__submitDone = true;
 		form.submit();
@@ -86,42 +88,43 @@
           <tr>
             <th>새 비밀번호</th>
             <td>
-              <input type="password" class="input input-bordered w-80" name="loginPwInput" placeholder="새 비밀번호를 입력해주세요." />
+              <input type="password" class="input input-bordered w-80" name="loginPwInput" placeholder="새 비밀번호를 입력해주세요."
+                maxlength="30" />
             </td>
           </tr>
           <tr>
             <th>새 비밀번호 확인</th>
             <td>
-              <input type="password" class="input input-bordered w-80" name="loginPwConfirm"
-                placeholder="다시 비밀번호를 입력해주세요." />
+              <input type="password" class="input input-bordered w-80 " name="loginPwConfirm"
+                placeholder="다시 비밀번호를 입력해주세요." maxlength="30" />
             </td>
           </tr>
           <tr>
             <th>이름</th>
             <td>
               <input type="text" class="input input-bordered w-80" name="name" value="${ rq.loginedMember.name }"
-                placeholder="이름을 입력해주세요." />
+                placeholder="이름을 입력해주세요." maxlength="30" />
             </td>
           </tr>
           <tr>
             <th>별명</th>
             <td>
               <input type="text" class="input input-bordered w-80" name="nickname"
-                value="${ rq.loginedMember.nickname }" placeholder="별명을 입력해주세요." />
+                value="${ rq.loginedMember.nickname }" placeholder="별명을 입력해주세요." maxlength="30" />
             </td>
           </tr>
           <tr>
             <th>연락처</th>
             <td>
               <input type="tel" class="input input-bordered w-80" name="cellPhoneNo"
-                value="${ rq.loginedMember.cellPhoneNo }" placeholder="연락처를 입력해주세요." />
+                value="${ rq.loginedMember.cellPhoneNo }" placeholder="연락처를 입력해주세요." maxlength="30" />
             </td>
           </tr>
           <tr>
             <th>이메일</th>
             <td>
               <input type="text" class="input input-bordered w-80" name="email" value="${ rq.loginedMember.email }"
-                placeholder="이메일을 입력해주세요." />
+                placeholder="이메일을 입력해주세요." maxlength="50" />
             </td>
           </tr>
         </tbody>
@@ -129,7 +132,12 @@
 
       <div class="btns mt-5">
         <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
-        <button class="btn btn-primary" type="submit">회원정보수정</button>
+        <button class="btn btn-primary" type="submit">
+          <span>
+            <i class="fas fa-user-plus"></i>
+          </span>
+          회원정보수정
+        </button>
       </div>
 
     </form>

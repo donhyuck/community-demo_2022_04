@@ -62,7 +62,7 @@ public class MemberService {
 
 		memberRepository.modify(memberId, loginPw, name, nickname, cellPhoneNo, email);
 
-		return ResultData.from("S-1", "회원정보가 수정되었습니다.");
+		return ResultData.from("S-1", "회원정보가 수정되었습니다. 다시 로그인해주세요.");
 
 	}
 
