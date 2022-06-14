@@ -73,8 +73,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
-`name` = '사용자1',
-nickname = '이몽룡',
+`name` = '이몽룡',
+nickname = '사용자1',
 cellPhoneNo = '01045674567',
 email = 'test01@test.com';
 
@@ -84,8 +84,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
-`name` = '사용자2',
-nickname = '성춘향',
+`name` = '성춘향',
+nickname = '사용자2',
 cellPhoneNo = '0107894789',
 email = 'test02@test.com';
 
@@ -358,3 +358,5 @@ ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 # 기존 회원의 비밀번호를 암호화 해서 저장
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
+
+SELECT * FROM `member`;

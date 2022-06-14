@@ -139,7 +139,7 @@ public class UserMemberController {
 			return rq.jsHistoryBack("비밀번호를 입력해주세요.");
 		}
 
-		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
+		if (rq.getLoginedMember().getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			return rq.jsHistoryBack("잘못된 비밀번호입니다.");
 		}
 
@@ -208,10 +208,14 @@ public class UserMemberController {
 			return rq.jsHistoryBack("이메일을 입력해주세요.");
 		}
 
+		loginPw = Ut.sha256(loginPw);
+
 		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, name, nickname, cellPhoneNo,
 				email);
 
-		return rq.jsReplace(modifyRd.getMsg(), "/");
+		rq.logout();
+
+		return rq.jsReplace(modifyRd.getMsg() + "다시 로그인해주세요.", "/");
 	}
 
 	@RequestMapping("/user/member/findLoginId")
