@@ -62,6 +62,10 @@ public class MemberService {
 
 		memberRepository.modify(memberId, loginPw, name, nickname, cellPhoneNo, email);
 
+		if (loginPw != null) {
+			attrService.remove("member", memberId, "extra", "useTempPassword");
+		}
+
 		return ResultData.from("S-1", "회원정보가 수정되었습니다. 다시 로그인해주세요.");
 
 	}
@@ -163,11 +167,17 @@ public class MemberService {
 		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
 	}
 
-	private void setTempPassword(Member actor, String tempPassword) {
+	private void setTempPassword(Member member, String tempPassword) {
 
 		tempPassword = Ut.sha256(tempPassword);
+		attrService.setValue("member", member.getId(), "extra", "useTempPassword", "Y", null);
 
-		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
+		memberRepository.modify(member.getId(), tempPassword, null, null, null, null);
+	}
+
+	public boolean isUsingTempPassword(int memberId) {
+
+		return attrService.getValue("member", memberId, "extra", "useTempPassword").equals("Y");
 	}
 
 }

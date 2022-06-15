@@ -105,7 +105,16 @@ public class UserMemberController {
 
 		rq.login(member);
 
-		return rq.jsReplace(Ut.format("%s님 환영합니다.", member.getName()), afterLoginUri);
+		String msg = Ut.format("%s님 환영합니다.", member.getName());
+
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
+
+		if (isUsingTempPassword) {
+			msg = "임시비밀번호 변경이 필요합니다.";
+			afterLoginUri = "/user/member/myPage";
+		}
+
+		return rq.jsReplace(msg, afterLoginUri);
 	}
 
 	@RequestMapping("/user/member/doLogout")

@@ -32,28 +32,28 @@
 
 		form.name.value = form.name.value.trim();
 		if (form.name.value.length == 0) {
-			alert('이름을 입력해주ads세요.')
+			alert('이름을 입력해주세요.');
 			form.name.focus();
 			return;
 		}
 
 		form.nickname.value = form.nickname.value.trim();
 		if (form.nickname.value.length == 0) {
-			alert('별명을 입력해주세요.')
+			alert('별명을 입력해주세요.');
 			form.nickname.focus();
 			return;
 		}
 
 		form.cellPhoneNo.value = form.cellPhoneNo.value.trim();
 		if (form.cellPhoneNo.value.length == 0) {
-			alert('연락처를 입력해주세요.')
+			alert('연락처를 입력해주세요.');
 			form.cellPhoneNo.focus();
 			return;
 		}
 
 		form.email.value = form.email.value.trim();
 		if (form.email.value.length == 0) {
-			alert('이메일을 입력해주세요.')
+			alert('이메일을 입력해주세요.');
 			form.email.focus();
 			return;
 		}
