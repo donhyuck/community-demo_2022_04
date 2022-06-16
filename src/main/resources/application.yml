@@ -25,6 +25,7 @@ spring:
 mybatis:
   type-aliases-package: com.ldh.exam.demo.vo
 custom:
+  freeDaysOfExpiredPassword: 50
   siteMainUri: http://localhost:8012/
   siteName: 헬로우월드
   emailFrom: no-reply@localhost

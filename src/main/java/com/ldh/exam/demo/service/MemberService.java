@@ -25,6 +25,12 @@ public class MemberService {
 	private String siteMainUri;
 	@Value("${custom.siteName}")
 	private String siteName;
+	@Value("${custom.freeDaysOfExpiredPassword}")
+	private int freeDaysOfExpiredPassword;
+
+	public int getFreeDaysOfExpiredPassword() {
+		return freeDaysOfExpiredPassword;
+	}
 
 	public ResultData join(String loginId, String loginPw, String name, String nickname, String cellPhoneNo,
 			String email) {
@@ -42,9 +48,17 @@ public class MemberService {
 		memberRepository.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 		int id = memberRepository.getLastInsertId();
 
-		attrService.setValue("member", id, "extra", "isExpiredPassword", "0", Ut.getDateStrLater(60 * 60 * 24 * 90));
+		setFreeDaysOfExpiredPasswordLater(id);
 
 		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
+	}
+
+	private void setFreeDaysOfExpiredPasswordLater(int memberId) {
+
+		int days = getFreeDaysOfExpiredPassword();
+		attrService.setValue("member", memberId, "extra", "isExpiredPassword", "0",
+				Ut.getDateStrLater(60 * 60 * 24 * days));
+
 	}
 
 	public Member getMemberByLoginId(String loginId) {

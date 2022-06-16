@@ -110,7 +110,7 @@ public class UserMemberController {
 		boolean isExpiredPassword = memberService.isExpiredPassword(member.getId());
 
 		if (isExpiredPassword) {
-			msg = "현재 비밀번호를 사용한지 90일이 경과했습니다. 비밀번호를 변경해주세요.";
+			msg = "현재 비밀번호를 사용한지 " + memberService.getFreeDaysOfExpiredPassword() + "일이 경과했습니다. 비밀번호를 변경해주세요.";
 			afterLoginUri = "/user/member/myPage";
 		}
 
