@@ -42,6 +42,8 @@ public class MemberService {
 		memberRepository.join(loginId, loginPw, name, nickname, cellPhoneNo, email);
 		int id = memberRepository.getLastInsertId();
 
+		attrService.setValue("member", id, "extra", "isExpiredPassword", "0", Ut.getDateStrLater(60 * 60 * 24 * 90));
+
 		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
 	}
 
@@ -63,6 +65,8 @@ public class MemberService {
 		memberRepository.modify(memberId, loginPw, name, nickname, cellPhoneNo, email);
 
 		if (loginPw != null) {
+			attrService.setValue("member", memberId, "extra", "isExpiredPassword", "0",
+					Ut.getDateStrLater(60 * 60 * 24 * 90));
 			attrService.remove("member", memberId, "extra", "useTempPassword");
 		}
 
@@ -178,6 +182,11 @@ public class MemberService {
 	public boolean isUsingTempPassword(int memberId) {
 
 		return attrService.getValue("member", memberId, "extra", "useTempPassword").equals("Y");
+	}
+
+	public boolean isExpiredPassword(int memberId) {
+
+		return attrService.getValue("member", memberId, "extra", "isExpiredPassword").equals("0") == false;
 	}
 
 }

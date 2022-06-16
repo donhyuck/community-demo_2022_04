@@ -107,10 +107,17 @@ public class UserMemberController {
 
 		String msg = Ut.format("%s님 환영합니다.", member.getName());
 
+		boolean isExpiredPassword = memberService.isExpiredPassword(member.getId());
+
+		if (isExpiredPassword) {
+			msg = "현재 비밀번호를 사용한지 90일이 경과했습니다. 비밀번호를 변경해주세요.";
+			afterLoginUri = "/user/member/myPage";
+		}
+
 		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
 
 		if (isUsingTempPassword) {
-			msg = "임시비밀번호 변경이 필요합니다.";
+			msg = "임시비밀번호를 사용중입니다. 비밀번호를 변경해주세요.";
 			afterLoginUri = "/user/member/myPage";
 		}
 
