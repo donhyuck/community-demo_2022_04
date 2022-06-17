@@ -60,6 +60,7 @@ public class Rq {
 
 		// 로그인한 회원중 비밀번호 만료기간이 넘은 사람이 있는가
 		if (loginedMember != null) {
+
 			if (session.getAttribute("isExpiredPassword") == null) {
 
 				isExpiredPassword = memberService.isExpiredPassword(loginedMemberId);

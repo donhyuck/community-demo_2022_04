@@ -76,7 +76,7 @@ loginPw = 'test1',
 `name` = '이몽룡',
 nickname = '사용자1',
 cellPhoneNo = '01045674567',
-email = 'test01@test.com';
+email = 'leedonhyuck123@gmail.com';
 
 # 회원, 테스트 데이터 생성(일반 회원)
 INSERT INTO `member`
@@ -360,3 +360,18 @@ UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
 
 SELECT * FROM `member`;
+SELECT * FROM `attr`;
+
+# 신규등록회원은 비번변경할 필요가 없도록 설정
+INSERT INTO attr (
+    regDate,
+	updateDate,
+	relTypeCode,
+	relId,
+	typeCode,
+	type2Code,
+	`value`,
+	expireDate
+)
+SELECT NOW(), NOW(), 'member', id, 'extra', 'isExpiredPassword', 0, NULL
+FROM `member`
