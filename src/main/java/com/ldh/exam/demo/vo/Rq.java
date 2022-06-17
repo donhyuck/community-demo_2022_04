@@ -51,12 +51,22 @@ public class Rq {
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			loginedMember = memberService.getMemberById(loginedMemberId);
+		}
+
+		if (loginedMemberId != 0) {
+			String loginedMemberJsonStr = (String) session.getAttribute("loginedMemberJsonStr");
+			loginedMember = Ut.fromJsonStr(loginedMemberJsonStr, Member.class);
 		}
 
 		// 로그인한 회원중 비밀번호 만료기간이 넘은 사람이 있는가
 		if (loginedMember != null) {
-			isExpiredPassword = memberService.isExpiredPassword(loginedMemberId);
+			if (session.getAttribute("isExpiredPassword") == null) {
+
+				isExpiredPassword = memberService.isExpiredPassword(loginedMemberId);
+				session.setAttribute("isExpiredPassword", isExpiredPassword);
+			}
+
+			isExpiredPassword = (boolean) session.getAttribute("isExpiredPassword");
 		}
 
 		this.isLogined = isLogined;
@@ -109,6 +119,7 @@ public class Rq {
 
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
+		session.setAttribute("loginedMemberJsonStr", member.toJsonStr());
 	}
 
 	public boolean isNotLogined() {

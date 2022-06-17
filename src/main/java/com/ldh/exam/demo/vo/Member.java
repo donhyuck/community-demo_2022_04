@@ -1,5 +1,8 @@
 package com.ldh.exam.demo.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ldh.exam.demo.util.Ut;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
 
 	private int id;
@@ -41,8 +45,13 @@ public class Member {
 	public boolean isAdmin() {
 		return this.authLevel == 7;
 	}
-	
+
 	public String getAuthLevelName() {
 		return "일반회원";
+	}
+
+	public String toJsonStr() {
+
+		return Ut.toJsonStr(this);
 	}
 }

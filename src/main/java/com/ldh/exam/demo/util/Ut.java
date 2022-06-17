@@ -9,6 +9,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Ut {
 
 	public static boolean empty(Object obj) {
@@ -153,5 +156,43 @@ public class Ut {
 		}
 
 		return defaultValue;
+	}
+
+	public static String toJsonStr(Object obj) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	public static String toJsonStr(Map<String, Object> param) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			return mapper.writeValueAsString(param);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	public static <T> T fromJsonStr(String jsonStr, Class<T> cls) {
+
+		ObjectMapper om = new ObjectMapper();
+
+		try {
+			return (T) om.readValue(jsonStr, cls);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
