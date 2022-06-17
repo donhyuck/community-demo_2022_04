@@ -23,9 +23,11 @@ public class Rq {
 	@Getter
 	private boolean isLogined;
 	@Getter
-	private int loginedMemberId;
+	private boolean isExpiredPassword;
 	@Getter
 	private Member loginedMember;
+	@Getter
+	private int loginedMemberId;
 	@Getter
 	private boolean isAjax;
 
@@ -38,12 +40,13 @@ public class Rq {
 
 		this.req = req;
 		this.resp = resp;
+		this.session = req.getSession();
 		paramMap = Ut.getParamMap(req);
 
-		this.session = req.getSession();
 		boolean isLogined = false;
-		int loginedMemberId = 0;
+		boolean isExpiredPassword = false;
 		Member loginedMember = null;
+		int loginedMemberId = 0;
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
@@ -51,9 +54,15 @@ public class Rq {
 			loginedMember = memberService.getMemberById(loginedMemberId);
 		}
 
+		// 로그인한 회원중 비밀번호 만료기간이 넘은 사람이 있는가
+		if (loginedMember != null) {
+			isExpiredPassword = memberService.isExpiredPassword(loginedMemberId);
+		}
+
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
+		this.isExpiredPassword = isExpiredPassword;
 
 		// 해당 요청이 ajax 요청인지 아닌지 체크
 		String requestUri = req.getRequestURI();

@@ -79,8 +79,7 @@ public class MemberService {
 		memberRepository.modify(memberId, loginPw, name, nickname, cellPhoneNo, email);
 
 		if (loginPw != null) {
-			attrService.setValue("member", memberId, "extra", "isExpiredPassword", "0",
-					Ut.getDateStrLater(60 * 60 * 24 * 90));
+			setFreeDaysOfExpiredPasswordLater(memberId);
 			attrService.remove("member", memberId, "extra", "useTempPassword");
 		}
 

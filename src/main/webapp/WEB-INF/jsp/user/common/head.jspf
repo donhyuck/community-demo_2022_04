@@ -61,6 +61,14 @@
       <div class="flex-grow"></div>
 
       <ul class="flex">
+        <c:if test="${ rq.logined && rq.expiredPassword }">
+          <li>
+            <a class="flex items-center px-3 h-full hover:underline"
+              href="../member/checkPassword?replaceUri=..%2Fmember%2Fmodify">
+              <span class="text-red-400">비밀번호 변경</span>
+            </a>
+          </li>
+        </c:if>
         <li>
           <a class="flex items-center px-3 h-full hover:underline btn-theme-toggle" href="javascript:Theme__toggle();">
             <span>밝게</span>
