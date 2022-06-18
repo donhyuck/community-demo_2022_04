@@ -12,56 +12,11 @@ import com.ldh.exam.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	@Select("""
-			<script>
-			SELECT a.*,
-			IFNULL(m.name, "삭제된_회원") AS extra__writerName
-			FROM article AS a
-			LEFT JOIN `member` AS m
-			ON a.memberId = m.id
-			WHERE a.id = #{id}
-			</script>
-			""")
 	public Article getForPrintArticle(@Param("id") int id);
 
-	@Select("""
-			<script>
-			SELECT a.*,
-			IFNULL(m.name, "삭제된_회원") AS extra__writerName
-			FROM article AS a
-			LEFT JOIN `member` AS m
-			ON a.memberId = m.id
-			WHERE 1
-			<if test="boardId != 0">
-				AND a.boardId = #{boardId}
-			</if>
-			<if test="searchKeyword != ''">
-				<choose>
-					<when test="searchKeywordTypeCode == 'title'">
-						AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
-					</when>
-					<when test="searchKeywordTypeCode == 'body'">
-						AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
-					</when>
-					<otherwise>
-						AND (
-							a.title LIKE CONCAT('%',#{searchKeyword},'%')
-							OR
-							a.body LIKE CONCAT('%',#{searchKeyword},'%')
-						)
-
-
-					</otherwise>
-				</choose>
-			</if>
-			ORDER BY a.id DESC
-			<if test="limitTake != -1">
-				LIMIT #{limitStart}, #{limitTake}
-			</if>
-			</script>
-			""")
-	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword,
-			int limitStart, int limitTake);
+	public List<Article> getForPrintArticles(@Param("boardId") int boardId,
+			@Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword,
+			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
 	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId,
 			@Param("title") String title, @Param("body") String body);
@@ -72,36 +27,8 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	@Select("""
-			<script>
-			SELECT COUNT(*) AS cnt
-			FROM article AS a
-			WHERE 1
-			<if test="boardId != 0">
-				AND a.boardId = #{boardId}
-			</if>
-			<if test="searchKeyword != ''">
-				<choose>
-					<when test="searchKeywordTypeCode == 'title'">
-						AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
-					</when>
-					<when test="searchKeywordTypeCode == 'body'">
-						AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
-					</when>
-					<otherwise>
-						AND (
-							a.title LIKE CONCAT('%',#{searchKeyword},'%')
-							OR
-							a.body LIKE CONCAT('%',#{searchKeyword},'%')
-						)
-
-
-					</otherwise>
-				</choose>
-			</if>
-			</script>
-			""")
-	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
+	public int getArticlesCount(@Param("boardId") int boardId,
+			@Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
 
 	@Update("""
 			<script>

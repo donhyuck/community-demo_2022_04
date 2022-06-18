@@ -4,10 +4,79 @@
 <mapper
 	namespace="com.ldh.exam.demo.repository.ArticleRepository">
 
+	<select id="getForPrintArticle" resultType="Article">
+		SELECT a.*,
+		IFNULL(m.name, "삭제된_회원") AS extra__writerName
+		FROM article AS a
+		LEFT JOIN `member` AS m
+		ON a.memberId = m.id
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="getForPrintArticles" resultType="Article">
+		SELECT a.*,
+		IFNULL(m.name, "삭제된_회원") AS extra__writerName
+		FROM article AS a
+		LEFT JOIN `member` AS m
+		ON a.memberId = m.id
+		WHERE 1
+		<if test="boardId != 0">
+			AND a.boardId = #{boardId}
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+					AND (
+					a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					OR
+					a.body LIKE CONCAT('%',#{searchKeyword},'%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY a.id DESC
+		<if test="limitTake != -1">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
+	</select>
+
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS a
+		WHERE 1
+		<if test="boardId != 0">
+			AND a.boardId = #{boardId}
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+					AND (
+					a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					OR
+					a.body LIKE CONCAT('%',#{searchKeyword},'%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		memberId = #{memberId},
 		boardId = #{boardId},
 		title = #{title},
