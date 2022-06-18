@@ -40,34 +40,72 @@
           <col width="100" />
           <col width="100" />
           <col />
-          <col width="90" />
-          <col width="80" />
-          <col width="80" />
+          <col width="120" />
+          <col width="120" />
+          <col width="120" />
+          <col width="120" />
         </colgroup>
         <thead>
           <tr>
-            <th>번호</th>
-            <th>작성날짜</th>
-            <th>수정날짜</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>추천</th>
-            <th>조회</th>
+            <th>
+              <span class="badge badge-primary">번호</span>
+            </th>
+            <th>
+              <span class="badge">등록날짜</span>
+            </th>
+            <th>
+              <span class="badge">수정날짜</span>
+            </th>
+            <th>
+              <span class="badge badge-outline">제목</span>
+            </th>
+            <th>
+              <span class="badge badge-outline ml-3">작성자</span>
+            </th>
+            <th>
+              <span class="badge badge-outline ml-3">추선수</span>
+            </th>
+            <th>
+              <span class="badge badge-outline ml-3">조회수</span>
+            </th>
+            <th></th>
           </tr>
         </thead>
 
         <tbody>
           <c:forEach var="article" items="${ articles }">
-            <tr>
-              <th>${ article.id }</th>
+            <tr class="px-4 py-8">
+              <td>
+                <a href="${rq.getArticleDetailUriFromArticleList(article)}" class="hover:underline ml-4">
+                  <span>${article.id}</span>
+                </a>
+              </td>
               <td>${ article.forPrintType1RegDate }</td>
               <td>${ article.forPrintType1UpdateDate }</td>
               <td>
                 <a class="btn-text-link block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${ article.title }</a>
               </td>
-              <td>${ article.extra__writerName }</td>
-              <td>${ article.goodReactionPoint }</td>
-              <td>${ article.hitCount }</td>
+              <td class="text-center">${ article.extra__writerName }</td>
+              <td class="text-center">${ article.goodReactionPoint }</td>
+              <td class="text-center">${ article.hitCount }</td>
+              <td>
+                <div class="mb-2">
+                  <a href="../article/modify?id=${ article.id }">
+                    <span>
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <span>수정</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="../article/doDelete?id=${ article.id }" onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
+                    <span>
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span>삭제</span>
+                  </a>
+                </div>
+              </td>
             </tr>
           </c:forEach>
         </tbody>
