@@ -15,7 +15,7 @@ public interface ArticleRepository {
 	@Select("""
 			<script>
 			SELECT a.*,
-			m.nickname AS extra__writerName
+			IFNULL(m.name, "삭제된_회원") AS extra__writerName
 			FROM article AS a
 			LEFT JOIN `member` AS m
 			ON a.memberId = m.id
@@ -26,7 +26,8 @@ public interface ArticleRepository {
 
 	@Select("""
 			<script>
-			SELECT a.*, m.nickname AS extra__writerName
+			SELECT a.*,
+			IFNULL(m.name, "삭제된_회원") AS extra__writerName
 			FROM article AS a
 			LEFT JOIN `member` AS m
 			ON a.memberId = m.id
