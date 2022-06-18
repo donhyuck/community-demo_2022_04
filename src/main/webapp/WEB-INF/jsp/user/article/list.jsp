@@ -57,16 +57,16 @@
               <span class="badge">수정날짜</span>
             </th>
             <th>
-              <span class="badge badge-outline">제목</span>
+              <span class="text-base">제목</span>
             </th>
-            <th>
-              <span class="badge badge-outline ml-3">작성자</span>
+            <th class=" text-center">
+              <span class="text-base">작성자</span>
             </th>
-            <th>
-              <span class="badge badge-outline ml-3">추선수</span>
+            <th class=" text-center">
+              <span class="text-base ml-3">추선수</span>
             </th>
-            <th>
-              <span class="badge badge-outline ml-3">조회수</span>
+            <th class=" text-center">
+              <span class="text-base ml-3">조회수</span>
             </th>
             <th></th>
           </tr>
@@ -74,20 +74,35 @@
 
         <tbody>
           <c:forEach var="article" items="${ articles }">
+            <c:set var="detailUri" value="${rq.getArticleDetailUriFromArticleList(article)}" />
             <tr class="px-4 py-8">
               <td>
-                <a href="${rq.getArticleDetailUriFromArticleList(article)}" class="hover:underline ml-4">
+                <a href="${ detailUri }" class="hover:underline ml-4">
                   <span>${article.id}</span>
                 </a>
               </td>
-              <td>${ article.forPrintType1RegDate }</td>
-              <td>${ article.forPrintType1UpdateDate }</td>
               <td>
-                <a class="btn-text-link block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${ article.title }</a>
+                <a href="${ detailUri }" class="hover:underline">
+                  <span>${ article.forPrintType1RegDate }</span>
+                </a>
               </td>
-              <td class="text-center">${ article.extra__writerName }</td>
-              <td class="text-center">${ article.goodReactionPoint }</td>
-              <td class="text-center">${ article.hitCount }</td>
+              <td>
+                <a href="${ detailUri }" class="hover:underline">
+                  <span>${ article.forPrintType1UpdateDate }</span>
+                </a>
+              </td>
+              <td>
+                <a href="${ detailUri }" class="btn-text-link block w-full truncate">${ article.title }</a>
+              </td>
+              <td class="text-center">
+                <a href="${ detailUri }">${ article.extra__writerName }</a>
+              </td>
+              <td class="text-center">
+                <a href="${ detailUri }">${ article.goodReactionPoint }</a>
+              </td>
+              <td class="text-center">
+                <a href="${ detailUri }">${ article.hitCount }</a>
+              </td>
               <td>
                 <div class="mb-2">
                   <a href="../article/modify?id=${ article.id }">
