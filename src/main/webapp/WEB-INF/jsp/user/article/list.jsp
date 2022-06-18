@@ -96,6 +96,7 @@
               </td>
               <td class="text-center">
                 <a href="${ detailUri }">${ article.extra__writerName }</a>
+                <a href="${ detailUri }">${ article.extra__writerRealName }</a>
               </td>
               <td class="text-center">
                 <a href="${ detailUri }">${ article.goodReactionPoint }</a>

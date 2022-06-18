@@ -1,5 +1,7 @@
 package com.ldh.exam.demo.vo;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Attr {
-	
+
 	private int id;
 	private String regDate;
 	private String updateDate;
@@ -18,4 +20,6 @@ public class Attr {
 	private String typeCode;
 	private String type2Code;
 	private String value;
+
+	private Map<String, Object> extra;
 }
