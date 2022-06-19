@@ -173,6 +173,7 @@
 <!-- 댓글 영역 시작 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
+    <h1 class="title-bar-type-2 px-4 font-semibold">댓글</h1>
     <c:if test="${ rq.logined }">
       <h1>댓글 작성</h1>
       <form class="table-box-type-1 mt-3" method="post" action="../reply/doWrite"
@@ -215,7 +216,7 @@
 <!-- 댓글 리스트 영역 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
-    <h1>댓글 목록 (${ replies.size() } 건)</h1>
+    <h1>전체댓글 (${ replies.size() } 건)</h1>
     <table class="table table-fixed w-full mt-5">
       <colgroup>
         <col width="50" />
@@ -250,14 +251,26 @@
               <!-- 댓글 조작 영역 시작 -->
               <div class="btns">
                 <c:if test="${ reply.extra__actorCanModify }">
-                  <a class="btn btn-link flex-auto"
-                    href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
+                  <div class="btn btn-outline btn-sm mb-2">
+                    <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
+                      <span>
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <span>수정</span>
+                    </a>
+                  </div>
                 </c:if>
-
+                <br />
                 <c:if test="${ reply.extra__actorCanDelete }">
-                  <a class="btn btn-link flex-auto"
-                    href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
-                    onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제</a>
+                  <div class="btn btn-outline btn-sm">
+                    <a href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
+                      onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">
+                      <span>
+                        <i class="fas fa-trash"></i>
+                      </span>
+                      <span>삭제</span>
+                    </a>
+                  </div>
                 </c:if>
               </div>
               <!-- 댓글 조작 영역 끝 -->

@@ -77,3 +77,17 @@ html[data-theme="dark"] .btn-theme-toggle > span:last-child {
 .btn-text-link:hover {
 	text-decoration: underline;
 }
+
+.title-bar-type-2 {
+  font-size:1.1rem;
+  padding-top:5px;
+  padding-bottom:5px;
+  margin-top:20px;
+  margin-bottom:15px;
+  border:solid black;
+  border-width:2px 0;
+}
+
+.title-bar-type-2:first-child {
+  margin-top:0;
+}
