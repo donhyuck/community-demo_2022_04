@@ -227,7 +227,16 @@
               <div class="flex text-gray-400 text-light text-sm">
                 <spqn class="font-bold text-black">${reply.extra__writerName}</spqn>
                 <span class="mx-1">·</span>
-                <spqn>${reply.forPrintType2UpateDate}</spqn>
+                <c:if test="${ reply.regDate == reply.updateDate }">
+                  <spqn>${reply.forPrintType2RegDate}</spqn>
+                  <span class="mx-1">·</span>
+                  <span>registered</span>
+                </c:if>
+                <c:if test="${ reply.regDate != reply.updateDate }">
+                  <spqn>${reply.forPrintType2UpateDate}</spqn>
+                  <span class="mx-1">·</span>
+                  <span>modified</span>
+                </c:if>
               </div>
               <div class="break-all">${reply.forPrintBody}</div>
               <div class="mt-1">
