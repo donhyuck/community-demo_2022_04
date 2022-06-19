@@ -174,6 +174,7 @@
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1 class="title-bar-type-2 px-4 font-semibold">댓글</h1>
+    <!-- 로그인 상태에서 댓글 작성기능 사용가능 -->
     <c:if test="${ rq.logined }">
       <h1>댓글 작성</h1>
       <form class="table-box-type-1 mt-3" method="post" action="../reply/doWrite"
@@ -205,6 +206,7 @@
         </div>
       </form>
     </c:if>
+    <!-- 비로그인 상태에선 로그인 안내 -->
     <c:if test="${ rq.notLogined }">
       <h1>
         <a class="link link-primary" href="${ rq.loginUri }">로그인</a>
@@ -217,69 +219,61 @@
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1>전체댓글 (${ replies.size() } 건)</h1>
-    <table class="table table-fixed w-full mt-5">
-      <colgroup>
-        <col width="50" />
-        <col width="100" />
-        <col width="100" />
-        <col width="50" />
-        <col width="80" />
-        <col width="150" />
-        <col />
-      </colgroup>
-      <thead>
-        <tr class="text-center">
-          <th>번호</th>
-          <th>작성날짜</th>
-          <th>수정날짜</th>
-          <th>추천</th>
-          <th>작성자</th>
-          <th>비고</th>
-          <th>내용</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <c:forEach var="reply" items="${ replies }">
-          <tr class="text-center">
-            <th>${ reply.id }</th>
-            <td>${ reply.forPrintType1RegDate }</td>
-            <td>${ reply.forPrintType1UpdateDate }</td>
-            <td>${ reply.goodReactionPoint }</td>
-            <td>${ reply.extra__writerName }</td>
-            <td>
-              <!-- 댓글 조작 영역 시작 -->
-              <div class="btns">
-                <c:if test="${ reply.extra__actorCanModify }">
-                  <div class="btn btn-outline btn-sm mb-2">
-                    <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
-                      <span>
-                        <i class="fas fa-edit"></i>
-                      </span>
-                      <span>수정</span>
-                    </a>
-                  </div>
-                </c:if>
-                <br />
-                <c:if test="${ reply.extra__actorCanDelete }">
-                  <div class="btn btn-outline btn-sm">
-                    <a href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
-                      onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">
-                      <span>
-                        <i class="fas fa-trash"></i>
-                      </span>
-                      <span>삭제</span>
-                    </a>
-                  </div>
-                </c:if>
+    <div>
+      <c:forEach items="${replies}" var="reply">
+        <div class="py-5 px-4">
+          <div class="flex">
+            <div class="flex-grow px-1">
+              <div class="flex text-gray-400 text-light text-sm">
+                <spqn class="font-bold text-black">${reply.extra__writerName}</spqn>
+                <span class="mx-1">·</span>
+                <spqn>${reply.forPrintType2UpateDate}</spqn>
               </div>
-              <!-- 댓글 조작 영역 끝 -->
-            </td>
-            <td class="text-left">${ reply.forPrintBody }</td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
+              <div class="break-all">${reply.forPrintBody}</div>
+              <div class="mt-1">
+                <span class="text-gray-400 cursor-pointer">
+                  <span>
+                    <i class="fas fa-thumbs-up"></i>
+                  </span>
+                  <span>5,600</span>
+                </span>
+                <span class="ml-1 text-gray-400 cursor-pointer">
+                  <span>
+                    <i class="fas fa-thumbs-down"></i>
+                  </span>
+                  <span>5,600</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- 댓글 조작 영역 시작 -->
+          <div class="btns h-8 flex items-center">
+            <c:if test="${ reply.extra__actorCanModify }">
+              <div class="btn btn-primary btn-outline btn-xs mr-2">
+                <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
+                  <span>
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span>수정</span>
+                </a>
+              </div>
+            </c:if>
+            <c:if test="${ reply.extra__actorCanDelete }">
+              <div class="btn btn-primary btn-outline btn-xs">
+                <a href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
+                  onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">
+                  <span>
+                    <i class="fas fa-trash"></i>
+                  </span>
+                  <span>삭제</span>
+                </a>
+              </div>
+            </c:if>
+          </div>
+          <!-- 댓글 조작 영역 끝 -->
+        </div>
+      </c:forEach>
+    </div>
   </div>
 </section>
 <!-- 댓글 영역 끝 -->
