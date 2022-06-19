@@ -14,13 +14,14 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="getForPrintArticles"  resultMap="article">
+	<select id="getForPrintArticles" resultMap="article">
 		SELECT a.*,
 		IFNULL(m.nickname, "삭제된_회원") AS extra__writerName,
 		IFNULL(m.name, "삭제된_회원") AS extra__writerRealName
 		FROM article
 		AS a
-		LEFT JOIN `member` AS m
+		LEFT
+		JOIN `member` AS m
 		ON a.memberId = m.id
 		WHERE 1
 		<if test="boardId != 0">
@@ -121,6 +122,9 @@
 		<id property="body" column="body" />
 		<id property="memberId" column="memberId" />
 		<id property="boardId" column="boardId" />
+		<id property="hitCount" column="hitCount" />
+		<id property="goodReactionPoint" column="goodReactionPoint" />
+		<id property="badReactionPoint" column="badReactionPoint" />
 		<id property="extra__writerName" column="extra__writerName" />
 
 		<association property="extra" javaType="map">

@@ -8,16 +8,14 @@
   <div class="container mx-auto px-3">
 
     <!-- 검색 박스 영역 시작 -->
-    <div class="flex">
-      <div>
-        등록된 게시물 :
+    <div class="search-box flex justify-between">
+      <div class="flex items-center grow-0">
+        등록된 게시물 : &nbsp;
         <span class="badge badge-primary">${ articlesCount }</span>
         개
       </div>
-      <div class="flex-grow"></div>
-      <form class="flex">
+      <form class="flex items-center grow-0">
         <input type="hidden" name="boardId" value="${param.boardId}" />
-
         <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
           <option disabled="disabled">검색타입</option>
           <option value="title">제목</option>
@@ -31,9 +29,8 @@
       </form>
     </div>
     <!-- 검색 박스 영역 끝 -->
-
     <!-- 게시글 목록 영역 시작 -->
-    <div class="mt-3">
+    <div class="ArticleList-box mt-3">
       <table class="table table-fixed w-full">
         <colgroup>
           <col width="60" />
@@ -130,7 +127,7 @@
     <!-- 게시글 목록 영역 끝 -->
 
     <!-- 페이지 영역 시작 -->
-    <div class="page-menu mt-3">
+    <div class="page-box page-menu mt-3">
       <div class="btn-group justify-center">
         <c:set var="pageMenuArmlen" value="5" />
         <c:set var="startPage" value="${ (page - pageMenuArmlen) >= 1 ? (page - pageMenuArmlen) : 1}" />
