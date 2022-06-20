@@ -170,7 +170,7 @@
 	}
 </script>
 
-<!-- 댓글 영역 시작 -->
+<!-- 댓글 작성영역 시작 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1 class="title-bar-type-2 px-4 font-semibold">댓글</h1>
@@ -200,7 +200,6 @@
             </tr>
           </tbody>
         </table>
-
         <div class="btns mt-5">
           <button class="btn btn-primary mr-3" type="submit">댓글 남기기</button>
         </div>
@@ -215,74 +214,80 @@
     </c:if>
   </div>
 </section>
+<!-- 댓글 작성영역 끝 -->
+
 <!-- 댓글 리스트 영역 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1>전체댓글 (${ replies.size() } 건)</h1>
-    <div>
-      <c:forEach items="${replies}" var="reply">
-        <div class="py-5 px-4">
-          <div class="flex">
-            <div class="flex-grow px-1">
-              <div class="flex text-gray-400 text-light text-sm">
-                <spqn class="font-bold text-black">${reply.extra__writerName}</spqn>
-                <span class="mx-1">·</span>
-                <c:if test="${ reply.regDate == reply.updateDate }">
-                  <spqn>${reply.forPrintType2RegDate}</spqn>
-                  <span class="mx-1">·</span>
-                  <span>registered</span>
-                </c:if>
-                <c:if test="${ reply.regDate != reply.updateDate }">
-                  <spqn>${reply.forPrintType2UpateDate}</spqn>
-                  <span class="mx-1">·</span>
-                  <span>modified</span>
-                </c:if>
-              </div>
-              <div class="break-all">${reply.forPrintBody}</div>
-              <div class="mt-1">
-                <span class="text-gray-400 cursor-pointer">
-                  <span>
-                    <i class="fas fa-thumbs-up"></i>
-                  </span>
-                  <span>5,600</span>
-                </span>
-                <span class="ml-1 text-gray-400 cursor-pointer">
-                  <span>
-                    <i class="fas fa-thumbs-down"></i>
-                  </span>
-                  <span>5,600</span>
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- 댓글 조작 영역 시작 -->
-          <div class="btns h-8 flex items-center">
-            <c:if test="${ reply.extra__actorCanModify }">
-              <div class="btn btn-primary btn-outline btn-xs mr-2">
-                <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
-                  <span>
-                    <i class="fas fa-edit"></i>
-                  </span>
-                  <span>수정</span>
-                </a>
-              </div>
+    <c:forEach items="${replies}" var="reply">
+      <div class="mt-5 mb-8 mx-4 flex justify-between grid md:grid-cols-2 shadow p-3 rounded-lg">
+        <!-- 댓글 내용 영역 시작 -->
+        <div class="px-1">
+          <!-- 작성자, 등록(수정)일 -->
+          <div class="text-gray-400 text-light text-sm">
+            <spqn class="font-bold text-black">${reply.extra__writerName}</spqn>
+            <span class="mx-1">·</span>
+            <c:if test="${ reply.regDate == reply.updateDate }">
+              <spqn>${reply.forPrintType2RegDate}</spqn>
+              <span class="mx-1">·</span>
+              <span>registered</span>
             </c:if>
-            <c:if test="${ reply.extra__actorCanDelete }">
-              <div class="btn btn-primary btn-outline btn-xs">
-                <a href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
-                  onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">
-                  <span>
-                    <i class="fas fa-trash"></i>
-                  </span>
-                  <span>삭제</span>
-                </a>
-              </div>
+            <c:if test="${ reply.regDate != reply.updateDate }">
+              <spqn>${reply.forPrintType2UpateDate}</spqn>
+              <span class="mx-1">·</span>
+              <span>modified</span>
             </c:if>
           </div>
-          <!-- 댓글 조작 영역 끝 -->
+
+          <!-- 댓글 내용 -->
+          <div class="break-all">${reply.forPrintBody}</div>
+
+          <!-- 추천, 반대 수 -->
+          <div class="mt-1">
+            <span class="text-gray-400 cursor-pointer">
+              <span>
+                <i class="fas fa-thumbs-up"></i>
+              </span>
+              <span>5,600</span>
+            </span>
+            <span class="ml-1 text-gray-400 cursor-pointer">
+              <span>
+                <i class="fas fa-thumbs-down"></i>
+              </span>
+              <span>5,600</span>
+            </span>
+          </div>
         </div>
-      </c:forEach>
-    </div>
+        <!-- 댓글 내용 영역 끝 -->
+
+        <!-- 댓글 수정, 삭제 영역 시작 -->
+        <div class="btns flex items-center ml-auto">
+          <c:if test="${ reply.extra__actorCanModify }">
+            <div class="btn btn-primary btn-outline btn-xs mr-3">
+              <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
+                <span>
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span>수정</span>
+              </a>
+            </div>
+          </c:if>
+          <c:if test="${ reply.extra__actorCanDelete }">
+            <div class="btn btn-primary btn-outline btn-xs">
+              <a href="../reply/doDelete?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}"
+                onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">
+                <span>
+                  <i class="fas fa-trash"></i>
+                </span>
+                <span>삭제</span>
+              </a>
+            </div>
+          </c:if>
+        </div>
+        <!-- 댓글 수정, 삭제 영역 영역 끝 -->
+      </div>
+    </c:forEach>
   </div>
 </section>
 <!-- 댓글 영역 끝 -->

@@ -8,25 +8,28 @@
   <div class="container mx-auto px-3">
 
     <!-- 검색 박스 영역 시작 -->
-    <div class="search-box flex justify-between">
-      <div class="flex items-center grow-0">
-        등록된 게시물 : &nbsp;
+    <div class="search-box flex justify-between grid md:grid-cols-2">
+      <div class="flex items-center ml-1 mr-5 w-44">
+        <span>등록된 게시물 : </span>
         <span class="badge badge-primary">${ articlesCount }</span>
-        개
+        <span>개 
       </div>
-      <form class="flex items-center grow-0">
-        <input type="hidden" name="boardId" value="${param.boardId}" />
-        <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
-          <option disabled="disabled">검색타입</option>
-          <option value="title">제목</option>
-          <option value="body">내용</option>
-          <option value="title,body">제목과 내용</option>
-        </select>
-        <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
-          class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
+      <div class="ml-auto flex items-center h-16">
+        <form class="flex grow-0">
+          <input type="hidden" name="boardId" value="${param.boardId}" />
+          <select class="select select-bordered" name="searchKeywordTypeCode"
+            data-value="${param.searchKeywordTypeCode}">
+            <option disabled="disabled">검색타입</option>
+            <option value="title">제목</option>
+            <option value="body">내용</option>
+            <option value="title,body">제목과 내용</option>
+          </select>
+          <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
+            class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
 
-        <button type="submit" class="ml-2 btn btn-primary">검색</button>
-      </form>
+          <button type="submit" class="ml-2 btn btn-primary">검색</button>
+        </form>
+      </div>
     </div>
     <!-- 검색 박스 영역 끝 -->
     <!-- 게시글 목록 영역 시작 -->
