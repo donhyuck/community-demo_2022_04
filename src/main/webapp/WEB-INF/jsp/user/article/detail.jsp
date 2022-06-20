@@ -217,11 +217,11 @@
 <!-- 댓글 작성영역 끝 -->
 
 <!-- 댓글 리스트 영역 -->
-<section class="mt-5">
+<section class="reply-list mt-5">
   <div class="container mx-auto px-3">
     <h1>전체댓글 (${ replies.size() } 건)</h1>
     <c:forEach items="${replies}" var="reply">
-      <div class="mt-5 mb-8 mx-4 flex justify-between grid md:grid-cols-2 shadow p-3 rounded-lg">
+      <div class="mt-5 mb-8 mx-4 flex justify-between grid md:grid-cols-2 shadow p-3 rounded-lg" data-id="${ reply.id }">
         <!-- 댓글 내용 영역 시작 -->
         <div class="px-1">
           <!-- 작성자, 등록(수정)일 -->
@@ -262,7 +262,7 @@
         <!-- 댓글 내용 영역 끝 -->
 
         <!-- 댓글 수정, 삭제 영역 시작 -->
-        <div class="btns flex items-center ml-auto">
+        <div class="btns flex items-center ml-auto mr-10">
           <c:if test="${ reply.extra__actorCanModify }">
             <div class="btn btn-primary btn-outline btn-xs mr-3">
               <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">

@@ -31,7 +31,7 @@ public interface ReplyRepository {
 
 	@Select("""
 			SELECT r.*,
-			m.nickname AS extra__writerName
+			m.name AS extra__writerName
 			FROM reply AS r
 			LEFT JOIN `member` AS m
 			ON r.memberId = m.id

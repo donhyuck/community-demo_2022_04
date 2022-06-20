@@ -40,7 +40,7 @@ public class UserReplyController {
 		}
 
 		ResultData<Integer> writeReplyRd = replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
-		int id = writeReplyRd.getData1();
+		int newReplyId = writeReplyRd.getData1();
 
 		if (Ut.empty(replaceUri)) {
 			switch (relTypeCode) {
@@ -49,6 +49,8 @@ public class UserReplyController {
 				break;
 			}
 		}
+
+		replaceUri = Ut.getNewUri(replaceUri, "focusReplyId", newReplyId + "");
 
 		return rq.jsReplace(writeReplyRd.getMsg(), replaceUri);
 	}
