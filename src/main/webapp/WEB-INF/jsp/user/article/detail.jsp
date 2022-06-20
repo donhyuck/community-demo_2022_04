@@ -26,6 +26,13 @@
 	})
 </script>
 
+<!-- 댓글 작성후 스크롤 이동 -->
+<script>
+	if (param.focusReplyId) {
+		alert(param.focusReplyId);
+	}
+</script>
+
 <section>
   <div class="container mx-auto px-3">
     <div class="table-box-type-1">

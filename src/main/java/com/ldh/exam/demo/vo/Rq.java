@@ -224,4 +224,8 @@ public class Rq {
 
 		return loginedMember.isAdmin();
 	}
+
+	public String getParamJsonStr() {
+		return Ut.toJsonStr(paramMap);
+	}
 }
