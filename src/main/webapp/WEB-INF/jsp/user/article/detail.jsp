@@ -27,9 +27,32 @@
 </script>
 
 <!-- 댓글 작성후 스크롤 이동 -->
+<style>
+.reply-list [data-id] {
+	transition: background-color 1s;
+}
+
+.reply-list [data-id].focus {
+	background-color: #efefef;
+	transition: background-color 0s;
+}
+</style>
+
 <script>
+	function ReplyList__goToReply(id) {
+		setTimeout(function() {
+			const $target = $('.reply-list [data-id="' + id + '"]');
+			const targetOffset = $target.offset();
+			$(window).scrollTop(targetOffset.top - 50);
+			$target.addClass('focus');
+
+			setTimeout(function() {
+				$target.removeClass('focus');
+			}, 1000);
+		}, 1000);
+	}
 	if (param.focusReplyId) {
-		alert(param.focusReplyId);
+		ReplyList__goToReply(param.focusReplyId);
 	}
 </script>
 
