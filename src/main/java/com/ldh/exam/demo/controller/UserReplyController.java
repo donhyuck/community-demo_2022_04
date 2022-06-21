@@ -111,7 +111,7 @@ public class UserReplyController {
 			return rq.jsHistoryBack(Ut.format("%d번 댓글에 대한 수정권한이 없습니다.", id));
 		}
 
-		ResultData deleteReplyRd = replyService.modifyReply(id, body);
+		ResultData modifyReplyRd = replyService.modifyReply(id, body);
 
 		if (Ut.empty(replaceUri)) {
 			switch (reply.getRelTypeCode()) {
@@ -121,7 +121,9 @@ public class UserReplyController {
 			}
 		}
 
-		return rq.jsReplace(deleteReplyRd.getMsg(), replaceUri);
+		replaceUri = Ut.getNewUri(replaceUri, "focusReplyId", id + "");
+
+		return rq.jsReplace(modifyReplyRd.getMsg(), replaceUri);
 	}
 
 	@RequestMapping("/user/reply/doDelete")

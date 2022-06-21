@@ -4,6 +4,7 @@
 <c:set var="pageTitle" value="댓글 수정" />
 <%@ include file="../common/head.jspf"%>
 
+<!-- 입력데이터 유효성 확인 -->
 <script>
 	let ReplyModify__submitDone = false;
 	function ReplyModify__submit(form) {
