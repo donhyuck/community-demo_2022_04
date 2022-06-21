@@ -5,7 +5,7 @@
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../../common/toastUiEditorLib.jspf"%>
 
-<!-- 조회수 증가 스크립트 -->
+<!-- 게시글 조회수 증가 스크립트 시작 -->
 <script>
 	const params = {};
 	params.id = parseInt('${param.id}');
@@ -26,7 +26,9 @@
 		ArticleDetail__increaseHitCount();
 	})
 </script>
+<!-- 게시글 조회수 증가 스크립트 끝 -->
 
+<!-- 게시글 상세보기 영역 시작 -->
 <section>
   <div class="container mx-auto px-3">
     <div class="table-box-type-1">
@@ -117,7 +119,7 @@
       </table>
     </div>
 
-    <!-- 게시글 조작 영역 시작 -->
+    <!-- 게시글 수정, 삭제 영역 시작 -->
     <div class="btns mt-5">
       <c:if test="${ empty param.listUri }">
         <button class="btn btn-secondary btn-outline mr-3" type="button" onclick="history.back();">뒤로가기</button>
@@ -139,11 +141,13 @@
         </button>
       </c:if>
     </div>
-    <!-- 게시글 조작 영역 끝 -->
+    <!-- 게시글 수정, 삭제 영역 끝 -->
   </div>
 </section>
+<!-- 게시글 상세보기 영역 시작 -->
 
-<!-- 댓글작성 관련 -->
+<!-- 댓글 영역 시작 -->
+<!-- 댓글 작성 유효성 검사 스크립트 시작-->
 <script>
 	let ReplyWrite__submitFormDone = false;
 	function ReplyWrite__submitForm(form) {
@@ -170,8 +174,57 @@
 		form.submit();
 	}
 </script>
+<!-- 댓글 작성 유효성 검사 스크립트 끝-->
 
-<!-- 댓글 작성영역 시작 -->
+<!-- 댓글 수정 모달 시작 -->
+<script>
+	let ReplyModify__submitDone = false;
+	function ReplyModify__submit(form) {
+
+		if (ReplyModify__submitDone) {
+			return;
+		}
+
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('수정내용을 입력해주세요.')
+			form.body.focus();
+			return;
+		}
+
+		ReplyModify__submitDone = true;
+		form.submit();
+	}
+</script>
+
+<div class="reply-modify-modal">
+  <section>
+    <div class="container mx-auto px-3">
+      <form class="" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
+        <input type="hidden" name="id" value="" />
+        <input type="hidden" name="replaceUri" value="${ rq.encodedCurrentUri}" />
+
+        <div class="form-control">
+          <label class="label">댓글내용</label>
+          <textarea class="textarea textarea-bordered w-full h-24" name="body" rows="3" maxlength="2000"
+            placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
+        </div>
+
+        <button class="btns btn-sm mb-1">
+          <span>
+            <i class="fas-fa-list"></i>
+            닫기
+          </span>
+          <span>댓글수정</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
+<!-- 댓글 수정 모달 끝 -->
+
+<!-- 댓글 작성 영역 시작 -->
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <h1 class="title-bar-type-2 px-4 font-semibold">댓글</h1>
@@ -215,9 +268,9 @@
     </c:if>
   </div>
 </section>
-<!-- 댓글 작성영역 끝 -->
+<!-- 댓글 작성 영역 끝 -->
 
-<!-- 댓글 작성후 스크롤 이동 -->
+<!-- 댓글 작성후 스크롤 이동, 포커스 스크립트 시작 -->
 <style>
 .reply-list [data-id] {
 	transition: background-color 1s;
@@ -246,8 +299,9 @@
 		ReplyList__goToReply(param.focusReplyId);
 	}
 </script>
+<!-- 댓글 작성후 스크롤 이동, 포커스 스크립트 끝 -->
 
-<!-- 댓글 리스트 영역 -->
+<!-- 댓글 리스트 영역 시작 -->
 <section class="reply-list mt-5">
   <div class="container mx-auto px-3">
     <h1>전체댓글 (${ replies.size() } 건)</h1>
@@ -321,5 +375,6 @@
     </c:forEach>
   </div>
 </section>
+<!-- 댓글 리스트 영역 끝 -->
 <!-- 댓글 영역 끝 -->
 <%@ include file="../common/foot.jspf"%>

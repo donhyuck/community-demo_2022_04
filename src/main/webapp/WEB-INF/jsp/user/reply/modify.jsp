@@ -58,7 +58,7 @@
           </tr>
           <tr>
             <th>작성날짜</th>
-            <td>${ reply.forPrintType1RegDate }</td>
+            <td>${ reply.forPrintType2RegDate }</td>
           </tr>
           <tr>
             <th>수정날짜</th>
