@@ -177,7 +177,31 @@
 <!-- 댓글 작성 유효성 검사 스크립트 끝-->
 
 <!-- 댓글 수정 모달 시작 -->
+<style>
+.section-reply-modify {
+	position: fixed;
+	top: 0;
+	left: 0;
+	widows: 100%;
+	height: 100%;
+	background-color: white;
+}
+</style>
+
 <script>
+	function ReplyModify__showModal(el) {
+		const $div = $(el).closest('[data-id]');
+		const replyId = $div.attr('data-id');
+		const replyBody = $div.find('.reply-body').html();
+
+		alert(replyId);
+		alert(replyBody);
+	}
+
+	function ReplyModify__hideModal() {
+		$('.section-reply-modify').removeClass('hidden');
+	}
+
 	let ReplyModify__submitDone = false;
 	function ReplyModify__submit(form) {
 
@@ -198,30 +222,28 @@
 	}
 </script>
 
-<div class="reply-modify-modal">
-  <section>
-    <div class="container mx-auto px-3">
-      <form class="" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
-        <input type="hidden" name="id" value="" />
-        <input type="hidden" name="replaceUri" value="${ rq.encodedCurrentUri}" />
+<section class="section-reply-modify hidden">
+  <div class="container mx-auto px-3">
+    <form class="" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
+      <input type="hidden" name="id" value="" />
+      <input type="hidden" name="replaceUri" value="${ rq.encodedCurrentUri}" />
 
-        <div class="form-control">
-          <label class="label">댓글내용</label>
-          <textarea class="textarea textarea-bordered w-full h-24" name="body" rows="3" maxlength="2000"
-            placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
-        </div>
+      <div class="form-control">
+        <label class="label">댓글내용</label>
+        <textarea class="textarea textarea-bordered w-full h-24" name="body" rows="3" maxlength="2000"
+          placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
+      </div>
 
-        <button class="btns btn-sm mb-1">
-          <span>
-            <i class="fas-fa-list"></i>
-            닫기
-          </span>
-          <span>댓글수정</span>
-        </button>
-      </form>
-    </div>
-  </section>
-</div>
+      <button class="btns btn-sm mb-1">
+        <span>
+          <i class="fas-fa-list"></i>
+          닫기
+        </span>
+        <span>댓글수정</span>
+      </button>
+    </form>
+  </div>
+</section>
 <!-- 댓글 수정 모달 끝 -->
 
 <!-- 댓글 작성 영역 시작 -->
@@ -306,7 +328,8 @@
   <div class="container mx-auto px-3">
     <h1>전체댓글 (${ replies.size() } 건)</h1>
     <c:forEach items="${replies}" var="reply">
-      <div class="mt-5 mb-8 mx-4 flex justify-between grid md:grid-cols-2 shadow p-3 rounded-lg" data-id="${ reply.id }">
+      <div data-id="${ reply.id }" class="mt-5 mb-8 mx-4 flex justify-between grid md:grid-cols-2 shadow p-3 rounded-lg">
+        <script type="text/x-template" class="reply-body hidden">${reply.body}</script>
         <!-- 댓글 내용 영역 시작 -->
         <div class="px-1">
           <!-- 작성자, 등록(수정)일 -->
@@ -350,7 +373,7 @@
         <div class="btns flex items-center ml-auto mr-10">
           <c:if test="${ reply.extra__actorCanModify }">
             <div class="btn btn-primary btn-outline btn-xs mr-3">
-              <a href="../reply/modify?id=${ reply.id }&replaceUri=${rq.encodedCurrentUri}">
+              <a class="plain-link" onclick="ReplyModify__showModal(this);">
                 <span>
                   <i class="fas fa-edit"></i>
                 </span>
