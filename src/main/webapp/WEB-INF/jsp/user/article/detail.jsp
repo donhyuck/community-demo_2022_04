@@ -182,9 +182,19 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	widows: 100%;
+	width: 100%;
 	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 10;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.section-reply-modify>div {
 	background-color: white;
+	padding: 20px 30px;
+	border-radius: 30px;
 }
 </style>
 
@@ -194,12 +204,13 @@
 		const replyId = $div.attr('data-id');
 		const replyBody = $div.find('.reply-body').html();
 
-		alert(replyId);
-		alert(replyBody);
-	}
+		$('.section-reply-modify [name="id"]').val(replyId);
+		$('.section-reply-modify [name="body"]').val(replyBody);
 
+		$('.section-reply-modify').css('display', 'flex');
+	}
 	function ReplyModify__hideModal() {
-		$('.section-reply-modify').removeClass('hidden');
+		$('.section-reply-modify').hide();
 	}
 
 	let ReplyModify__submitDone = false;
@@ -222,28 +233,31 @@
 	}
 </script>
 
-<section class="section-reply-modify hidden">
-  <div class="container mx-auto px-3">
-    <form class="" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
-      <input type="hidden" name="id" value="" />
-      <input type="hidden" name="replaceUri" value="${ rq.encodedCurrentUri}" />
+<div class="section section-reply-modify hidden">
+  <div>
+    <div class="container mx-auto">
+      <form class="" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
+        <input type="hidden" name="id" value="" />
+        <input type="hidden" name="replaceUri" value="${ rq.currentUri}" />
 
-      <div class="form-control">
-        <label class="label">댓글내용</label>
-        <textarea class="textarea textarea-bordered w-full h-24" name="body" rows="3" maxlength="2000"
-          placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
-      </div>
+        <div class="form-control">
+          <label class="label">댓글내용</label>
+          <textarea class="textarea textarea-bordered w-full h-24" name="body" rows="3" maxlength="2000"
+            placeholder="내용을 입력해주세요.">${ reply.body }</textarea>
+        </div>
 
-      <button class="btns btn-sm mb-1">
-        <span>
-          <i class="fas-fa-list"></i>
-          닫기
-        </span>
-        <span>댓글수정</span>
-      </button>
-    </form>
+        <div class="mt-4 btn-wrap gap-1">
+          <button type="button" onclick="history.back();" class="btn btn-secondary btn-outline btn-sm mb-1" title="닫기">
+            <span>닫기</span>
+          </button>
+          <button type="submit" href="#" class="btn btn-primary btn-outline btn-sm mb-1">
+            <span>수정</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</section>
+</div>
 <!-- 댓글 수정 모달 끝 -->
 
 <!-- 댓글 작성 영역 시작 -->
