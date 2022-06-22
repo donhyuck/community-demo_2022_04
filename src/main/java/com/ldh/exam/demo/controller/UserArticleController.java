@@ -44,6 +44,7 @@ public class UserArticleController {
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
 		model.addAttribute("replies", replies);
 
+		// 특정 게시글에 대해 좋아요, 싫어요 가능한지 확인
 		ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
 				"article", id);
 
@@ -58,6 +59,24 @@ public class UserArticleController {
 			} else {
 
 				model.addAttribute("actorCanCancelBadReaction", true);
+			}
+		}
+
+		// 특정 댓글에 대해 좋아요, 싫어요 가능한지 확인
+		ResultData actorCanMakeReplyReactionPointRd = reactionPointService
+				.actorCanMakeReplyReactionPoint(rq.getLoginedMemberId(), "reply", id);
+
+		model.addAttribute("actorCanMakeReplyReaction", actorCanMakeReplyReactionPointRd.isSuccess());
+
+		if (actorCanMakeReplyReactionPointRd.getResultCode().equals("F-2")) {
+			int sumReplyReactionPointByMemberId = (int) actorCanMakeReplyReactionPointRd.getData1();
+
+			if (sumReplyReactionPointByMemberId > 0) {
+				model.addAttribute("actorCanCancelReplyGoodReaction", true);
+
+			} else {
+
+				model.addAttribute("actorCanCancelReplyBadReaction", true);
 			}
 		}
 

@@ -374,4 +374,19 @@ INSERT INTO attr (
 	expireDate
 )
 SELECT NOW(), NOW(), 'member', id, 'extra', 'isExpiredPassword', 0, NULL
-FROM `member`
+FROM `member`;
+
+# 댓글 정보 가져오기
+SELECT r.*,
+IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+FROM (
+    SELECT r.*, m.name AS extra__writerName
+    FROM reply AS r
+    LEFT JOIN `member` AS m
+    ON r.memberId = m.id
+) AS r
+LEFT JOIN `reactionPoint` AS rp
+ON rp.relTypeCode = 'reply'
+AND r.id = rp.relId
+GROUP BY r.id; 

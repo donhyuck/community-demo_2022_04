@@ -144,7 +144,7 @@
     <!-- 게시글 수정, 삭제 영역 끝 -->
   </div>
 </section>
-<!-- 게시글 상세보기 영역 시작 -->
+<!-- 게시글 상세보기 영역 끝 -->
 
 <!-- 댓글 영역 시작 -->
 <!-- 댓글 작성 유효성 검사 스크립트 시작-->
@@ -365,21 +365,67 @@
           <!-- 댓글 내용 -->
           <div class="break-all">${reply.forPrintBody}</div>
 
-          <!-- 추천, 반대 수 -->
-          <div class="mt-1">
-            <span class="text-gray-400 cursor-pointer">
-              <span>
-                <i class="fas fa-thumbs-up"></i>
-              </span>
-              <span>5,600</span>
-            </span>
-            <span class="ml-1 text-gray-400 cursor-pointer">
-              <span>
-                <i class="fas fa-thumbs-down"></i>
-              </span>
-              <span>5,600</span>
-            </span>
+          <!-- 추천, 반대 영역 시작 -->
+          <div class="mt-1 text-gray-400">
+            <c:if test="${ actorCanMakeReplyReaction }">
+              <span>${ reply.goodReactionPoint }</span>
+              <a
+                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                class="btn btn-xs btn-secondary btn-outline">
+                <span>
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </a>
+              &nbsp;
+              <span>${ reply.badReactionPoint }</span>
+              <a
+                href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                class="btn btn-xs btn-accent btn-outline">
+                <span>
+                  <i class="fas fa-thumbs-down"></i>
+                </span>
+              </a>
+            </c:if>
+
+            <c:if test="${ actorCanCancelReplyGoodReaction }">
+              <span>${ reply.goodReactionPoint }</span>
+              <a
+                href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                class="btn btn-xs btn-secondary">
+                <span>
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </a>
+              &nbsp;
+              <span>${ reply.badReactionPoint }</span>
+              <a href="#" title="먼저 좋아요를 취소해주세요." onclick="alert(this.title); return false;"
+                class="btn btn-xs btn-accent btn-outline">
+                <span>
+                  <i class="fas fa-thumbs-down"></i>
+                </span>
+              </a>
+            </c:if>
+
+            <c:if test="${ actorCanCancelReplyBadReaction }">
+              <span>${ reply.goodReactionPoint }</span>
+              <a href="#" title="먼저 싫어요를 취소해주세요." onclick="alert(this.title); return false;"
+                class="btn btn-xs btn-secondary btn-outline">
+                <span>
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </a>
+              &nbsp;
+              <span>${ reply.badReactionPoint }</span>
+              <a
+                href="/user/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                class="btn btn-xs btn-accent">
+                <span>
+                  <i class="fas fa-thumbs-down"></i>
+                </span>
+              </a>
+            </c:if>
           </div>
+          <!-- 추천, 반대 영역 끝 -->
         </div>
         <!-- 댓글 내용 영역 끝 -->
 
