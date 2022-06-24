@@ -367,10 +367,22 @@
 
           <!-- 추천, 반대 영역 시작 -->
           <div class="mt-1 text-gray-400">
+            <c:if test="${ rq.notLogined }">
+              <span>${ reply.goodReactionPoint }</span>
+              <span>
+                <i class="fas fa-thumbs-up"></i>
+              </span>
+              &nbsp;
+              <span>${ reply.badReactionPoint }</span>
+              <span>
+                <i class="fas fa-thumbs-down"></i>
+              </span>
+            </c:if>
+
             <c:if test="${ actorCanMakeReplyReaction }">
               <span>${ reply.goodReactionPoint }</span>
               <a
-                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                 class="btn btn-xs btn-secondary btn-outline">
                 <span>
                   <i class="fas fa-thumbs-up"></i>
@@ -379,7 +391,7 @@
               &nbsp;
               <span>${ reply.badReactionPoint }</span>
               <a
-                href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                 class="btn btn-xs btn-accent btn-outline">
                 <span>
                   <i class="fas fa-thumbs-down"></i>
@@ -390,7 +402,7 @@
             <c:if test="${ actorCanCancelReplyGoodReaction }">
               <span>${ reply.goodReactionPoint }</span>
               <a
-                href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                 class="btn btn-xs btn-secondary">
                 <span>
                   <i class="fas fa-thumbs-up"></i>

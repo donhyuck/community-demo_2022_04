@@ -31,23 +31,6 @@ public class ReactionPointService {
 		return ResultData.from("S-1", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
-	public ResultData actorCanMakeReplyReactionPoint(int memberId, String relTypeCode, int relId) {
-
-		if (memberId == 0) {
-			return ResultData.from("F-1", "로그인 후 이용해주세요.");
-		}
-
-		int sumReplyReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(memberId,
-				relTypeCode, relId);
-
-		if (sumReplyReactionPointByMemberId != 0) {
-			return ResultData.from("F-2", "리액션을 할 수 없습니다.", "sumReactionPointByMemberId",
-					sumReplyReactionPointByMemberId);
-		}
-
-		return ResultData.from("S-1", "리액션이 가능합니다.", "sumReactionPointByMemberId", sumReplyReactionPointByMemberId);
-	}
-
 	public ResultData addGoodReactionPoint(int memberId, String relTypeCode, int relId) {
 
 		reactionPointRepository.addGoodReactionPoint(memberId, relTypeCode, relId);

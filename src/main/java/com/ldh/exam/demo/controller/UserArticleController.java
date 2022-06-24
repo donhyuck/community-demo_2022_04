@@ -64,7 +64,7 @@ public class UserArticleController {
 
 		// 특정 댓글에 대해 좋아요, 싫어요 가능한지 확인
 		ResultData actorCanMakeReplyReactionPointRd = reactionPointService
-				.actorCanMakeReplyReactionPoint(rq.getLoginedMemberId(), "reply", id);
+				.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "reply", id);
 
 		model.addAttribute("actorCanMakeReplyReaction", actorCanMakeReplyReactionPointRd.isSuccess());
 
