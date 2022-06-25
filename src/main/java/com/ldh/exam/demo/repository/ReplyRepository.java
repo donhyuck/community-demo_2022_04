@@ -31,23 +31,35 @@ public interface ReplyRepository {
 
 	@Select("""
 			SELECT r.*,
-			m.name AS extra__writerName
-			FROM reply AS r
-			LEFT JOIN `member` AS m
-			ON r.memberId = m.id
-			WHERE relTypeCode = #{relTypeCode}
-			AND relId = #{relId}
-			ORDER BY r.id DESC
+			IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+			IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+			FROM (
+				SELECT r.*, m.name AS extra__writerName
+				FROM reply AS r
+				LEFT JOIN `member` AS m
+				ON r.memberId = m.id
+			) AS r
+			LEFT JOIN `reactionPoint` AS rp
+			ON rp.relTypeCode = 'reply'
+			AND r.id = rp.relId
+			GROUP BY r.id
 			""")
 	List<Reply> getForPrintReplies(String relTypeCode, int relId);
 
 	@Select("""
 			SELECT r.*,
-			m.nickname AS extra__writerName
+			IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+			IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+			FROM (
+			SELECT r.*, m.name AS extra__writerName
 			FROM reply AS r
 			LEFT JOIN `member` AS m
 			ON r.memberId = m.id
-			WHERE r.id = #{id}
+			) AS r
+			LEFT JOIN `reactionPoint` AS rp
+			ON rp.relTypeCode = 'reply'
+			AND r.id = rp.relId
+			GROUP BY r.id
 			""")
 	Reply getForPrintReply(int id);
 

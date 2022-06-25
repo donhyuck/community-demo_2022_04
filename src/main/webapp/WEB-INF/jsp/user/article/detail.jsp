@@ -367,6 +367,11 @@
 
           <!-- 추천, 반대 영역 시작 -->
           <div class="mt-1 text-gray-400">
+            좋아요 수 : 
+            <span>${ reply.goodReactionPoint }</span>
+             &nbsp;
+            싫어요 수 : 
+            <span>${ reply.badReactionPoint }</span>
             <c:if test="${ rq.notLogined }">
               <span>${ reply.goodReactionPoint }</span>
               <span>

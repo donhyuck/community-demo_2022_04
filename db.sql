@@ -390,3 +390,72 @@ LEFT JOIN `reactionPoint` AS rp
 ON rp.relTypeCode = 'reply'
 AND r.id = rp.relId
 GROUP BY r.id; 
+
+# 리액션포인트 테스트 데이터(댓글)
+## 1번 회원이 1번 reply 에 대해서 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'reply',
+relId = 1,
+`point` = -1;
+
+## 2번 회원이 1번 reply 에 대해서 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 1,
+`point` = -1;
+
+## 2번 회원이 2번 reply 에 대해서 좋어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'reply',
+relId = 2,
+`point` = 1;
+
+## 3번 회원이 1번 reply 에 대해서 좋어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'reply',
+relId = 1,
+`point` = 1;
+
+# 기존 댓글의 좋아요, 싫어요 필드의 값 채우기
+UPDATE reply AS r
+INNER JOIN (
+    SELECT rp.relId, SUM(IF(rp.point > 0, rp.point, 0)) AS goodReactionPoint,
+    SUM(IF(rp.point < 0, rp.point*-1, 0)) AS badReactionPoint
+    FROM reactionPoint AS rp
+    WHERE rp.relTypeCode = 'reply'
+    GROUP BY rp.relTypeCode, rp.relId
+) AS rp_sum
+ON r.id = rp_sum.relId
+SET r.goodReactionPoint = rp_sum.goodReactionPoint,
+r.badReactionPoint = rp_sum.badReactionPoint;
+
+# 댓글 정보 가져오기
+SELECT r.*,
+IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+FROM (
+    SELECT r.*, m.nickname AS extra__writerName
+    FROM reply AS r
+    LEFT JOIN `member` AS m
+    ON r.memberId = m.id
+) AS r
+LEFT JOIN `reactionPoint` AS rp
+ON rp.relTypeCode = 'reply'
+AND r.id = rp.relId
+GROUP BY r.id;
+
+SELECT * FROM reactionPoint;
+SELECT * FROM reply;
+SELECT * FROM article;
