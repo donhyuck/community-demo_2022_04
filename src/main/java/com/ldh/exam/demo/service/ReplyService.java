@@ -108,4 +108,50 @@ public class ReplyService {
 		return ResultData.from("S-1", Ut.format("%d번 댓글을 수정했습니다.", id));
 	}
 
+	public ResultData increaseGoodReactionPoint(int relId) {
+
+		int affectedRowsCount = replyRepository.increaseGoodReactionPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물이 존재하지 않습니다.");
+		}
+
+		return ResultData.from("S-1", "좋아요가 1만큼 증가합니다.", "affectedRowsCount", affectedRowsCount);
+	}
+
+	public ResultData increaseBadReactionPoint(int relId) {
+
+		int affectedRowsCount = replyRepository.increaseBadReactionPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물이 존재하지 않습니다.");
+		}
+
+		return ResultData.from("S-1", "싫어요가 1만큼 증가합니다.", "affectedRowsCount", affectedRowsCount);
+	}
+
+	public ResultData decreaseGoodReactionPoint(int relId) {
+
+		int affectedRowsCount = replyRepository.decreaseGoodReactionPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물이 존재하지 않습니다.");
+		}
+
+		return ResultData.from("S-1", "좋아요가 1만큼 감소합니다.", "affectedRowsCount", affectedRowsCount);
+
+	}
+
+	public ResultData decreaseBadReactionPoint(int relId) {
+
+		int affectedRowsCount = replyRepository.decreaseBadReactionPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물이 존재하지 않습니다.");
+		}
+
+		return ResultData.from("S-1", "싫어요가 1만큼 감소합니다.", "affectedRowsCount", affectedRowsCount);
+
+	}
+
 }

@@ -74,11 +74,20 @@
                 <c:if test="${ actorCanMakeReaction }">
                   <a
                     href="/user/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                    class="btn btn-xs btn-secondary btn-outline">좋아요 👍</a>
-                  <span>&nbsp;</span>
+                    class="btn btn-xs btn-secondary btn-outline mr-2">
+                    <span>좋아요&nbsp;</span>
+                    <span>
+                      <i class="fas fa-thumbs-up"></i>
+                    </span>
+                  </a>
                   <a
                     href="/user/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                    class="btn btn-xs btn-accent btn-outline">싫어요 👎</a>
+                    class="btn btn-xs btn-accent btn-outline">
+                    <span>싫어요&nbsp;</span>
+                    <span>
+                      <i class="fas fa-thumbs-down"></i>
+                    </span>
+                  </a>
                 </c:if>
 
                 <c:if test="${ actorCanCancelGoodReaction }">
@@ -367,78 +376,82 @@
 
           <!-- 추천, 반대 영역 시작 -->
           <div class="mt-1 text-gray-400">
-            좋아요 수 : 
-            <span>${ reply.goodReactionPoint }</span>
-             &nbsp;
-            싫어요 수 : 
-            <span>${ reply.badReactionPoint }</span>
             <c:if test="${ rq.notLogined }">
-              <span>${ reply.goodReactionPoint }</span>
-              <span>
-                <i class="fas fa-thumbs-up"></i>
-              </span>
-              &nbsp;
-              <span>${ reply.badReactionPoint }</span>
-              <span>
-                <i class="fas fa-thumbs-down"></i>
-              </span>
-            </c:if>
-
-            <c:if test="${ actorCanMakeReplyReaction }">
-              <span>${ reply.goodReactionPoint }</span>
-              <a
-                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-secondary btn-outline">
+              <div class="border inline-block rounded-lg p-1 mr-1">
                 <span>
                   <i class="fas fa-thumbs-up"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.goodReactionPoint }</span>
+              </div>
+              <div class="border inline-block rounded-lg p-1">
+                <span>
+                  <i class="fas fa-thumbs-down"></i>
+                </span>
+                &nbsp;
+                <span>${ reply.badReactionPoint }</span>
+              </div>
+            </c:if>
+
+            <c:if test="${ actorCanMakeReplyReaction }">
+              <a
+                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
+                class="btn btn-xs btn-secondary btn-outline mr-1">
+                <span>
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+                &nbsp;
+                <span>${ reply.goodReactionPoint }</span>
               </a>
-              &nbsp;
-              <span>${ reply.badReactionPoint }</span>
               <a
                 href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                 class="btn btn-xs btn-accent btn-outline">
                 <span>
                   <i class="fas fa-thumbs-down"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.badReactionPoint }</span>
               </a>
             </c:if>
 
             <c:if test="${ actorCanCancelReplyGoodReaction }">
-              <span>${ reply.goodReactionPoint }</span>
               <a
                 href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-secondary">
+                class="btn btn-xs btn-secondary mr-1">
                 <span>
                   <i class="fas fa-thumbs-up"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.goodReactionPoint }</span>
               </a>
-              &nbsp;
-              <span>${ reply.badReactionPoint }</span>
               <a href="#" title="먼저 좋아요를 취소해주세요." onclick="alert(this.title); return false;"
                 class="btn btn-xs btn-accent btn-outline">
                 <span>
                   <i class="fas fa-thumbs-down"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.badReactionPoint }</span>
               </a>
             </c:if>
 
             <c:if test="${ actorCanCancelReplyBadReaction }">
-              <span>${ reply.goodReactionPoint }</span>
               <a href="#" title="먼저 싫어요를 취소해주세요." onclick="alert(this.title); return false;"
-                class="btn btn-xs btn-secondary btn-outline">
+                class="btn btn-xs btn-secondary btn-outline mr-1">
                 <span>
                   <i class="fas fa-thumbs-up"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.goodReactionPoint }</span>
               </a>
               &nbsp;
-              <span>${ reply.badReactionPoint }</span>
               <a
                 href="/user/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
                 class="btn btn-xs btn-accent">
                 <span>
                   <i class="fas fa-thumbs-down"></i>
                 </span>
+                &nbsp;
+                <span>${ reply.badReactionPoint }</span>
               </a>
             </c:if>
           </div>

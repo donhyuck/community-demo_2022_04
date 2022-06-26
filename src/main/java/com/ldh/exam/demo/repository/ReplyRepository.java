@@ -31,35 +31,23 @@ public interface ReplyRepository {
 
 	@Select("""
 			SELECT r.*,
-			IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
-			IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
-			FROM (
-				SELECT r.*, m.name AS extra__writerName
-				FROM reply AS r
-				LEFT JOIN `member` AS m
-				ON r.memberId = m.id
-			) AS r
-			LEFT JOIN `reactionPoint` AS rp
-			ON rp.relTypeCode = 'reply'
-			AND r.id = rp.relId
-			GROUP BY r.id
+			m.name AS extra__writerName
+			FROM reply AS r
+			LEFT JOIN `member` AS m
+			ON r.memberId = m.id
+			WHERE relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+			ORDER BY r.id DESC
 			""")
 	List<Reply> getForPrintReplies(String relTypeCode, int relId);
 
 	@Select("""
 			SELECT r.*,
-			IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
-			IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
-			FROM (
-			SELECT r.*, m.name AS extra__writerName
+			m.nickname AS extra__writerName
 			FROM reply AS r
 			LEFT JOIN `member` AS m
 			ON r.memberId = m.id
-			) AS r
-			LEFT JOIN `reactionPoint` AS rp
-			ON rp.relTypeCode = 'reply'
-			AND r.id = rp.relId
-			GROUP BY r.id
+			WHERE r.id = #{id}
 			""")
 	Reply getForPrintReply(int id);
 
@@ -76,5 +64,41 @@ public interface ReplyRepository {
 			WHERE id = #{id}
 			""")
 	void modifyReply(int id, String body);
+
+	@Update("""
+			<script>
+			UPDATE reply
+			SET goodReactionPoint = goodReactionPoint + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	int increaseGoodReactionPoint(int id);
+
+	@Update("""
+			<script>
+			UPDATE reply
+			SET badReactionPoint = badReactionPoint + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int increaseBadReactionPoint(int id);
+
+	@Update("""
+			<script>
+			UPDATE reply
+			SET goodReactionPoint = goodReactionPoint - 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int decreaseGoodReactionPoint(int id);
+
+	@Update("""
+			<script>
+			UPDATE reply
+			SET badReactionPoint = badReactionPoint - 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int decreaseBadReactionPoint(int id);
 
 }

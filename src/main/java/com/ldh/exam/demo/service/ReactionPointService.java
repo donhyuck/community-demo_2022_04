@@ -14,6 +14,8 @@ public class ReactionPointService {
 	private ReactionPointRepository reactionPointRepository;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ReplyService replyService;
 
 	public ResultData actorCanMakeReactionPoint(int memberId, String relTypeCode, int relId) {
 
@@ -39,6 +41,9 @@ public class ReactionPointService {
 		case "article":
 			articleService.increaseGoodReactionPoint(relId);
 			break;
+		case "reply":
+			replyService.increaseGoodReactionPoint(relId);
+			break;
 		}
 
 		return ResultData.from("S-1", Ut.format("[%d번 글] 좋아요", relId));
@@ -51,6 +56,9 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article":
 			articleService.increaseBadReactionPoint(relId);
+			break;
+		case "reply":
+			replyService.increaseBadReactionPoint(relId);
 			break;
 		}
 
@@ -65,6 +73,9 @@ public class ReactionPointService {
 		case "article":
 			articleService.decreaseGoodReactionPoint(relId);
 			break;
+		case "reply":
+			replyService.decreaseGoodReactionPoint(relId);
+			break;
 		}
 
 		return ResultData.from("S-1", Ut.format("[%d번 글] 좋아요 취소", relId));
@@ -77,6 +88,9 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article":
 			articleService.decreaseBadReactionPoint(relId);
+			break;
+		case "reply":
+			replyService.decreaseBadReactionPoint(relId);
 			break;
 		}
 
