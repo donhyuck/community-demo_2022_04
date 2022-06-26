@@ -308,7 +308,7 @@
     <c:if test="${ rq.notLogined }">
       <h1>
         <a class="link link-primary" href="${ rq.loginUri }">로그인</a>
-        후 댓글을 남길 수 있습니다.
+        후 댓글작성과 '좋아요'와 '싫어요'가 가능합니다.
       </h1>
     </c:if>
   </div>
@@ -377,14 +377,14 @@
           <!-- 추천, 반대 영역 시작 -->
           <div class="mt-1 text-gray-400">
             <c:if test="${ rq.notLogined }">
-              <div class="border inline-block rounded-lg p-1 mr-1">
+              <div class="btn btn-xs mr-1" title="로그인이 필요합니다." onclick="alert(this.title); return false;">
                 <span>
                   <i class="fas fa-thumbs-up"></i>
                 </span>
                 &nbsp;
                 <span>${ reply.goodReactionPoint }</span>
               </div>
-              <div class="border inline-block rounded-lg p-1">
+              <div class="btn btn-xs" title="로그인이 필요합니다." onclick="alert(this.title); return false;">
                 <span>
                   <i class="fas fa-thumbs-down"></i>
                 </span>
@@ -393,66 +393,66 @@
               </div>
             </c:if>
 
-            <c:if test="${ actorCanMakeReplyReaction }">
-              <a
-                href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-secondary btn-outline mr-1">
-                <span>
-                  <i class="fas fa-thumbs-up"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.goodReactionPoint }</span>
-              </a>
-              <a
-                href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-accent btn-outline">
-                <span>
-                  <i class="fas fa-thumbs-down"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.badReactionPoint }</span>
-              </a>
-            </c:if>
+            <c:if test="${ rq.logined }">
+              <c:if test="${ reply.extra__actorCanMakeReaction }">
+                <a class="btn btn-xs btn-secondary btn-outline mr-1"
+                  href="/user/reactionPoint/doGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}">
+                  <span>
+                    <i class="fas fa-thumbs-up"></i>
+                  </span>
+                  &nbsp;
+                  <span>${ reply.goodReactionPoint }</span>
+                </a>
+                <a class="btn btn-xs btn-accent btn-outline"
+                  href="/user/reactionPoint/doBadReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}">
+                  <span>
+                    <i class="fas fa-thumbs-down"></i>
+                  </span>
+                  &nbsp;
+                  <span>${ reply.badReactionPoint }</span>
+                </a>
+              </c:if>
 
-            <c:if test="${ actorCanCancelReplyGoodReaction }">
-              <a
-                href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-secondary mr-1">
-                <span>
-                  <i class="fas fa-thumbs-up"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.goodReactionPoint }</span>
-              </a>
-              <a href="#" title="먼저 좋아요를 취소해주세요." onclick="alert(this.title); return false;"
-                class="btn btn-xs btn-accent btn-outline">
-                <span>
-                  <i class="fas fa-thumbs-down"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.badReactionPoint }</span>
-              </a>
-            </c:if>
+              <c:if test="${ reply.extra__actorCanMakeReaction == false }">
+                <c:if test="${ reply.extra__actorCanCancelGOODReaction }">
+                  <a class="btn btn-xs btn-secondary mr-1"
+                    href="/user/reactionPoint/doCancelGoodReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}">
+                    <span>
+                      <i class="fas fa-thumbs-up"></i>
+                    </span>
+                    &nbsp;
+                    <span>${ reply.goodReactionPoint }</span>
+                  </a>
+                  <a class="btn btn-xs btn-accent btn-outline" href="#" title="먼저 좋아요를 취소해주세요."
+                    onclick="alert(this.title); return false;">
+                    <span>
+                      <i class="fas fa-thumbs-down"></i>
+                    </span>
+                    &nbsp;
+                    <span>${ reply.badReactionPoint }</span>
+                  </a>
+                </c:if>
 
-            <c:if test="${ actorCanCancelReplyBadReaction }">
-              <a href="#" title="먼저 싫어요를 취소해주세요." onclick="alert(this.title); return false;"
-                class="btn btn-xs btn-secondary btn-outline mr-1">
-                <span>
-                  <i class="fas fa-thumbs-up"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.goodReactionPoint }</span>
-              </a>
-              &nbsp;
-              <a
-                href="/user/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                class="btn btn-xs btn-accent">
-                <span>
-                  <i class="fas fa-thumbs-down"></i>
-                </span>
-                &nbsp;
-                <span>${ reply.badReactionPoint }</span>
-              </a>
+                <c:if test="${ reply.extra__actorCanCancelGOODReaction == false }">
+                  <a class="btn btn-xs btn-secondary btn-outline mr-1" href="#" title="먼저 싫어요를 취소해주세요."
+                    onclick="alert(this.title); return false;">
+                    <span>
+                      <i class="fas fa-thumbs-up"></i>
+                    </span>
+                    &nbsp;
+                    <span>${ reply.goodReactionPoint }</span>
+                  </a>
+                  <a class="btn btn-xs btn-accent"
+                    href="/user/reactionPoint/doCancelBadReaction?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}">
+                    <span>
+                      <i class="fas fa-thumbs-down"></i>
+                    </span>
+                    &nbsp;
+                    <span>${ reply.badReactionPoint }</span>
+                  </a>
+                </c:if>
+
+              </c:if>
             </c:if>
           </div>
           <!-- 추천, 반대 영역 끝 -->

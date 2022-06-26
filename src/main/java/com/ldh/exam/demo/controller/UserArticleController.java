@@ -42,16 +42,15 @@ public class UserArticleController {
 		model.addAttribute("article", article);
 
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
-		model.addAttribute("replies", replies);
 
 		// 특정 게시글에 대해 좋아요, 싫어요 가능한지 확인
-		ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
-				"article", id);
+		ResultData actorCanMakeArticleReactionPointRd = reactionPointService
+				.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "article", id);
 
-		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionPointRd.isSuccess());
+		model.addAttribute("actorCanMakeReaction", actorCanMakeArticleReactionPointRd.isSuccess());
 
-		if (actorCanMakeReactionPointRd.getResultCode().equals("F-2")) {
-			int sumReactionPointByMemberId = (int) actorCanMakeReactionPointRd.getData1();
+		if (actorCanMakeArticleReactionPointRd.getResultCode().equals("F-2")) {
+			int sumReactionPointByMemberId = (int) actorCanMakeArticleReactionPointRd.getData1();
 
 			if (sumReactionPointByMemberId > 0) {
 				model.addAttribute("actorCanCancelGoodReaction", true);
@@ -63,22 +62,27 @@ public class UserArticleController {
 		}
 
 		// 특정 댓글에 대해 좋아요, 싫어요 가능한지 확인
-		ResultData actorCanMakeReplyReactionPointRd = reactionPointService
-				.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "reply", id);
+		for (Reply reply : replies) {
+			ResultData actorCanMakeReplyReactionPointRd = reactionPointService
+					.actorCanMakeReactionPoint(rq.getLoginedMemberId(), "reply", reply.getId());
 
-		model.addAttribute("actorCanMakeReplyReaction", actorCanMakeReplyReactionPointRd.isSuccess());
+			if (actorCanMakeReplyReactionPointRd.isSuccess()) {
+				reply.setExtra__actorCanMakeReaction(true);
 
-		if (actorCanMakeReplyReactionPointRd.getResultCode().equals("F-2")) {
-			int sumReplyReactionPointByMemberId = (int) actorCanMakeReplyReactionPointRd.getData1();
+			} else if (actorCanMakeReplyReactionPointRd.getResultCode().equals("F-2")) {
+				int sumReactionPointByMemberId = (int) actorCanMakeReplyReactionPointRd.getData1();
+				reply.setExtra__actorCanMakeReaction(false);
 
-			if (sumReplyReactionPointByMemberId > 0) {
-				model.addAttribute("actorCanCancelReplyGoodReaction", true);
+				if (sumReactionPointByMemberId > 0) {
+					reply.setExtra__actorCanCancelGOODReaction(true);
 
-			} else {
-
-				model.addAttribute("actorCanCancelReplyBadReaction", true);
+				} else {
+					reply.setExtra__actorCanCancelGOODReaction(false);
+				}
 			}
 		}
+
+		model.addAttribute("replies", replies);
 
 		return "user/article/detail";
 	}

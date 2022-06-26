@@ -23,6 +23,8 @@ public class Reply {
 	private String extra__writerName;
 	private boolean extra__actorCanModify;
 	private boolean extra__actorCanDelete;
+	private boolean extra__actorCanMakeReaction;
+	private boolean extra__actorCanCancelGOODReaction;
 
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2, 16).replace(" ", "</br>");
@@ -39,7 +41,7 @@ public class Reply {
 	public String getForPrintType2UpateDate() {
 		return updateDate.substring(2, 16);
 	}
-	
+
 	public String getForPrintBody() {
 		return body.replaceAll("\n", "</br>");
 	}
