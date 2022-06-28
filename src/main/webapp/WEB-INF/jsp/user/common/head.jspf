@@ -61,6 +61,118 @@ const param = ${rq.paramJsonStr};
 <body>
   <header>
     <div class="flex container h-20 mx-auto">
+      <div class="navbar bg-base-100">
+        <div class="navbar-start">
+          <!-- dropdown 메뉴, 반응형 -->
+          <div class="dropdown">
+            <label tabindex="0" class="btn btn-ghost lg:hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+            </label>
+            <!-- 좌측 탭메뉴 -->
+            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a class="btn-theme-toggle" href="javascript:Theme__toggle();">
+                  <span>밝게</span>
+                  <span>어둡게</span>
+                </a>
+              </li>
+              <li>
+                <a href="/">
+                  <span>홈으로</span>
+                </a>
+              </li>
+              <li>
+                <a href="/user/article/write">
+                  <span>글쓰기</span>
+                </a>
+              </li>
+              <!-- 2차 메뉴 -->
+              <li tabindex="0">
+                <a class="justify-between">
+                  게시판
+                  <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24">
+                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+                </a>
+                <ul class="p-2">
+                  <li>
+                    <a class="flex items-center px-3 h-full" href="/user/article/list?boardId=1">
+                      <span>공지사항 게시판</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="flex items-center px-3 h-full" href="/user/article/list?boardId=2">
+                      <span>자유 게시판</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <c:if test="${ !rq.logined }">
+                <li>
+                  <a class="flex items-center px-3 h-full" href="${ rq.loginUri }">
+                    <span>로그인</span>
+                  </a>
+                </li>
+              </c:if>
+              <li>
+                <a class="flex items-center px-3 h-full" href="${ rq.joinUri }">
+                  <span>회원가입</span>
+                </a>
+              </li>
+              <c:if test="${ rq.logined }">
+                <li>
+                  <a class="flex items-center px-3 h-full" href="/user/member/myPage">
+                    <span>${rq.loginedMember.name}님의 프로필</span>
+                  </a>
+                </li>
+              </c:if>
+              <c:if test="${ rq.admin }">
+                <li>
+                  <a class="flex items-center px-3 h-full" href="/adm/member/list">
+                    <span class="text-blue-400">관리자</span>
+                  </a>
+                </li>
+              </c:if>
+              <c:if test="${ rq.logined }">
+                <li>
+                  <a class="flex items-center px-3 h-full" href="${ rq.logoutUri }">
+                    <span>로그아웃</span>
+                  </a>
+                </li>
+              </c:if>
+            </ul>
+          </div>
+          <a href="/" class="normal-case text-lg">헬로우월드</a>
+        </div>
+        <div class="navbar-end hidden lg:flex">
+          <ul class="menu menu-horizontal p-0">
+            <li>
+              <a>Item 1</a>
+            </li>
+            <li tabindex="0">
+              <a>
+                Parent
+                <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+              </a>
+              <ul class="p-2">
+                <li>
+                  <a>Submenu 1</a>
+                </li>
+                <li>
+                  <a>Submenu 2</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>Item 3</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 
       <a class="flex items-center px-3" href="/">
         <span>헬로우월드</span>
       </a>
@@ -91,7 +203,7 @@ const param = ${rq.paramJsonStr};
             <span>글쓰기</span>
           </a>
         </li>
-        <li tabindex="0">
+        <li>
           <a>
             게시판
             <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -144,9 +256,9 @@ const param = ${rq.paramJsonStr};
           </li>
         </c:if>
       </ul>
+     -->
     </div>
   </header>
-
   <section>
     <div class="container mx-auto px-3 mb-5">
       <h1>${ pageTitle }페이지</h1>
