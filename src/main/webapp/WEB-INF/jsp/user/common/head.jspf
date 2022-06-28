@@ -40,6 +40,9 @@
 const param = ${rq.paramJsonStr};
 </script>
 
+<!-- 모바일에서 사이트가 PC에서의 픽셀크기 기준으로 작동하게 하기(반응형 하려면 필요) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <!-- 테일윈드 불러오기 -->
 <!-- 노말라이즈, 라이브러리까지 한방에 해결 -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
@@ -64,70 +67,78 @@ const param = ${rq.paramJsonStr};
 
       <div class="flex-grow"></div>
 
-      <ul class="flex">
+      <ul class="flex menu menu-horizontal p-0">
         <c:if test="${ rq.logined && rq.expiredPassword }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline"
-              href="../member/checkPassword?replaceUri=..%2Fmember%2Fmodify">
+            <a class="flex items-center px-3 h-full" href="../member/checkPassword?replaceUri=..%2Fmember%2Fmodify">
               <span class="text-red-400">비밀번호 변경</span>
             </a>
           </li>
         </c:if>
         <li>
-          <a class="flex items-center px-3 h-full hover:underline btn-theme-toggle" href="javascript:Theme__toggle();">
+          <a class="flex items-center px-3 h-full btn-theme-toggle" href="javascript:Theme__toggle();">
             <span>밝게</span>
             <span>어둡게</span>
           </a>
         </li>
         <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/">
+          <a class="flex items-center px-3 h-full" href="/">
             <span>홈으로</span>
           </a>
         </li>
         <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/user/article/write">
+          <a class="flex items-center px-3 h-full" href="/user/article/write">
             <span>글쓰기</span>
           </a>
         </li>
-        <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/user/article/list?boardId=1">
-            <span>공지사항 게시판</span>
+        <li tabindex="0">
+          <a>
+            게시판
+            <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
           </a>
-        </li>
-        <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="/user/article/list?boardId=2">
-            <span>자유 게시판</span>
-          </a>
+          <ul class="bg-base-100">
+            <li>
+              <a class="flex items-center px-3 h-full" href="/user/article/list?boardId=1">
+                <span>공지사항 게시판</span>
+              </a>
+            </li>
+            <li>
+              <a class="flex items-center px-3 h-full" href="/user/article/list?boardId=2">
+                <span>자유 게시판</span>
+              </a>
+            </li>
+          </ul>
         </li>
         <c:if test="${ !rq.logined }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="${ rq.loginUri }">
+            <a class="flex items-center px-3 h-full" href="${ rq.loginUri }">
               <span>로그인</span>
             </a>
           </li>
         </c:if>
         <li>
-          <a class="flex items-center px-3 h-full hover:underline" href="${ rq.joinUri }">
+          <a class="flex items-center px-3 h-full" href="${ rq.joinUri }">
             <span>회원가입</span>
           </a>
         </li>
         <c:if test="${ rq.logined }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="/user/member/myPage">
+            <a class="flex items-center px-3 h-full" href="/user/member/myPage">
               <span>${rq.loginedMember.name}님의 프로필</span>
             </a>
           </li>
         </c:if>
         <c:if test="${ rq.admin }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="/adm/member/list">
+            <a class="flex items-center px-3 h-full" href="/adm/member/list">
               <span class="text-blue-400">관리자</span>
             </a>
           </li>
         </c:if>
         <c:if test="${ rq.logined }">
           <li>
-            <a class="flex items-center px-3 h-full hover:underline" href="${ rq.logoutUri }">
+            <a class="flex items-center px-3 h-full" href="${ rq.logoutUri }">
               <span>로그아웃</span>
             </a>
           </li>
