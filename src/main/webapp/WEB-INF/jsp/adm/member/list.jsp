@@ -99,11 +99,6 @@
     });
     </script>
 
-    <!-- 회원 삭제 버튼 -->
-    <div>
-      <button class="btn btn-error btn-delete-selected-members">선택삭제</button>
-    </div>
-
     <form hidden action="../member/doDeleteMembers" name="do-delete-members-form" method="post">
       <input type="hidden" name="ids" value="" />
       <input type="hidden" name="replaceUri" value="${ rq.currentUri }" />
@@ -126,6 +121,11 @@
 			document['do-delete-members-form'].submit();
 		});
 	</script>
+
+    <!-- 회원 삭제 버튼 -->
+    <div>
+      <button class="btn btn-error btn-delete-selected-members">선택삭제</button>
+    </div>
     <!-- 회원 목록 영역 끝 -->
     <!-- 페이지 영역 시작 -->
     <div class="page-menu mt-3">

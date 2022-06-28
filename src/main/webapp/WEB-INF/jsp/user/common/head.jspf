@@ -82,18 +82,18 @@ const param = ${rq.paramJsonStr};
               </li>
               <li>
                 <a href="/">
-                  <span>홈으로</span>
+                  <div>홈으로</div>
                 </a>
               </li>
               <li>
                 <a href="/user/article/write">
-                  <span>글쓰기</span>
+                  <div>글쓰기</div>
                 </a>
               </li>
               <!-- 2차 메뉴 -->
               <li tabindex="0">
                 <a class="justify-between">
-                  <span>게시판</span>
+                  <div>게시판</div>
                   <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
@@ -101,12 +101,12 @@ const param = ${rq.paramJsonStr};
                 <ul class="p-2 bg-base-100">
                   <li>
                     <a href="/user/article/list?boardId=1">
-                      <span>공지사항 게시판</span>
+                      <div>공지사항 게시판</div>
                     </a>
                   </li>
                   <li>
                     <a href="/user/article/list?boardId=2">
-                      <span>자유 게시판</span>
+                      <div>자유 게시판</div>
                     </a>
                   </li>
                 </ul>
@@ -114,33 +114,33 @@ const param = ${rq.paramJsonStr};
               <c:if test="${ !rq.logined }">
                 <li>
                   <a href="${ rq.loginUri }">
-                    <span>로그인</span>
+                    <div>로그인</div>
                   </a>
                 </li>
               </c:if>
               <li>
                 <a href="${ rq.joinUri }">
-                  <span>회원가입</span>
+                  <div>회원가입</div>
                 </a>
               </li>
               <c:if test="${ rq.logined }">
                 <li>
                   <a href="/user/member/myPage">
-                    <span>${rq.loginedMember.name}'s 프로필</span>
+                    <div>${rq.loginedMember.name}'s프로필</div>
                   </a>
                 </li>
               </c:if>
               <c:if test="${ rq.logined && rq.admin }">
                 <li>
                   <a href="/adm/member/list">
-                    <span class="text-blue-400">관리자</span>
+                    <div class="text-blue-400">관리자</div>
                   </a>
                 </li>
               </c:if>
               <c:if test="${ rq.logined }">
                 <li>
                   <a href="${ rq.logoutUri }">
-                    <span>로그아웃</span>
+                    <div>로그아웃</div>
                   </a>
                 </li>
               </c:if>
@@ -155,7 +155,7 @@ const param = ${rq.paramJsonStr};
             <c:if test="${ rq.logined && rq.expiredPassword }">
               <li>
                 <a href="../member/checkPassword?replaceUri=..%2Fmember%2Fmodify">
-                  <span class="text-red-400">비밀번호 변경</span>
+                  <div class="text-red-400">비밀번호 변경</div>
                 </a>
               </li>
             </c:if>
@@ -167,29 +167,29 @@ const param = ${rq.paramJsonStr};
             </li>
             <li>
               <a href="/">
-                <span>홈으로</span>
+                <div>홈으로</div>
               </a>
             </li>
             <li>
               <a href="/user/article/write">
-                <span>글쓰기</span>
+                <div>글쓰기</div>
               </a>
             </li>
             <li tabindex="0">
               <a>
-                <span>게시판</span>
+                <div>게시판</div>
                 <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
               </a>
               <ul class="p-2 shadow-lg bg-base-100">
                 <li>
                   <a href="/user/article/list?boardId=1">
-                    <span>공지사항 게시판</span>
+                    <div>공지사항 게시판</div>
                   </a>
                 </li>
                 <li>
                   <a href="/user/article/list?boardId=2">
-                    <span>자유 게시판</span>
+                    <div>자유 게시판</div>
                   </a>
                 </li>
               </ul>
@@ -197,33 +197,33 @@ const param = ${rq.paramJsonStr};
             <c:if test="${ !rq.logined }">
               <li>
                 <a href="${ rq.loginUri }">
-                  <span>로그인</span>
+                  <div>로그인</div>
                 </a>
               </li>
             </c:if>
             <li>
               <a href="${ rq.joinUri }">
-                <span>회원가입</span>
+                <div>회원가입</div>
               </a>
             </li>
             <c:if test="${ rq.logined }">
               <li>
                 <a href="/user/member/myPage">
-                  <span>${rq.loginedMember.name}'s 프로필</span>
+                  <div>${rq.loginedMember.name}'s프로필</div>
                 </a>
               </li>
             </c:if>
             <c:if test="${ rq.logined && rq.admin }">
               <li>
                 <a href="/adm/member/list">
-                  <span class="text-blue-400">관리자</span>
+                  <div class="text-blue-400">관리자</div>
                 </a>
               </li>
             </c:if>
             <c:if test="${ rq.logined }">
               <li>
                 <a href="${ rq.logoutUri }">
-                  <span>로그아웃</span>
+                  <div>로그아웃</div>
                 </a>
               </li>
             </c:if>
@@ -238,6 +238,5 @@ const param = ${rq.paramJsonStr};
       <h1>${ pageTitle }페이지</h1>
     </div>
   </section>
-
 
   <main>

@@ -8,6 +8,41 @@
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<!-- 화면테마 변경 -->
+<script>
+	function Theme__toggle() {
+		const theme = localStorage.getItem("theme") ?? "light";
+		
+		if (theme == 'light') {
+			localStorage.setItem("theme", "dark");
+			// Theme__applyTo('dark');
+		} else if (theme == 'dark') {
+			localStorage.setItem("theme", "light");
+			// Theme__applyTo('light');
+		}
+		
+		location.reload();
+	}
+	
+	function Theme__applyTo(themeName) {
+		$('html').attr('data-theme', themeName);
+	}
+	
+	function Theme__init() {
+		const theme = localStorage.getItem("theme") ?? "light";
+		Theme__applyTo(theme);
+	}
+	
+	Theme__init();
+</script>
+
+<script>
+const param = ${rq.paramJsonStr};
+</script>
+
+<!-- 모바일에서 사이트가 PC에서의 픽셀크기 기준으로 작동하게 하기(반응형 하려면 필요) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <!-- 테일윈드 불러오기 -->
 <!-- 노말라이즈, 라이브러리까지 한방에 해결 -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
@@ -24,15 +59,184 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-  <div class="container mx-auto px-3 mt-3">
-    <h1>${ pageTitle }페이지</h1>
-    <div class="flex mt-3 mb-3">
-      <a class="flex items-center h-full hover:underline" href="/">
-        <span>홈으로</span>
-      </a>
-      <a class="flex items-center h-full px-3 hover:underline" href="${ rq.logoutUri }">
-        <span>로그아웃</span>
-      </a>
+  <header>
+    <div class="flex container h-20 mx-auto">
+      <div class="navbar bg-base-100">
+        <!-- dropdown 좌측 토글메뉴 시작, 반응형 -->
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div class="xl:hidden">
+              <label tabindex="0" class="btn btn-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+              </label>
+            </div>
+            <!-- 좌측 탭메뉴 -->
+            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow-lg bg-base-100 rounded-box w-52">
+              <li>
+                <a class="btn-theme-toggle" href="javascript:Theme__toggle();">
+                  <span>밝게</span>
+                  <span>어둡게</span>
+                </a>
+              </li>
+              <li>
+                <a href="/">
+                  <div>홈으로</div>
+                </a>
+              </li>
+              <li>
+                <a href="/user/article/write">
+                  <div>글쓰기</div>
+                </a>
+              </li>
+              <!-- 2차 메뉴 -->
+              <li tabindex="0">
+                <a class="justify-between">
+                  <div>게시판</div>
+                  <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24">
+                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+                </a>
+                <ul class="p-2 bg-base-100">
+                  <li>
+                    <a href="/user/article/list?boardId=1">
+                      <div>공지사항 게시판</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/user/article/list?boardId=2">
+                      <div>자유 게시판</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <c:if test="${ !rq.logined }">
+                <li>
+                  <a href="${ rq.loginUri }">
+                    <div>로그인</div>
+                  </a>
+                </li>
+              </c:if>
+              <li>
+                <a href="${ rq.joinUri }">
+                  <div>회원가입</div>
+                </a>
+              </li>
+              <c:if test="${ rq.logined }">
+                <li>
+                  <a href="/user/member/myPage">
+                    <div>${rq.loginedMember.name}'s프로필</div>
+                  </a>
+                </li>
+              </c:if>
+              <c:if test="${ rq.logined && rq.admin }">
+                <li>
+                  <a href="/adm/member/list">
+                    <div class="text-blue-400">관리자</div>
+                  </a>
+                </li>
+              </c:if>
+              <c:if test="${ rq.logined }">
+                <li>
+                  <a href="${ rq.logoutUri }">
+                    <div>로그아웃</div>
+                  </a>
+                </li>
+              </c:if>
+            </ul>
+          </div>
+          <a href="/" class="normal-case text-lg">헬로우월드</a>
+        </div>
+        <!-- dropdown 좌측 토글메뉴 끝 -->
+        <!-- 상단 메뉴바 시작, 반응형 -->
+        <div class="navbar-end hidden lg:flex">
+          <ul class="menu menu-horizontal p-0">
+            <c:if test="${ rq.logined && rq.expiredPassword }">
+              <li>
+                <a href="../member/checkPassword?replaceUri=..%2Fmember%2Fmodify">
+                  <div class="text-red-400">비밀번호 변경</div>
+                </a>
+              </li>
+            </c:if>
+            <li>
+              <a class="btn-theme-toggle" href="javascript:Theme__toggle();">
+                <span>밝게</span>
+                <span>어둡게</span>
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <div>홈으로</div>
+              </a>
+            </li>
+            <li>
+              <a href="/user/article/write">
+                <div>글쓰기</div>
+              </a>
+            </li>
+            <li tabindex="0">
+              <a>
+                <div>게시판</div>
+                <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+              </a>
+              <ul class="p-2 shadow-lg bg-base-100">
+                <li>
+                  <a href="/user/article/list?boardId=1">
+                    <div>공지사항 게시판</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="/user/article/list?boardId=2">
+                    <div>자유 게시판</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <c:if test="${ !rq.logined }">
+              <li>
+                <a href="${ rq.loginUri }">
+                  <div>로그인</div>
+                </a>
+              </li>
+            </c:if>
+            <li>
+              <a href="${ rq.joinUri }">
+                <div>회원가입</div>
+              </a>
+            </li>
+            <c:if test="${ rq.logined }">
+              <li>
+                <a href="/user/member/myPage">
+                  <div>${rq.loginedMember.name}'s프로필</div>
+                </a>
+              </li>
+            </c:if>
+            <c:if test="${ rq.logined && rq.admin }">
+              <li>
+                <a href="/adm/member/list">
+                  <div class="text-blue-400">관리자</div>
+                </a>
+              </li>
+            </c:if>
+            <c:if test="${ rq.logined }">
+              <li>
+                <a href="${ rq.logoutUri }">
+                  <div>로그아웃</div>
+                </a>
+              </li>
+            </c:if>
+          </ul>
+        </div>
+        <!-- 상단 메뉴바 끝 -->
+      </div>
     </div>
-  </div>
-  <hr />
+  </header>
+  <section>
+    <div class="container mx-auto px-3 mb-5">
+      <h1>${ pageTitle }페이지</h1>
+    </div>
+  </section>
+
+  <main>
