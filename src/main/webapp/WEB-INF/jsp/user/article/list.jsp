@@ -105,22 +105,25 @@
                 <a href="${ detailUri }">${ article.hitCount }</a>
               </td>
               <td>
-                <div class="mb-2">
-                  <a href="../article/modify?id=${ article.id }">
-                    <span>
-                      <i class="fas fa-edit"></i>
-                    </span>
-                    <span>수정</span>
-                  </a>
-                </div>
-                <div>
-                  <a href="../article/doDelete?id=${ article.id }" onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
-                    <span>
-                      <i class="fas fa-trash"></i>
-                    </span>
-                    <span>삭제</span>
-                  </a>
-                </div>
+                <c:if test="${ rq.loginedMemberId == article.memberId }">
+                  <div class="mb-2">
+                    <a href="../article/modify?id=${ article.id }">
+                      <span>
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <span>수정</span>
+                    </a>
+                  </div>
+                  <div>
+                    <a href="../article/doDelete?id=${ article.id }"
+                      onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
+                      <span>
+                        <i class="fas fa-trash"></i>
+                      </span>
+                      <span>삭제</span>
+                    </a>
+                  </div>
+                </c:if>
               </td>
             </tr>
           </c:forEach>
