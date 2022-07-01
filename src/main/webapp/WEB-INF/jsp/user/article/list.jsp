@@ -12,11 +12,12 @@
       <div class="flex items-center ml-1 mr-5 w-44">
         <span>등록된 게시물 : </span>
         <span class="badge badge-primary">${ articlesCount }</span>
-        <span>개 
+        개
       </div>
       <div class="ml-auto flex items-center h-16">
         <form class="flex grow-0">
           <input type="hidden" name="boardId" value="${param.boardId}" />
+
           <select class="select select-bordered" name="searchKeywordTypeCode"
             data-value="${param.searchKeywordTypeCode}">
             <option disabled="disabled">검색타입</option>
@@ -24,6 +25,7 @@
             <option value="body">내용</option>
             <option value="title,body">제목과 내용</option>
           </select>
+
           <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
             class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
 
@@ -36,9 +38,9 @@
     <div class="ArticleList-box mt-3">
       <table class="table table-fixed w-full">
         <colgroup>
-          <col width="60" />
-          <col width="100" />
-          <col width="100" />
+          <col width="70" />
+          <col width="150" />
+          <col width="150" />
           <col />
           <col width="120" />
           <col width="120" />
@@ -76,11 +78,11 @@
           <c:forEach var="article" items="${ articles }">
             <c:set var="detailUri" value="${rq.getArticleDetailUriFromArticleList(article)}" />
             <tr class="px-4 py-8">
-              <td>
+              <th>
                 <a href="${ detailUri }" class="hover:underline ml-4">
                   <span>${article.id}</span>
                 </a>
-              </td>
+              </th>
               <td>
                 <a href="${ detailUri }" class="hover:underline">
                   <span>${ article.forPrintType1RegDate }</span>

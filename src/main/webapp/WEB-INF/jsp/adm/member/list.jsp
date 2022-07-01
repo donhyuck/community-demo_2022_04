@@ -6,75 +6,113 @@
 
 <section class="mt-5">
   <div class="container mx-auto px-3">
+
     <!-- 검색 박스 영역 시작 -->
-    <div class="flex">
-      <div>
-        회원수 :
+    <div class="search-box flex justify-between grid md:grid-cols-2">
+      <div class="flex items-center ml-1 mr-5 w-44">
+        <span>회원수 : </span>
         <span class="badge badge-primary">${ membersCount }</span>
         명
       </div>
-      <div class="flex-grow"></div>
-      <form class="flex">
-        <input type="hidden" name="boardId" value="${param.boardId}" />
+      <div class="ml-auto flex items-center h-16">
+        <form class="flex grow-0">
+          <input type="hidden" name="boardId" value="${param.boardId}" />
 
-        <select class="select select-bordered" name="authLevel" data-value="${authLevel}">
-          <option disabled="disabled">회원구분</option>
-          <option value="3">일반회원</option>
-          <option value="7">관리자</option>
-          <option value="0">전체</option>
-        </select>
+          <select class="select select-bordered mr-2" name="authLevel" data-value="${authLevel}">
+            <option disabled="disabled">회원구분</option>
+            <option value="3">일반회원</option>
+            <option value="7">관리자</option>
+            <option value="0">전체</option>
+          </select>
 
-        <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${searchKeywordTypeCode}">
-          <option disabled="disabled">검색타입</option>
-          <option value="loginId">아이디</option>
-          <option value="name">이름</option>
-          <option value="nickname">별명</option>
-          <option value="loginId,name,nickname">전부포함</option>
-        </select>
+          <select class="select select-bordered" name="searchKeywordTypeCode" data-value="${searchKeywordTypeCode}">
+            <option disabled="disabled">검색타입</option>
+            <option value="loginId">아이디</option>
+            <option value="name">이름</option>
+            <option value="nickname">별명</option>
+            <option value="loginId,name,nickname">전부포함</option>
+          </select>
 
-        <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
-          class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
+          <input type="text" name="searchKeyword" value="${param.searchKeyword}" maxlength="20"
+            class="ml-2 w-72 input input-bordered" placeholder="검색어를 입력하세요." />
 
-        <button type="submit" class="ml-2 btn btn-primary">검색</button>
-      </form>
+          <button type="submit" class="ml-2 btn btn-primary">검색</button>
+        </form>
+      </div>
     </div>
     <!-- 검색 박스 영역 끝 -->
 
     <!-- 회원 목록 영역 시작 -->
-    <div class="mt-3">
+    <div class="MemberList-box mt-3">
       <table class="table table-fixed w-full">
         <colgroup>
+          <col width="70" />
           <col width="100" />
-          <col width="100" />
-          <col width="120" />
-          <col width="120" />
+          <col width="150" />
+          <col width="150" />
         </colgroup>
         <thead>
           <tr>
-            <th>
+            <td>
               <input type="checkbox" class="checkbox-all-member-id" />
+            </td>
+            <th>
+              <span class="badge badge-primary">번호</span>
             </th>
-            <th>번호</th>
-            <th>가입날짜</th>
-            <th>갱신날짜</th>
-            <th>아이디</th>
-            <th>이름</th>
-            <th>별명</th>
+            <th>
+              <span class="badge">가입날짜</span>
+            </th>
+            <th>
+              <span class="badge">갱신날짜</span>
+            </th>
+            <th>
+              <span class="text-base">아이디</span>
+            </th>
+            <th>
+              <span class="text-base">이름</span>
+            </th>
+            <th>
+              <span class="text-base">별명</span>
+            </th>
           </tr>
         </thead>
 
         <tbody>
           <c:forEach var="member" items="${ members }">
-            <tr>
+            <tr class="px-4 py-8">
               <th>
                 <input type="checkbox" class="checkbox-member-id" value="${ member.id }" />
               </th>
-              <th>${ member.id }</th>
-              <td>${ member.forPrintType1RegDate }</td>
-              <td>${ member.forPrintType1UpdateDate }</td>
-              <td>${ member.loginId }</td>
-              <td>${ member.name }</td>
-              <td>${ member.nickname }</td>
+              <th>
+                <a class="hover:underline ml-4">
+                  <span>${ member.id }</span>
+                </a>
+              </th>
+              <td>
+                <a class="hover:underline">
+                  <span>${ member.forPrintType1RegDate }</span>
+                </a>
+              </td>
+              <td>
+                <a class="hover:underline">
+                  <span>${ member.forPrintType1UpdateDate }</span>
+                </a>
+              </td>
+              <td>
+                <a class="hover:underline">
+                  <span>${ member.loginId }</span>
+                </a>
+              </td>
+              <td>
+                <a class="hover:underline">
+                  <span>${ member.name }</span>
+                </a>
+              </td>
+              <td>
+                <a class="hover:underline">
+                  <span>${ member.nickname }</span>
+                </a>
+              </td>
             </tr>
           </c:forEach>
         </tbody>
