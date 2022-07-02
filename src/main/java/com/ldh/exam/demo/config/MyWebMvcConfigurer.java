@@ -85,6 +85,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/adm/**");
 		ir.excludePathPatterns("/adm/member/login");
 		ir.excludePathPatterns("/adm/member/doLogin");
+		ir.excludePathPatterns("/adm/member/join");
+		ir.excludePathPatterns("/adm/member/doJoin");
 		ir.excludePathPatterns("/adm/member/findLoginId");
 		ir.excludePathPatterns("/adm/member/doFindLoginId");
 		ir.excludePathPatterns("/adm/member/findLoginPw");
