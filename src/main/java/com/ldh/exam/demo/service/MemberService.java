@@ -202,4 +202,16 @@ public class MemberService {
 		return attrService.getValue("member", memberId, "extra", "isExpiredPassword").equals("0") == false;
 	}
 
+	public static String getAuthLevelName(Member member) {
+
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "관리자";
+		case 3:
+			return "일반";
+		default:
+			return "회원구분없음";
+		}
+	}
+
 }

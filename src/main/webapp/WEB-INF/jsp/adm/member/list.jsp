@@ -77,6 +77,9 @@
             <th>
               <span class="text-base">회원구분</span>
             </th>
+            <th>
+              <span class="text-base">정보열람</span>
+            </th>
           </tr>
         </thead>
 
@@ -108,6 +111,11 @@
               </td>
               <td>
                 <span>${ member.authLevelName }</span>
+              </td>
+              <td>
+                <div class="btn btn-outline">
+                  <a href="../member/detail?id=${member.id}">전체보기</a>
+                </div>
               </td>
             </tr>
           </c:forEach>
