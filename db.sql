@@ -44,7 +44,7 @@ CREATE TABLE `member` (
     updateDate DATETIME NOT NULL,
     loginId CHAR(20) NOT NULL,
     loginPw CHAR(60) NOT NULL,
-    authLevel SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
+    authLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
     cellPhoneNo CHAR(20) NOT NULL,

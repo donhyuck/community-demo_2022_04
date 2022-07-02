@@ -74,6 +74,12 @@
             <th>
               <span class="text-base">별명</span>
             </th>
+            <th>
+              <span class="text-base">회원구분</span>
+            </th>
+            <th>
+              <span class="text-base">상세정보</span>
+            </th>
           </tr>
         </thead>
 
@@ -84,34 +90,27 @@
                 <input type="checkbox" class="checkbox-member-id" value="${ member.id }" />
               </th>
               <th>
-                <a class="hover:underline ml-4">
+                <div class="ml-4">
                   <span>${ member.id }</span>
-                </a>
+                </div>
               </th>
               <td>
-                <a class="hover:underline">
-                  <span>${ member.forPrintType1RegDate }</span>
-                </a>
+                <span>${ member.forPrintType1RegDate }</span>
               </td>
               <td>
-                <a class="hover:underline">
-                  <span>${ member.forPrintType1UpdateDate }</span>
-                </a>
+                <span>${ member.forPrintType1UpdateDate }</span>
               </td>
               <td>
-                <a class="hover:underline">
-                  <span>${ member.loginId }</span>
-                </a>
+                <span>${ member.loginId }</span>
               </td>
               <td>
-                <a class="hover:underline">
-                  <span>${ member.name }</span>
-                </a>
+                <span>${ member.name }</span>
               </td>
               <td>
-                <a class="hover:underline">
-                  <span>${ member.nickname }</span>
-                </a>
+                <span>${ member.nickname }</span>
+              </td>
+              <td>
+                <span>${ member.authLevelName }</span>
               </td>
             </tr>
           </c:forEach>

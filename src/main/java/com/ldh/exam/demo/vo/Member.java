@@ -47,6 +47,11 @@ public class Member {
 	}
 
 	public String getAuthLevelName() {
+
+		if (authLevel == 7) {
+			return "관리자";
+		}
+
 		return "일반회원";
 	}
 
