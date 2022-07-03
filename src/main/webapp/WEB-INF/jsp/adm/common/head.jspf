@@ -209,7 +209,7 @@ const param = ${rq.paramJsonStr};
             <c:if test="${ rq.logined }">
               <li>
                 <a href="/user/member/myPage">
-                  <div>${rq.loginedMember.name}'s프로필</div>
+                  <div>${rq.loginedMember.getName()}'s프로필</div>
                 </a>
               </li>
             </c:if>

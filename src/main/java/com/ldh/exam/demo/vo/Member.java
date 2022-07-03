@@ -43,8 +43,8 @@ public class Member {
 		return updateDate.substring(2, 16);
 	}
 
-	public boolean isAdmin() {
-		return this.authLevel == 7;
+	public String getForPrintDelDate() {
+		return delDate.substring(2, 16);
 	}
 
 	public String getAuthLevelName() {
@@ -52,12 +52,12 @@ public class Member {
 		return MemberService.getAuthLevelName(this);
 	}
 
+	public boolean isAdmin() {
+		return this.authLevel == 7;
+	}
+
 	public String toJsonStr() {
 
 		return Ut.toJsonStr(this);
-	}
-
-	public String getForPrintDelDate() {
-		return delDate.substring(2, 16);
 	}
 }

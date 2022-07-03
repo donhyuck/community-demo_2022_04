@@ -216,16 +216,16 @@ public class Rq {
 		return "/user/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
 
+	public String getParamJsonStr() {
+		return Ut.toJsonStr(paramMap);
+	}
+
 	public boolean isAdmin() {
 
-		if (isLogined == false) {
+		if (loginedMember == null) {
 			return false;
 		}
 
 		return loginedMember.isAdmin();
-	}
-
-	public String getParamJsonStr() {
-		return Ut.toJsonStr(paramMap);
 	}
 }

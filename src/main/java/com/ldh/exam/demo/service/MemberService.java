@@ -204,13 +204,13 @@ public class MemberService {
 
 	public static String getAuthLevelName(Member member) {
 
-		switch (member.getAuthLevel()) {
-		case 7:
+		if (member.getAuthLevel() == 7) {
 			return "관리자";
-		case 3:
+
+		} else if (member.getAuthLevel() == 3) {
 			return "일반";
-		default:
-			return "회원구분없음";
 		}
+
+		return "회원구분없음";
 	}
 }
