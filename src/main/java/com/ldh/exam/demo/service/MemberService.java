@@ -113,6 +113,33 @@ public class MemberService {
 		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 	}
 
+	public List<Member> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int itemsCountInAPage, int page) {
+
+		int limitStart = (page - 1) * itemsCountInAPage;
+		int limitTake = itemsCountInAPage;
+
+		List<Member> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+				limitStart, limitTake);
+
+		return members;
+	}
+
+	public void doDeleteMembers(List<Integer> memberIds) {
+
+		for (int memberId : memberIds) {
+			Member member = getMemberById(memberId);
+
+			if (member != null) {
+				doDeleteMember(member);
+			}
+		}
+	}
+
+	private void doDeleteMember(Member member) {
+		memberRepository.deleteMember(member.getId());
+	}
+
 	public ResultData findLoginId(Member member) {
 
 		if (member == null) {
@@ -173,5 +200,17 @@ public class MemberService {
 	public boolean isExpiredPassword(int memberId) {
 
 		return attrService.getValue("member", memberId, "extra", "isExpiredPassword").equals("0") == false;
+	}
+
+	public static String getAuthLevelName(Member member) {
+
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "관리자";
+		case 3:
+			return "일반";
+		default:
+			return "회원구분없음";
+		}
 	}
 }
