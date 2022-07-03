@@ -1,7 +1,7 @@
 package com.ldh.exam.demo.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ldh.exam.demo.service.MemberService;
+import com.ldh.exam.demo.service.admMemberService;
 import com.ldh.exam.demo.util.Ut;
 
 import lombok.AllArgsConstructor;
@@ -49,11 +49,15 @@ public class Member {
 
 	public String getAuthLevelName() {
 
-		return MemberService.getAuthLevelName(this);
+		return admMemberService.getAuthLevelName(this);
 	}
 
 	public String toJsonStr() {
 
 		return Ut.toJsonStr(this);
+	}
+
+	public String getForPrintDelDate() {
+		return delDate.substring(2, 16);
 	}
 }

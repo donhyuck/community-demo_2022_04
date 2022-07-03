@@ -55,13 +55,13 @@
             <span class="text-gray-600">${member.email}</span>
           </div>
 
-          <div class="order-7">
-            <span class="badge">등록상태</span>
+          <div class="order-7 text-red-400 font-bold">
+            <span class="badge font-normal">등록상태</span>
             <c:if test="${ member.delStatus == false }">
               등록완료
             </c:if>
             <c:if test="${ member.delStatus == true }">
-              탈퇴처리 / 처리일 : ${member.delDate}
+              탈퇴: [ ${member.forPrintDelDate} ] 처리완료
             </c:if>
           </div>
 
