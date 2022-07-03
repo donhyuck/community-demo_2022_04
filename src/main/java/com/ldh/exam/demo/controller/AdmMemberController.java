@@ -63,4 +63,13 @@ public class AdmMemberController {
 
 		return Ut.jsReplace("회원 삭제처리가 완료되었습니다.", replaceUri);
 	}
+
+	@RequestMapping("/adm/member/detail")
+	public String showDetail(Model model, int id) {
+
+		Member member = memberService.getMemberById(id);
+		model.addAttribute("member", member);
+
+		return "adm/member/detail";
+	}
 }

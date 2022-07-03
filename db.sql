@@ -44,7 +44,7 @@ CREATE TABLE `member` (
     updateDate DATETIME NOT NULL,
     loginId CHAR(20) NOT NULL,
     loginPw CHAR(60) NOT NULL,
-    authLevel SMALLINT(2) UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
+    authLevel SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨(3=일반,7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
     cellPhoneNo CHAR(20) NOT NULL,
@@ -88,6 +88,19 @@ loginPw = 'test2',
 nickname = '사용자2',
 cellPhoneNo = '0107894789',
 email = 'test02@test.com';
+
+# 회원, 테스트 데이터 생성(탈퇴 회원)
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'delete1',
+loginPw = 'delete1',
+`name` = '김철수',
+nickname = '철수',
+cellPhoneNo = '01044554442',
+email = 'lost01@test.com';
+delStatus = 1;
+delDate = 2022-01-01;
 
 SELECT LAST_INSERT_ID();
 
@@ -459,3 +472,17 @@ GROUP BY r.id;
 SELECT * FROM reactionPoint;
 SELECT * FROM reply;
 SELECT * FROM article;
+
+SELECT r.*,
+IFNULL(SUM(IF(rp.point > 0, rp.point, 0)), 0) AS extra_goodReactionPoint,
+IFNULL(SUM(IF(rp.point < 0, rp.point, 0)), 0) AS extra_badReactionPoint
+FROM (
+    SELECT r.*, m.name AS extra__writerName
+    FROM reply AS r
+    LEFT JOIN `member` AS m
+    ON r.memberId = m.id
+) AS r
+LEFT JOIN `reactionPoint` AS rp
+ON rp.relTypeCode = 'article'
+WHERE r.relId = 1
+GROUP BY r.id;

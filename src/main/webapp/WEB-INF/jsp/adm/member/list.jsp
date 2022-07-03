@@ -111,6 +111,9 @@
               </td>
               <td>
                 <span>${ member.authLevelName }</span>
+                <c:if test="${ member.delStatus == true }">
+                  <span>(탈퇴처리)</span>
+                </c:if>
               </td>
               <td>
                 <div class="btn btn-outline">
