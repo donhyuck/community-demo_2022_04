@@ -23,7 +23,7 @@
 
           <div class="cursor-pointer order-3">
             <span class="badge badge-accent">회원타입</span>
-            <span>${rq.loginedMember.authLevelName}</span>
+            <span>${rq.loginedMember.forPrintAuthName}</span>
           </div>
 
           <div class="order-4">

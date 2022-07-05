@@ -32,6 +32,7 @@ public class AdmMemberController {
 
 		int itemsCountInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) membersCount / itemsCountInAPage);
+
 		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
 				itemsCountInAPage, page);
 

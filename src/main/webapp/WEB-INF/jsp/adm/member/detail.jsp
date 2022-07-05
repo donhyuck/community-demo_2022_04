@@ -22,7 +22,7 @@
 
           <div class="order-3">
             <span class="badge badge-accent">회원타입</span>
-            <span>${member.authLevelName}</span>
+            <span>${member.forPrintAuthName}</span>
           </div>
 
           <div class="order-4">
@@ -61,7 +61,7 @@
               등록완료
             </c:if>
             <c:if test="${ member.delStatus == true }">
-              탈퇴: [ ${member.forPrintDelDate} ] 처리완료
+              탈퇴: [ ${member.delDate} ] 처리완료
             </c:if>
           </div>
 

@@ -130,7 +130,7 @@ const param = ${rq.paramJsonStr};
                   </a>
                 </li>
               </c:if>
-              <c:if test="${ rq.logined && rq.admin }">
+              <c:if test="${ rq.admin }">
                 <li>
                   <a href="/adm/member/list">
                     <div class="text-blue-400">관리자</div>
@@ -213,7 +213,7 @@ const param = ${rq.paramJsonStr};
                 </a>
               </li>
             </c:if>
-            <c:if test="${ rq.logined && rq.admin }">
+            <c:if test="${ rq.admin }">
               <li>
                 <a href="/adm/member/list">
                   <div class="text-blue-400">관리자</div>

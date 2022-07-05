@@ -110,7 +110,7 @@
                 <span>${ member.nickname }</span>
               </td>
               <td>
-                <span>${ member.authLevelName }</span>
+                <span>${member.forPrintAuthName}</span>
                 <c:if test="${ member.delStatus == true }">
                   <span>(탈퇴처리)</span>
                 </c:if>

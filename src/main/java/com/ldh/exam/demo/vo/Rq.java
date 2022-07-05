@@ -222,7 +222,11 @@ public class Rq {
 			return false;
 		}
 
-		return loginedMember.isAdmin();
+		if (loginedMember.getAuthLevel() == 7) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getParamJsonStr() {
