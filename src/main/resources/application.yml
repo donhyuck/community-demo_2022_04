@@ -20,8 +20,8 @@ spring:
     # driver-class-name: com.mysql.cj.jdbc.Driver
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/sts_community?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
-    username: sbsst
-    password: sbs123414  
+    username: korad
+    password: kor123414  
 mybatis:
   type-aliases-package: com.ldh.exam.demo.vo
 custom:

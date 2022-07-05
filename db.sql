@@ -3,7 +3,6 @@ DROP DATABASE IF EXISTS sts_community;
 CREATE DATABASE sts_community;
 USE sts_community;
 
-DROP TABLE IF EXISTS article;
 
 # 게시물 테이블 생성
 CREATE TABLE article (
@@ -35,7 +34,6 @@ updateDate=NOW(),
 title='제목3',
 `body`='내용3';
 
-DROP TABLE IF EXISTS `member`;
 
 # 회원 테이블 생성
 CREATE TABLE `member` (
@@ -98,9 +96,9 @@ loginPw = 'delete1',
 `name` = '김철수',
 nickname = '철수',
 cellPhoneNo = '01044554442',
-email = 'lost01@test.com';
-delStatus = 1;
-delDate = 2022-01-01;
+email = 'lost01@test.com',
+delStatus = 1,
+delDate = '2020-05-20 20:00:00';
 
 SELECT LAST_INSERT_ID();
 

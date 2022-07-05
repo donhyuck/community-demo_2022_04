@@ -1,7 +1,6 @@
 package com.ldh.exam.demo.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ldh.exam.demo.service.MemberService;
 import com.ldh.exam.demo.util.Ut;
 
 import lombok.AllArgsConstructor;
@@ -49,11 +48,18 @@ public class Member {
 
 	public String getAuthLevelName() {
 
-		return MemberService.getAuthLevelName(this);
+		if (authLevel == 7) {
+			return "관리자";
+
+		} else if (authLevel == 3) {
+			return "일반";
+		}
+
+		return "회원구분없음";
 	}
 
 	public boolean isAdmin() {
-		return this.authLevel == 7;
+		return authLevel == 7;
 	}
 
 	public String toJsonStr() {
