@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ldh.exam.demo.service.MemberService;
+import com.ldh.exam.demo.service.AdmMemberService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.Rq;
@@ -19,7 +19,7 @@ import com.ldh.exam.demo.vo.Rq;
 public class AdmMemberController {
 
 	@Autowired
-	private MemberService memberService;
+	private AdmMemberService admMemberService;
 	@Autowired
 	private Rq rq;
 
@@ -28,12 +28,12 @@ public class AdmMemberController {
 			@RequestParam(defaultValue = "loginId,name,nickname") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 
-		int membersCount = memberService.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
+		int membersCount = admMemberService.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 
 		int itemsCountInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) membersCount / itemsCountInAPage);
 
-		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+		List<Member> members = admMemberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
 				itemsCountInAPage, page);
 
 		model.addAttribute("authLevel", authLevel);
@@ -60,7 +60,7 @@ public class AdmMemberController {
 			memberIds.add(Integer.parseInt(idsStr));
 		}
 
-		memberService.doDeleteMembers(memberIds);
+		admMemberService.doDeleteMembers(memberIds);
 
 		return Ut.jsReplace("회원 삭제처리가 완료되었습니다.", replaceUri);
 	}
@@ -68,7 +68,7 @@ public class AdmMemberController {
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(Model model, int id) {
 
-		Member member = memberService.getMemberById(id);
+		Member member = admMemberService.getMemberById(id);
 		model.addAttribute("member", member);
 
 		return "adm/member/detail";

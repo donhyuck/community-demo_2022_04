@@ -49,14 +49,13 @@ public class Member {
 
 	public String getForPrintAuthName() {
 
-		if (authLevel == 7) {
+		switch (authLevel) {
+		case 7:
 			return "관리자";
-		}
-
-		else if (authLevel == 3) {
+		case 3:
 			return "일반회원";
+		default:
+			return "유형정보없음";
 		}
-
-		return "유형정보없음";
 	}
 }

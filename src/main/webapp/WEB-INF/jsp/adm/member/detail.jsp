@@ -22,7 +22,14 @@
 
           <div class="order-3">
             <span class="badge badge-accent">회원타입</span>
-            <span>${member.forPrintAuthName}</span>
+            <c:if test="${ member.delStatus == false }">
+              <span>${member.forPrintAuthName}</span>
+            </c:if>
+            <c:if test="${ member.delStatus == true }">
+              <span class="text-red-400 font-bold">
+                <span>${member.forPrintAuthName}(탈퇴)</span>
+              </span>
+            </c:if>
           </div>
 
           <div class="order-4">
@@ -55,13 +62,16 @@
             <span class="text-gray-600">${member.email}</span>
           </div>
 
-          <div class="order-7 text-red-400 font-bold">
-            <span class="badge font-normal">등록상태</span>
+          <div class="order-7">
+            <span class="badge">등록상태</span>
             <c:if test="${ member.delStatus == false }">
               등록완료
             </c:if>
             <c:if test="${ member.delStatus == true }">
-              탈퇴: [ ${member.delDate} ] 처리완료
+              <span class="text-red-400 font-bold">
+                <span>(탈퇴)</span>
+                <div>[ ${member.delDate} ] 처리완료</div>
+              </span>
             </c:if>
           </div>
 

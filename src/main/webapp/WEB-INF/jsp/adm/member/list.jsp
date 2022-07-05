@@ -110,9 +110,11 @@
                 <span>${ member.nickname }</span>
               </td>
               <td>
-                <span>${member.forPrintAuthName}</span>
+                <c:if test="${ member.delStatus == false }">
+                  <span>${member.forPrintAuthName}</span>
+                </c:if>
                 <c:if test="${ member.delStatus == true }">
-                  <span>(탈퇴처리)</span>
+                  <span class="text-red-400">${member.forPrintAuthName}(탈퇴)</span>
                 </c:if>
               </td>
               <td>
