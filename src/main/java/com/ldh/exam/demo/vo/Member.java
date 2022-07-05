@@ -42,24 +42,12 @@ public class Member {
 		return updateDate.substring(2, 16);
 	}
 
-	public String getForPrintDelDate() {
-		return delDate.substring(2, 16);
+	public boolean isAdmin() {
+		return this.authLevel == 7;
 	}
 
 	public String getAuthLevelName() {
-
-		if (authLevel == 7) {
-			return "관리자";
-
-		} else if (authLevel == 3) {
-			return "일반";
-		}
-
-		return "회원구분없음";
-	}
-
-	public boolean isAdmin() {
-		return authLevel == 7;
+		return "일반회원";
 	}
 
 	public String toJsonStr() {

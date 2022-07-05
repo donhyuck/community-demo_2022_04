@@ -82,6 +82,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
+authLevel = 5,
 `name` = '성춘향',
 nickname = '사용자2',
 cellPhoneNo = '0107894789',
@@ -98,7 +99,7 @@ nickname = '철수',
 cellPhoneNo = '01044554442',
 email = 'lost01@test.com',
 delStatus = 1,
-delDate = '2020-05-20 20:00:00';
+delDate = '2022-01-05 15:00:00';
 
 SELECT LAST_INSERT_ID();
 
