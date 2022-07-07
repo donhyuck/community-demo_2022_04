@@ -60,10 +60,15 @@ const param = ${rq.paramJsonStr};
 </head>
 <body>
   <header>
-    <div class="flex container h-20 mx-auto">
+    <div class="flex container mx-auto h-20">
       <div class="navbar bg-base-100">
         <!-- dropdown 좌측 토글메뉴 시작, 반응형 -->
-        <div class="navbar-start">
+        <div>
+          <div class="logo-box normal-case text-lg">
+            <a href="/" class="flex items-center h-20">
+              <span>헬로우월드</span>
+            </a>
+          </div>
           <div class="dropdown">
             <div class="xl:hidden">
               <label tabindex="0" class="btn btn-ghost">
@@ -146,11 +151,11 @@ const param = ${rq.paramJsonStr};
               </c:if>
             </ul>
           </div>
-          <a href="/" class="normal-case text-lg">헬로우월드</a>
         </div>
         <!-- dropdown 좌측 토글메뉴 끝 -->
+        <div class="flex-grow"></div>
         <!-- 상단 메뉴바 시작, 반응형 -->
-        <div class="navbar-end hidden lg:flex">
+        <div class="hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
             <c:if test="${ rq.logined && rq.expiredPassword }">
               <li>
@@ -214,10 +219,25 @@ const param = ${rq.paramJsonStr};
               </li>
             </c:if>
             <c:if test="${ rq.admin }">
-              <li>
-                <a href="/adm/member/list">
+              <li tabindex="0">
+                <a>
                   <div class="text-blue-400">관리자</div>
+                  <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                 </a>
+                <ul class="p-2 shadow-lg bg-base-100">
+                  <li>
+                    <a href="/adm/member/list">
+                      <div>회원목록</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/adm/article/list">
+                      <div>게시판목록</div>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </c:if>
             <c:if test="${ rq.logined }">
