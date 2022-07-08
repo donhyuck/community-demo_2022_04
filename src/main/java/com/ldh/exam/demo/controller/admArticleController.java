@@ -17,7 +17,6 @@ import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Board;
 import com.ldh.exam.demo.vo.Reply;
-import com.ldh.exam.demo.vo.ResultData;
 import com.ldh.exam.demo.vo.Rq;
 
 @Controller
@@ -38,12 +37,11 @@ public class admArticleController {
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(Model model, int id) {
 
-		Article article = admArticleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		Article article = admArticleService.getForPrintArticle(id);
 		model.addAttribute("article", article);
 
-		// 구현 예정
-//		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
-//		model.addAttribute("replies", replies);
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
+		model.addAttribute("replies", replies);
 
 		return "adm/article/detail";
 	}
@@ -63,6 +61,7 @@ public class admArticleController {
 
 		int itemsCountInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) articlesCount / itemsCountInAPage);
+
 		List<Article> articles = admArticleService.getForPrintArticles(rq.getLoginedMemberId(), boardId,
 				searchKeywordTypeCode, searchKeyword, itemsCountInAPage, page);
 
@@ -79,8 +78,9 @@ public class admArticleController {
 	@RequestMapping("/adm/article/modify")
 	public String showModify(int id, Model model) {
 
-		Article article = admArticleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		Article article = admArticleService.getForPrintArticle(id);
 
+		// 게시글 존재여부 체크
 		if (article == null) {
 			return rq.jsHistoryBack("F-1", Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
@@ -94,7 +94,7 @@ public class admArticleController {
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
 
-		Article article = admArticleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		Article article = admArticleService.getForPrintArticle(id);
 
 		// 게시글 존재여부 체크
 		if (article == null) {
@@ -110,9 +110,9 @@ public class admArticleController {
 	@ResponseBody
 	public String doDelete(int id) {
 
-		Article article = admArticleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		Article article = admArticleService.getForPrintArticle(id);
 
-		// 게시글 존재여부 및 권한 체크
+		// 게시글 존재여부 체크
 		if (article == null) {
 			return rq.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
 		}
