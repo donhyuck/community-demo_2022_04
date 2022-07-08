@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ldh.exam.demo.repository.AdmArticleRepository">
+
+	<select id="getForPrintArticle" resultType="Article">
+		SELECT a.*,
+		IFNULL(m.name, "삭제된_회원") AS extra__writerName
+		FROM article AS a
+		LEFT
+		JOIN `member` AS m
+		ON a.memberId = m.id
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="getForPrintArticles" resultType="Article">
+		SELECT a.*,
+		IFNULL(m.nickname, "삭제된_회원") AS extra__writerName,
+		IFNULL(m.name, "삭제된_회원") AS extra__writerRealName
+		FROM article
+		AS a
+		LEFT
+		JOIN `member` AS m
+		ON a.memberId = m.id
+		WHERE 1
+		<if test="boardId != 0">
+			AND a.boardId = #{boardId}
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+					AND (
+					a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					OR
+					a.body LIKE CONCAT('%',#{searchKeyword},'%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY a.id DESC
+		<if test="limitTake != -1">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
+	</select>
+
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS a
+		WHERE 1
+		<if test="boardId != 0">
+			AND a.boardId = #{boardId}
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND a.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND a.body LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+					AND (
+					a.title LIKE CONCAT('%',#{searchKeyword},'%')
+					OR
+					a.body LIKE CONCAT('%',#{searchKeyword},'%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+
+	<update id="modifyArticle">
+		UPDATE article
+		<set>
+			<if test="title != null and title !=''">
+				title = #{title},
+			</if>
+			<if test="body != null and body !=''">
+				`body` = #{body},
+			</if>
+			updateDate = NOW(),
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteArticle">
+		DELETE
+		FROM article
+		WHERE id = #{id}
+	</delete>
+</mapper>
