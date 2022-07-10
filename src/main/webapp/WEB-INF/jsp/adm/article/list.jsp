@@ -46,9 +46,13 @@
           <col width="120" />
           <col width="120" />
           <col width="120" />
+          <col width="120" />
         </colgroup>
         <thead>
           <tr>
+            <td>
+              <input type="checkbox" class="checkbox-all-article-id" />
+            </td>
             <th>
               <span class="badge badge-primary">번호</span>
             </th>
@@ -79,6 +83,9 @@
             <c:set var="detailUri" value="${rq.getArticleDetailUriFromArticleList(article)}" />
             <tr class="px-4 py-8">
               <th>
+                <input type="checkbox" class="checkbox-article-id" value="${ article.id }" />
+              </th>
+              <th>
                 <a href="${ detailUri }" class="hover:underline ml-4">
                   <span>${article.id}</span>
                 </a>
@@ -98,7 +105,6 @@
               </td>
               <td class="text-center">
                 <a href="${ detailUri }">${ article.extra__writerName }</a>
-                <a href="${ detailUri }">${ article.extra__writerRealName }</a>
               </td>
               <td class="text-center">
                 <a href="${ detailUri }">${ article.goodReactionPoint }</a>
@@ -107,31 +113,74 @@
                 <a href="${ detailUri }">${ article.hitCount }</a>
               </td>
               <td>
-                <c:if test="${ rq.loginedMemberId == article.memberId }">
-                  <div class="mb-2">
-                    <a href="../article/modify?id=${ article.id }">
-                      <span>
-                        <i class="fas fa-edit"></i>
-                      </span>
-                      <span>수정</span>
-                    </a>
-                  </div>
-                  <div>
-                    <a href="../article/doDelete?id=${ article.id }"
-                      onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
-                      <span>
-                        <i class="fas fa-trash"></i>
-                      </span>
-                      <span>삭제</span>
-                    </a>
-                  </div>
-                </c:if>
+                <div class="mb-2">
+                  <a href="../article/modify?id=${ article.id }">
+                    <span>
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <span>수정</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="../article/doDelete?id=${ article.id }" onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
+                    <span>
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span>삭제</span>
+                  </a>
+                </div>
               </td>
             </tr>
           </c:forEach>
         </tbody>
       </table>
     </div>
+    <!-- 게시글선택 박스 스크립트 -->
+    <script>
+    $('.checkbox-all-article-id').change(function() {
+      const $all = $(this);
+      const allChecked = $all.prop('checked');
+      
+      $('.checkbox-article-id').prop('checked', allChecked);
+    });
+    
+    $('.checkbox-article-id').change(function() {
+      const checkboxMemberIdCount = $('.checkbox-article-id').length;
+      const checkboxMemberIdCheckedCount = $('.checkbox-article-id:checked').length;
+      
+      const allChecked = checkboxMemberIdCount == checkboxMemberIdCheckedCount;
+      
+    $('.checkbox-all-article-id').prop('checked', allChecked);
+    });
+    </script>
+
+    <!-- 게시글 삭제 버튼 -->
+    <div>
+      <button class="btn btn-error btn-delete-selected-articles">선택삭제</button>
+    </div>
+
+    <form hidden action="../article/doDelete" name="do-delete-articles-form" method="post">
+      <input type="hidden" name="ids" value="" />
+      <input type="hidden" name="replaceUri" value="${ rq.currentUri }" />
+    </form>
+
+    <!-- 삭제할 회원정보 전송 -->
+    <script>
+    $('.btn-delete-selected-articles').click(function() {
+      const values = $('.checkbox-article-id:checked').map((index, el) => el.value).toArray();
+      
+      if (values.length == 0) {
+        alert('선택된 회원이 없습니다.');
+      }
+      
+      if (confirm('정말 삭제하시겠습니까?') == false) {
+        return;
+      }
+      
+      document['do-delete-articles-form'].ids.value = values.join(',');
+      document['do-delete-articles-form'].submit();
+      });
+    </script>
     <!-- 게시글 목록 영역 끝 -->
 
     <!-- 페이지 영역 시작 -->
