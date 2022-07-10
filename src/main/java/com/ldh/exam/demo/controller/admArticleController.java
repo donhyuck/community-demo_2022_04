@@ -87,7 +87,7 @@ public class admArticleController {
 
 		model.addAttribute("article", article);
 
-		return "user/article/modify";
+		return "adm/article/modify";
 	}
 
 	@RequestMapping("/adm/article/doModify")
@@ -120,6 +120,11 @@ public class admArticleController {
 		admArticleService.deleteArticle(id);
 
 		return rq.jsReplace(Ut.format("%d번 게시물을 삭제했습니다.", id), "../article/list");
+	}
+
+	@RequestMapping("/adm/article/selectList")
+	public String selectList() {
+		return "adm/article/selectList";
 	}
 	// 액션 메서드 끝
 }

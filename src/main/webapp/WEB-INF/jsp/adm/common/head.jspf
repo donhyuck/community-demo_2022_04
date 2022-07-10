@@ -136,10 +136,25 @@ const param = ${rq.paramJsonStr};
                 </li>
               </c:if>
               <c:if test="${ rq.admin }">
-                <li>
-                  <a href="/adm/member/list">
-                    <div class="text-blue-400">관리자</div>
+                <li tabindex="0">
+                  <a class="justify-between">
+                    <div>게시판</div>
+                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                      viewBox="0 0 24 24">
+                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
                   </a>
+                  <ul class="p-2 bg-base-100">
+                    <li>
+                      <a href="/adm/member/list">
+                        <div>회원목록</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/adm/article/selectList">
+                        <div>게시판목록</div>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </c:if>
               <c:if test="${ rq.logined }">
@@ -233,7 +248,7 @@ const param = ${rq.paramJsonStr};
                     </a>
                   </li>
                   <li>
-                    <a href="/adm/article/list">
+                    <a href="/adm/article/selectList">
                       <div>게시판목록</div>
                     </a>
                   </li>
