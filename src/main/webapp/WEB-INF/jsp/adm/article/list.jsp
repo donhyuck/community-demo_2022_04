@@ -39,10 +39,10 @@
       <table class="table table-fixed w-full">
         <colgroup>
           <col width="70" />
+          <col width="70" />
           <col width="150" />
           <col width="150" />
           <col />
-          <col width="120" />
           <col width="120" />
           <col width="120" />
           <col width="120" />
@@ -80,7 +80,7 @@
 
         <tbody>
           <c:forEach var="article" items="${ articles }">
-            <c:set var="detailUri" value="${rq.getArticleDetailUriFromArticleList(article)}" />
+            <c:set var="detailUri" value="${rq.getArticleDetailUriFromAdmArticleList(article)}" />
             <tr class="px-4 py-8">
               <th>
                 <input type="checkbox" class="checkbox-article-id" value="${ article.id }" />

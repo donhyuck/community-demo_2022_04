@@ -233,8 +233,13 @@ const param = ${rq.paramJsonStr};
                     </a>
                   </li>
                   <li>
-                    <a href="/adm/article/list">
-                      <div>게시판목록</div>
+                    <a href="/adm/article/list?boardId=1">
+                      <div>공지사항</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/adm/article/list?boardId=2">
+                      <div>자유게시판</div>
                     </a>
                   </li>
                 </ul>

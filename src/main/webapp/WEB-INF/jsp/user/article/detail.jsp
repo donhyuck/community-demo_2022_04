@@ -360,12 +360,12 @@
             <spqn class="font-bold text-black">${reply.extra__writerName}</spqn>
             <span class="mx-1">·</span>
             <c:if test="${ reply.regDate == reply.updateDate }">
-              <spqn>${reply.forPrintType2RegDate}</spqn>
+              <span>${reply.forPrintType2RegDate}</span>
               <span class="mx-1">·</span>
               <span>registered</span>
             </c:if>
             <c:if test="${ reply.regDate != reply.updateDate }">
-              <spqn>${reply.forPrintType2UpateDate}</spqn>
+              <span>${reply.forPrintType2UpateDate}</span>
               <span class="mx-1">·</span>
               <span>modified</span>
             </c:if>

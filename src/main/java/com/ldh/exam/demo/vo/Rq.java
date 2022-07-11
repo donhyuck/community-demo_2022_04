@@ -216,6 +216,10 @@ public class Rq {
 		return "/user/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
 
+	public String getArticleDetailUriFromAdmArticleList(Article article) {
+		return "/adm/article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
+	}
+
 	public boolean isAdmin() {
 
 		if (isLogined == false) {
