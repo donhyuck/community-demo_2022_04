@@ -138,7 +138,7 @@ const param = ${rq.paramJsonStr};
               <c:if test="${ rq.admin }">
                 <li tabindex="0">
                   <a class="justify-between">
-                    <div>게시판</div>
+                    <div class="text-blue-400">관리자</div>
                     <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                       viewBox="0 0 24 24">
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
@@ -150,8 +150,13 @@ const param = ${rq.paramJsonStr};
                       </a>
                     </li>
                     <li>
-                      <a href="/adm/article/selectList">
-                        <div>게시판목록</div>
+                      <a href="/adm/article/list?boardId=1">
+                        <div>공지사항</div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/adm/article/list?boardId=2">
+                        <div>자유게시판</div>
                       </a>
                     </li>
                   </ul>
@@ -248,8 +253,13 @@ const param = ${rq.paramJsonStr};
                     </a>
                   </li>
                   <li>
-                    <a href="/adm/article/selectList">
-                      <div>게시판목록</div>
+                    <a href="/adm/article/list?boardId=1">
+                      <div>공지사항</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/adm/article/list?boardId=2">
+                      <div>자유게시판</div>
                     </a>
                   </li>
                 </ul>

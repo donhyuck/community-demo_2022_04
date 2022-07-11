@@ -14,7 +14,7 @@
         <span class="badge badge-primary">${ membersCount }</span>
         명
       </div>
-      <div class="ml-auto flex items-center h-16">
+      <div class="ml-auto flex items-center h-24">
         <form class="flex grow-0">
           <input type="hidden" name="boardId" value="${param.boardId}" />
 

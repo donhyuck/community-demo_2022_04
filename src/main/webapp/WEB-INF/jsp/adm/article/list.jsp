@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="${ board.name } " />
+<c:set var="pageTitle" value="관리자 페이지 - ${ board.name } " />
 <%@ include file="../common/head.jspf"%>
 
 <section>
@@ -14,7 +14,7 @@
         <span class="badge badge-primary">${ articlesCount }</span>
         개
       </div>
-      <div class="ml-auto flex items-center h-16">
+      <div class="ml-auto flex items-center h-24">
         <form class="flex grow-0">
           <input type="hidden" name="boardId" value="${param.boardId}" />
 
