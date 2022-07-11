@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.ldh.exam.demo.repository.AdmArticleRepository;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
+import com.ldh.exam.demo.vo.Member;
 import com.ldh.exam.demo.vo.ResultData;
 
 @Service
@@ -55,5 +56,16 @@ public class AdmArticleService {
 
 	public Article getArticle(int id) {
 		return admArticleRepository.getArticle(id);
+	}
+
+	public void deleteArticles(List<Integer> articleIds) {
+
+		for (int articleId : articleIds) {
+			Article article = getArticle(articleId);
+
+			if (article != null) {
+				deleteArticle(articleId);
+			}
+		}
 	}
 }

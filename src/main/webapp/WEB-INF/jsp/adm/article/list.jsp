@@ -164,7 +164,7 @@
       <input type="hidden" name="replaceUri" value="${ rq.currentUri }" />
     </form>
 
-    <!-- 삭제할 회원정보 전송 -->
+    <!-- 삭제할 게시글정보 전송 -->
     <script>
     $('.btn-delete-selected-articles').click(function() {
       const values = $('.checkbox-article-id:checked').map((index, el) => el.value).toArray();

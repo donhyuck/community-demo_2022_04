@@ -1,5 +1,6 @@
 package com.ldh.exam.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,18 +109,18 @@ public class admArticleController {
 
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public String doDelete(Model model, @RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
 
-		Article article = admArticleService.getForPrintArticle(id);
+		List<Integer> articleIds = new ArrayList<>();
 
-		// 게시글 존재여부 체크
-		if (article == null) {
-			return rq.jsHistoryBack(Ut.format("%d번 게시글을 찾을 수 없습니다.", id));
+		for (String idsStr : ids.split(",")) {
+			articleIds.add(Integer.parseInt(idsStr));
 		}
 
-		admArticleService.deleteArticle(id);
+		admArticleService.deleteArticles(articleIds);
 
-		return rq.jsReplace(Ut.format("%d번 게시물을 삭제했습니다.", id), "../article/list");
+		return Ut.jsReplace("게시물 삭제처리가 완료되었습니다.", replaceUri);
 	}
 	// 액션 메서드 끝
 }
