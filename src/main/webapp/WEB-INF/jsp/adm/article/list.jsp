@@ -122,7 +122,7 @@
                   </a>
                 </div>
                 <div>
-                  <a href="../article/doDelete?id=${ article.id }" onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
+                  <a href="../article/doDelete?ids=${ article.id }" onclick="if ( !confirm('삭제하시겠습니까?') ) return false;">
                     <span>
                       <i class="fas fa-trash"></i>
                     </span>

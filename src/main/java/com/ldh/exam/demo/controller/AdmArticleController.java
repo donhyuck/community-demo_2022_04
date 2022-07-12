@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ldh.exam.demo.service.AdmArticleService;
+import com.ldh.exam.demo.service.AdmReplyService;
 import com.ldh.exam.demo.service.BoardService;
 import com.ldh.exam.demo.service.ReactionPointService;
-import com.ldh.exam.demo.service.ReplyService;
 import com.ldh.exam.demo.util.Ut;
 import com.ldh.exam.demo.vo.Article;
 import com.ldh.exam.demo.vo.Board;
@@ -21,7 +21,7 @@ import com.ldh.exam.demo.vo.Reply;
 import com.ldh.exam.demo.vo.Rq;
 
 @Controller
-public class admArticleController {
+public class AdmArticleController {
 
 	@Autowired
 	private AdmArticleService admArticleService;
@@ -30,7 +30,7 @@ public class admArticleController {
 	@Autowired
 	private BoardService boardService;
 	@Autowired
-	private ReplyService replyService;
+	private AdmReplyService admReplyService;
 	@Autowired
 	private Rq rq;
 
@@ -41,7 +41,7 @@ public class admArticleController {
 		Article article = admArticleService.getForPrintArticle(id);
 		model.addAttribute("article", article);
 
-		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
+		List<Reply> replies = admReplyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
 		model.addAttribute("replies", replies);
 
 		return "adm/article/detail";
@@ -110,7 +110,7 @@ public class admArticleController {
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public String doDelete(Model model, @RequestParam(defaultValue = "") String ids,
-			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
+			@RequestParam(defaultValue = "/adm/article/list") String replaceUri) {
 
 		List<Integer> articleIds = new ArrayList<>();
 

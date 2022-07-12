@@ -97,7 +97,7 @@
       </button>
 
       <button class="btn btn-primary">
-        <a href="../article/doDelete?id=${ article.id }" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제하기</a>
+        <a href="../article/doDelete?ids=${ article.id }" onclick="if( confirm('정말 삭제하시겠습니까?') == false ) return false;">삭제하기</a>
       </button>
     </div>
     <!-- 게시글 수정, 삭제 영역 끝 -->
